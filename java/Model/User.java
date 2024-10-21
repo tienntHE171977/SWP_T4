@@ -9,27 +9,104 @@ package Model;
  * @author pc
  */
 public class User {
-    private int Id;
-  private  String userName;
-  private String Email;
-  private String passWord;
-  private String role;
 
-    public User( String userName, String Email, String passWord, String role) {
+    private int Id;
+    private String userName;
+    private String email;
+    private String passWord;
+    private String fullName;
+    private String address;
+    private String gender;
+    private String phone;
+    private String role;
+
+    /**
+     *
+     * @param userName 
+     * @param email
+     * @param passWord
+     * @param role
+     */
+    public User(String userName, String email, String passWord, String role) {
         this.userName = userName;
-        this.Email = Email;
+        this.email = email;
         this.passWord = passWord;
         this.role = role;
     }
-  public User(){}
 
-    public User(int Id, String userName, String Email, String passWord, String role) {
+    public User(int Id, String userName, String email, String passWord, String fullName, String address, String gender, String phone, String role) {
         this.Id = Id;
         this.userName = userName;
-        this.Email = Email;
+        this.email = email;
+        this.passWord = passWord;
+        this.fullName = fullName;
+        this.address = address;
+        this.gender = gender;
+        this.phone = phone;
+        this.role = role;
+    }
+    
+        /**
+     *
+     * @param fullName
+     * @param phone
+     * @param address
+     * @param email
+     */
+   
+    public User(String email, String fullName, String address, String gender, String phone) {
+        this.email = email;
+        this.fullName = fullName;
+        this.address = address;
+        this.gender = gender;
+        this.phone = phone;
+    }
+
+    public User(int Id, String userName, String email, String passWord, String role) {
+        this.Id = Id;
+        this.userName = userName;
+        this.email = email;
         this.passWord = passWord;
         this.role = role;
     }
+    public User() {
+    }
+
+    
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    
 
     public int getId() {
         return Id;
@@ -48,11 +125,11 @@ public class User {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassWord() {
@@ -73,10 +150,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userName=" + userName + ", Email=" + Email + ", passWord=" + passWord + ", role=" + role + '}';
+        return "User{" + "userName=" + userName + ", Email=" + email + ", passWord=" + passWord + ", role=" + role + '}';
     }
 
-   
-  
-  
 }
