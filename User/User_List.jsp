@@ -34,6 +34,29 @@
                         <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
                     </div>
                 </div>
+                <script>
+                    // Hàm xử lý tìm kiếm
+                    function handleSearch() {
+                        var query = document.getElementById("searchInput").value;
+                        if (query) {
+                            console.log("Searching for:", query);
+                            // Thực hiện tìm kiếm hoặc điều hướng
+                            // Ví dụ: window.location.href = "/search?query=" + query;
+                        } else {
+                            alert("Please enter a search query");
+                        }
+                    }
+
+                    // Xử lý khi nhấn vào nút search
+                    document.getElementById("searchButton").addEventListener("click", handleSearch);
+
+                    // Xử lý khi nhấn phím Enter
+                    document.getElementById("searchInput").addEventListener("keydown", function (event) {
+                        if (event.key === "Enter") {
+                            handleSearch();
+                        }
+                    });
+                </script>
                 <table class="w-full text-left">
                     <thead>
                         <tr>
@@ -41,15 +64,17 @@
                             <th class="py-2">Role</th>
                             <th class="py-2">Email</th>
                             <th class="py-2">Actions</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="user" items="${users}">
                             <tr class="border-t">
+
                                 <td class="py-2 flex items-center">
                                     <div>
                                         <div class="font-semibold">${user.userName}</div>
-                                                                         </div>
+                                    </div>
                                 </td>
                                 <td class="py-2">
                                     <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded">${user.role}</span>
@@ -57,9 +82,9 @@
                                 <td class="py-2">${user.email}</td>
                                 <td class="py-2">
                                     <div class="flex space-x-2">
-                                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" onclick="location.href = 'User/User_Detail.jsp?id=${user.id}'">View</button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+
+                                        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" onclick="location.href = 'userDetail?id=${user.id}'">View</button>
+
                                     </div>
                                 </td>
                             </tr>
