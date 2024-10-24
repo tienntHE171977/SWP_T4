@@ -57,6 +57,7 @@ public class UserDetailController extends HttpServlet {
 
         request.setAttribute("user", user);
         request.getRequestDispatcher("User/User_Detail.jsp").forward(request, response);
+       
     }
 
     /**

@@ -5,20 +5,22 @@
 
 package Controller;
 
-import DAO.UserDAO;
-import Model.User;
+import DAO.ProjectDAO;
+import Model.Project;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author pc
  */
-public class UserProfileController extends HttpServlet {
+public class ProjectController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,16 +32,18 @@ public class UserProfileController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        UserDAO userDAO = new UserDAO();
-        User userProfile = userDAO.userProfile(2); // Fetch user profile
-        
-        // Set userProfile in the request scope
-        request.setAttribute("userProfile", userProfile);
-        
-        // Forward to the JSP page to display the user profile
-        request.getRequestDispatcher("User/User_Profile.jsp").forward(request, response); 
-        
-        
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProjectController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProjectController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +57,13 @@ public class UserProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        ProjectDAO projectDAO = new ProjectDAO();
+        List<Project> newProject = projectDAO.getProject();
+        
+        request.setAttribute("project",newProject );
+        request.getRequestDispatcher("ManageProjects.jsp").forward(request, response);
+        
+        
     } 
 
     /** 
