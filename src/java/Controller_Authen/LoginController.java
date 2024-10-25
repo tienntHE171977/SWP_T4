@@ -5,6 +5,7 @@
 package Controller_Authen;
 
 import DAL_Authen.AccountDAO;
+import DAL_Staff.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.nio.file.Files;
+import model.Staff;
 import model.Users;
 
 /**
@@ -44,7 +47,7 @@ public class LoginController extends HttpServlet {
         request.setAttribute("username", username);
         request.setAttribute("password", password);
         request.getRequestDispatcher("login.jsp").forward(request, response);
-        
+
     }
 
     /**
@@ -82,6 +85,8 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("acc", user);
 
+            session.setMaxInactiveInterval(30 * 60);
+
             // Kiểm tra password_reset_required
             if (user.isPassword_reset_required() && "staff".equals(user.getRole())) {
                 response.sendRedirect("resetPasswordRequired.jsp");
@@ -109,6 +114,12 @@ public class LoginController extends HttpServlet {
             if ("admin".equals(role)) {
                 response.sendRedirect("admin.jsp");
             } else if ("staff".equals(role)) {
+                StaffDAO staffDAO = new StaffDAO();
+                Staff staff = staffDAO.getStaffByUserId(user.getUserId());
+                if (staff != null) {
+                    staff.setUser(user);  // Đặt user vào staff
+                    session.setAttribute("staff", staff);
+                }
                 response.sendRedirect("staff.jsp");
             } else {
                 response.sendRedirect("index.jsp");

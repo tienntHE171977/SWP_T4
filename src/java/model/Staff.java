@@ -8,19 +8,11 @@ import java.sql.*;
  *
  * @author FPT
  */
-public class Staff {
-//    SELECT TOP (1000) [staff_id]
-//      ,[user_id]
-//      ,[role]
-//      ,[status]
-//      ,[approval_date]
-//      ,[first_password]
-//      ,[created_at]
-//      ,[updated_at]
-//  FROM [Volunteerisms77].[dbo].[Staff]
+public class Staff{
+
+    private Users user;
     private int staff_id;
-    private int user_id;
-    private String role;
+    private String role_staff;
     private String status;
     private Date approval_date;
     private String first_password;
@@ -30,15 +22,33 @@ public class Staff {
     public Staff() {
     }
 
-    public Staff(int staff_id, int user_id, String role, String status, Date approval_date, String first_password, Date created_at, Date updated_at) {
+    public Staff(int staff_id, String role_staff, String status, Date approval_date, String first_password, Date created_at, Date updated_at) {
         this.staff_id = staff_id;
-        this.user_id = user_id;
-        this.role = role;
+        this.role_staff = role_staff;
         this.status = status;
         this.approval_date = approval_date;
         this.first_password = first_password;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public Staff(Users user, int staff_id, String role_staff, String status, Date approval_date, String first_password, Date created_at, Date updated_at) {
+        this.user = user;
+        this.staff_id = staff_id;
+        this.role_staff = role_staff;
+        this.status = status;
+        this.approval_date = approval_date;
+        this.first_password = first_password;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     public int getStaff_id() {
@@ -49,20 +59,12 @@ public class Staff {
         this.staff_id = staff_id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public String getRole_staff() {
+        return role_staff;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole_staff(String role_staff) {
+        this.role_staff = role_staff;
     }
 
     public String getStatus() {
@@ -103,6 +105,11 @@ public class Staff {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff{" + "user=" + user + ", staff_id=" + staff_id + ", role_staff=" + role_staff + ", status=" + status + ", approval_date=" + approval_date + ", first_password=" + first_password + ", created_at=" + created_at + ", updated_at=" + updated_at + '}';
     }
     
 }

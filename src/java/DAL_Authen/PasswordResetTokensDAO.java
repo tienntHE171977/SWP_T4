@@ -4,7 +4,7 @@
  */
 package DAL_Authen;
 
-import DAL_Staff.DBContext;
+import DBContext.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -94,7 +94,7 @@ public class PasswordResetTokensDAO extends DBContext {
         PasswordResetTokensDAO dao = new PasswordResetTokensDAO();
         
         // Test saveToken
-        int userId = 53; // Giả sử có một user với id là 1
+        int userId = 14; // Giả sử có một user với id là 1
         String token = generateOTP();
         Timestamp expiryDate = new Timestamp(System.currentTimeMillis() + 900000); // 15 phút từ bây giờ
         
@@ -102,7 +102,7 @@ public class PasswordResetTokensDAO extends DBContext {
         System.out.println("Token saved: " + saved);
         
         // Test isValidOTP
-        String email = "ntt4447777@gmail.com"; // Giả sử đây là email của user có id 1
+        String email = "nguyentrungtien512003@gmail.com"; // Giả sử đây là email của user có id 1
         boolean isValid = dao.isValidOTP(email, token);
         System.out.println("Is valid OTP: " + isValid);
         

@@ -78,7 +78,7 @@ public class VerificationServlet extends HttpServlet {
         if (token != null) {
             verifyToken(token, request, response);
         } else if (email != null) {
-            // Đặt email vào request attribute để sử dụng trong JSP
+            
             request.setAttribute("email", email);
             request.getRequestDispatcher("/verify.jsp").forward(request, response);
         } else {

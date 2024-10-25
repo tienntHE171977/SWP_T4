@@ -159,13 +159,9 @@ public class Users {
         this.verified = verified;
     }
 
-    
-
-    
-
-
-    
-
-    
-    
+    @Override
+    public String toString() {
+        return "Users{" + "userId=" + userId + ", userName=" + userName + ", email=" + email + ", password=" + password + ", password_reset_required=" + password_reset_required + ", role=" + role + ", fullname=" + fullname + ", adrees=" + adrees + ", gender=" + gender + ", phone=" + phone + ", image=" + image + ", verified=" + verified + '}';
+    }
+   
 }

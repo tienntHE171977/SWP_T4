@@ -14,8 +14,7 @@ import model.Users;
 public class EmailSender {
 
     private static final String FORM = "nguyentrungtien512003@gmail.com";
-    private static final String PASSWORD = "yplj gfrn yypw aegx";
-    
+    private static final String PASSWORD = "litd zjrr nidm bvkj";
 
     public static void sendEmail(String recipient, String code) {
         Properties props = new Properties();
@@ -39,7 +38,7 @@ public class EmailSender {
             message.setFrom(new InternetAddress(FORM));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
             message.setSubject("Verify OTP");
-            
+
             message.setText("Your verification code is: " + code);
 
             Transport.send(message);
@@ -50,6 +49,38 @@ public class EmailSender {
             e.printStackTrace();
         }
     }
+
+    public static void sendReplyEmail(String recipient, String subject, String replyMessage) {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(FORM, PASSWORD);
+            }
+        };
+
+        Session session = Session.getInstance(props, auth);
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(FORM));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
+            message.setSubject("Phản hồi từ Charifit Page: " + subject);
+            message.setText(replyMessage);
+
+            Transport.send(message);
+            System.out.println("Reply email sent successfully!");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void sendEmailToUser(Users user, String code) {
         if (user != null && user.getEmail() != null) {
             sendEmail(user.getEmail(), code);
@@ -57,6 +88,7 @@ public class EmailSender {
             System.out.println("Người dùng hoặc email không hợp lệ.");
         }
     }
+
     public static void main(String[] args) {
         // Tạo một đối tượng người dùng với email
         Users user = new Users();

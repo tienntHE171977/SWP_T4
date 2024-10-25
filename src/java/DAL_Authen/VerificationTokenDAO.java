@@ -4,7 +4,7 @@
  */
 package DAL_Authen;
 
-import DAL_Staff.DBContext;
+import DBContext.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -144,7 +144,7 @@ public class VerificationTokenDAO extends DBContext{
         VerificationTokenDAO tokenDAO = new VerificationTokenDAO();
 
         // Giả sử userId là 1
-        int userId = 38;
+        int userId = 14;
 
         // Gọi hàm generateAndSaveVerificationToken và in ra kết quả
         String token = tokenDAO.generateAndSaveVerificationToken(userId);

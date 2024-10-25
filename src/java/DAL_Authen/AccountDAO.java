@@ -4,7 +4,7 @@
  */
 package DAL_Authen;
 
-import DAL_Staff.DBContext;
+import DBContext.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -230,7 +230,7 @@ public class AccountDAO extends DBContext {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace(); // Thay thế bằng logging framework
+            e.printStackTrace();
         }
         return false;
     }
@@ -279,46 +279,149 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
+    public boolean updateUserProfile(Users user) {
+        String query = """
+        UPDATE Users 
+        SET phone = ?, adrees = ? 
+        WHERE user_id = ?
+    """;
+
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, user.getPhone());
+            ps.setString(2, user.getAdrees());
+
+            ps.setInt(3, user.getUserId());
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    public boolean updateUserProfileImage(Users user) {
+        String sql = "UPDATE Users SET image = ? WHERE user_id = ?";
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, user.getImage());
+            ps.setInt(2, user.getUserId());
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         // Tạo một instance của AccountDAO
         AccountDAO accountDAO = new AccountDAO();
+        Users user = new Users();
+        user.setUserId(14); // Đặt ID người dùng cần cập nhật
+        user.setPhone("123456789");
+        user.setAdrees("123 Main St");
+        user.setImage("images/logolacay.jpg"); // Đường dẫn đến file ảnh
 
-        // Email cần kiểm tra, thay thế bằng email thực tế có trong cơ sở dữ liệu
-        String testEmail = "ntt4447777@gmail.com";
-        String testPassword = "abc";
-
-        // Gọi phương thức checkAccountByemail
-        Users userByEmail = accountDAO.getAccountByemail(testEmail, testPassword);
-        if (userByEmail != null) {
-            System.out.println("User found by email:");
-            printUserDetails(userByEmail);
+        // Gọi phương thức updateUserProfile
+        boolean isUpdated = accountDAO.updateUserProfile(user);
+        boolean imageUpdated = accountDAO.updateUserProfileImage(user);
+        // Kiểm tra kết quả
+        if (isUpdated) {
+            System.out.println("User profile updated successfully.");
         } else {
-            System.out.println("No user found with email: " + testEmail);
+            System.out.println("Failed to update user profile.");
         }
-
-        // Test getAccountByUsername
-        String testUsername = "mafiaTien";
-        Users userByUsername = accountDAO.getAccountByUsername(testUsername, testPassword);
-        if (userByUsername != null) {
-            System.out.println("\nUser found by username:");
-            printUserDetails(userByUsername);
+        if (imageUpdated) {
+            System.out.println("Cập nhật ảnh người dùng thành công.");
         } else {
-            System.out.println("No user found with username: " + testUsername);
+            System.out.println("Cập nhật ảnh người dùng thất bại.");
         }
-
+        // Test createNewUser
+//    Users newUser = new Users();
+//    newUser.setUserName("testUser");
+//    newUser.setEmail("test@example.com");
+//    newUser.setPassword("password123");
+//    newUser.setFullname("Test User");
+//    newUser.setAdrees("123 Test St");
+//    newUser.setGender("Male");
+//    newUser.setPhone("123456789");
+//    newUser.setImage(null);
+//    boolean isCreated = accountDAO.createNewUser(newUser);
+//    System.out.println("Create new user: " + (isCreated ? "Success" : "Failed"));
+//
+//    // Test getAllAccount
+//    List<Users> users = accountDAO.getAllAccount();
+//    System.out.println("\nAll Accounts:");
+//    for (Users user : users) {
+//        printUserDetails(user);
+//    }
+//
+//    // Test getAccountByUsername
+//    String testUsername = "testUser";
+//    String testPassword = "password123";
+//    Users userByUsername = accountDAO.getAccountByUsername(testUsername, testPassword);
+//    System.out.println("\nUser found by username:");
+//    if (userByUsername != null) {
+//        printUserDetails(userByUsername);
+//    } else {
+//        System.out.println("No user found with username: " + testUsername);
+//    }
+//
+//    // Test checkAccountByUsername
+//    Users checkUserByUsername = accountDAO.checkAccountByUsername(testUsername);
+//    System.out.println("\nCheck user by username:");
+//    if (checkUserByUsername != null) {
+//        printUserDetails(checkUserByUsername);
+//    } else {
+//        System.out.println("No user found with username: " + testUsername);
+//    }
+//
+//    // Test getAccountByemail
+//    String testEmail = "test@example.com";
+//    Users userByEmail = accountDAO.getAccountByemail(testEmail, testPassword);
+//    System.out.println("\nUser found by email:");
+//    if (userByEmail != null) {
+//        printUserDetails(userByEmail);
+//    } else {
+//        System.out.println("No user found with email: " + testEmail);
+//    }
+//
+//    // Test checkAccountByEmail
+//    boolean emailExists = accountDAO.checkAccountByEmail(testEmail);
+//    System.out.println("\nCheck account by email: " + (emailExists ? "Exists" : "Does not exist"));
+//
+//    // Test updatePasswordByEmail
+//    String newPassword = "newPassword123";
+//    boolean isPasswordUpdated = accountDAO.updatePasswordByEmail(testEmail, newPassword);
+//    System.out.println("\nUpdate password by email: " + (isPasswordUpdated ? "Success" : "Failed"));
+//
+//    // Test getUserIdByEmail
+//    int userId = accountDAO.getUserIdByEmail(testEmail);
+//    System.out.println("\nUser ID by email: " + (userId != -1 ? userId : "Not found"));
+//
+//    // Test isUserVerified
+//    boolean isVerified = accountDAO.isUserVerified(userId);
+//    System.out.println("\nIs user verified: " + (isVerified ? "Yes" : "No"));
+//
+//    // Test updatePasswordResetRequired
+//    boolean isPasswordResetRequiredUpdated = accountDAO.updatePasswordResetRequired(userId, true);
+//    System.out.println("\nUpdate password reset required: " + (isPasswordResetRequiredUpdated ? "Success" : "Failed"));
+//}
+//
+//private static void printUserDetails(Users user) {
+//    System.out.println("User ID: " + user.getUserId());
+//    System.out.println("Username: " + user.getUserName());
+//    System.out.println("Email: " + user.getEmail());
+//    System.out.println("Password Reset Required: " + user.isPassword_reset_required());
+//    System.out.println("Role: " + user.getRole());
+//    System.out.println("Full Name: " + user.getFullname());
+//    System.out.println("Address: " + user.getAdrees());
+//    System.out.println("Gender: " + user.getGender());
+//    System.out.println("Phone: " + user.getPhone());
+//    System.out.println("Image: " + user.getImage());
+//    System.out.println("Verified: " + user.isVerified());
     }
 
-    private static void printUserDetails(Users user) {
-        System.out.println("User ID: " + user.getUserId());
-        System.out.println("Username: " + user.getUserName());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Password Reset Required: " + user.isPassword_reset_required());
-        System.out.println("Role: " + user.getRole());
-        System.out.println("Full Name: " + user.getFullname());
-        System.out.println("Address: " + user.getAdrees());
-        System.out.println("Gender: " + user.getGender());
-        System.out.println("Phone: " + user.getPhone());
-        System.out.println("Image: " + user.getImage());
-        System.out.println("Verified: " + user.isVerified());
-    }
 }
