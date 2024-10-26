@@ -26,7 +26,54 @@ public class NewsDAObyAdmin {
     PreparedStatement ps = null;
     ResultSet rs = null;
 // Use for News Management
+// For category news    
+    public List<NewsCategories> getAllCategory() {
+        List<NewsCategories> list = new ArrayList<>();
+        String query = "select * from NewsCategories";
+        try {
+            conn = new DBContext().makeConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new NewsCategories(rs.getInt(1),
+                        rs.getString(2)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
 
+    public void editNewsCategories(String ncategoryName, String ncategoriesID) {
+        String query = "UPDATE NewsCategories SET category_name = ? WHERE category_id = ?";
+
+        try {
+            conn = new DBContext().makeConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, ncategoryName);
+            ps.setString(2, ncategoriesID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+    }
+
+    public void insertNewsCategories(String ncategoryName) {
+        String query = "INSERT INTO NewsCategories (category_name) VALUES (?)";
+        try {
+            conn = new DBContext().makeConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, ncategoryName);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+    }
+    
+// For news
     public int getTotalNews() {
         String query = "select count(*) from News";
         try {
@@ -112,22 +159,6 @@ public class NewsDAObyAdmin {
                 String status = rs.getString("status");
                 Date updatedDate = rs.getDate("created_at");
                 list.add(new News(newsID, (java.sql.Date) updatedDate, title, content, image, status, message));
-            }
-        } catch (Exception e) {
-        }
-        return list;
-    }
-
-    public List<NewsCategories> getAllCategory() {
-        List<NewsCategories> list = new ArrayList<>();
-        String query = "select * from NewsCategories";
-        try {
-            conn = new DBContext().makeConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new NewsCategories(rs.getInt(1),
-                        rs.getString(2)));
             }
         } catch (Exception e) {
         }
@@ -254,7 +285,7 @@ public class NewsDAObyAdmin {
             ps = conn.prepareStatement(query1);
             ps.setString(1, newsID);
             ps.executeUpdate();
-            
+
             ps = conn.prepareStatement(query);
             ps.setString(1, newsID);
             ps.executeUpdate();
@@ -321,6 +352,7 @@ public class NewsDAObyAdmin {
         }
     }
 
+    // For News comment
     public int getTotalComment(String newsID) {
         String query = "select count(*) from NewsComment\n"
                 + "WHERE news_id = ?";
@@ -395,55 +427,19 @@ public class NewsDAObyAdmin {
             e.printStackTrace();
         }
     }
-    
-    public void editNewsCategories(String ncategoryName, String ncategoriesID) {
-        String query = "INSERT INTO NewsCategories (category_name) VALUES (?)";
-                 
-        try {
-            conn = new DBContext().makeConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, ncategoryName);
-            ps.setString(2, ncategoriesID);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
 
-        }
-    }
-    
-    public void insertNewsCategories(String ncategoryName) {
-        String query = "INSERT INTO NewsCategories (category_name) "
-                + "VALUES (?)";
-        try {
-            conn = new DBContext().makeConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, ncategoryName);   
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-
-        }
-    }
-
+// Main
     public static void main(String[] args) {
-        // Khởi tạo các tham số cần thiết để chèn một bản tin mới
-        String title = "Tiêu đề bài viết mới";
-        String category_id = "1"; // ID của danh mục
-        String content = "Nội dung của bài viết mới.";
-        String message = "Thông điệp của bài viết mới.";
-        String author_id = "1"; // ID của tác giả
-        String image = "http://example.com/image.jpg"; // URL của hình ảnh
 
-        // Tạo một đối tượng NewsDAObyAdmin để gọi phương thức insertNews
         NewsDAObyAdmin dao = new NewsDAObyAdmin();
+        String testCategoryName = "Test Category";
+        dao.insertNewsCategories(testCategoryName);
 
-        // Gọi phương thức insertNews để thêm bản tin mới
-        dao.insertNews(title, category_id, content, message, author_id, image);
-
-        // In ra thông báo
-        System.out.println("Bản tin đã được thêm thành công.");
+        // Kiểm tra lấy danh sách danh mục
+        List<NewsCategories> categories = dao.getAllCategory();
+        for (NewsCategories category : categories) {
+            System.out.println(category);
+        }
     }
-
 
 }

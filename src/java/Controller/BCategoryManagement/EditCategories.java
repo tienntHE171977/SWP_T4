@@ -33,20 +33,22 @@ public class EditCategories extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Đặt mã này trong phương thức doPost hoặc doGet tùy thuộc vào cách bạn cấu hình form
         response.setContentType("text/html;charset=UTF-8");
 
         String ID = request.getParameter("ID");
         String Name = request.getParameter("Name");
-        NewsDAObyAdmin dao = new NewsDAObyAdmin();
-        if (ID != null && Name != null && !ID.isEmpty() && !Name.isEmpty()) {
-            // Thực hiện cập nhật
+        
+        if (ID != null && Name != null) {
+            NewsDAObyAdmin dao = new NewsDAObyAdmin();
             dao.editNewsCategories(Name, ID);
-        }
-        List<NewsCategories> listC = dao.getAllCategory();
 
-        request.setAttribute("listCC", listC);
-        request.getRequestDispatcher("Dashboard/BCategoryManagement.jsp").forward(request, response);
+            List<NewsCategories> listC = dao.getAllCategory();
+            request.setAttribute("listCC", listC);
+
+            request.getRequestDispatcher("Dashboard/BCategoryManagement.jsp").forward(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID or Name");
+        }
 
     }
 

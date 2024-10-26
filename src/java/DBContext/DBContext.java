@@ -20,7 +20,7 @@ public class DBContext implements Serializable{
         //2. Create Connection String
         String url="jdbc:sqlserver:"
                 + "//localhost:1433"
-                + ";databaseName=Volunteerisms3;encrypt=true;trustServerCertificate=true";
+                + ";databaseName=Volunteerisms7;encrypt=true;trustServerCertificate=true";
         //3. Open Connection
         Connection con=DriverManager.getConnection(url,"sa","sa");
         return con;

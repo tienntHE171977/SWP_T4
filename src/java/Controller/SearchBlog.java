@@ -62,7 +62,7 @@ public class SearchBlog extends HttpServlet {
         request.setAttribute("tag", index);
         request.setAttribute("txtS", txtSearch);
         request.setAttribute("listPP", last);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        request.getRequestDispatcher("News/blog.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

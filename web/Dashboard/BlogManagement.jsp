@@ -355,7 +355,7 @@
                                     </div>
                                     <div class ="col-sm-1">
                                         <div class="box-tools m-b-15">
-                                            <form action="EditCategories" method="get" ">
+                                            <form action="BlogCategories_1" method="get" ">
                                                 <button  style=" width: 100%; height: 35px;" type="submit" class="btn btn-success">Category</button>
                                             </form>
                                         </div>

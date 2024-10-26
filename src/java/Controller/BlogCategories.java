@@ -66,7 +66,7 @@ public class BlogCategories extends HttpServlet {
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
         request.setAttribute("totalPage", count);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        request.getRequestDispatcher("News/blog.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

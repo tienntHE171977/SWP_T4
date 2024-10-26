@@ -66,4 +66,31 @@
         <servlet-name>AddBlog</servlet-name>
         <url-pattern>/AddBlog</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Campaign</servlet-name>
+        <servlet-class>Controller.Campaigns.Campaign</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Campaign</servlet-name>
+        <url-pattern>/Campaign</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CampaignManage</servlet-name>
+        <servlet-class>Controller.Campaigns.CampaignManage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CampaignManage</servlet-name>
+        <url-pattern>/CampaignManage</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CampaignList</servlet-name>
+        <servlet-class>Controller.CampaignManagement.CampaignList</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CampaignList</servlet-name>
+        <url-pattern>/CampaignList</url-pattern>
+    </servlet-mapping>
 </web-app>

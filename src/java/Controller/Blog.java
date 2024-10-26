@@ -60,7 +60,7 @@ public class Blog extends HttpServlet {
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
         request.setAttribute("totalPage", count);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        request.getRequestDispatcher("News/blog.jsp").forward(request, response);
 
     }
 

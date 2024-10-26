@@ -332,8 +332,6 @@
                                         </form>
                                     </c:forEach>
 
-
-
                                 </div>
                             </section>
                         </div>
@@ -346,9 +344,9 @@
                                     
                                     <form action="AddCategory" method="post">
                                         <div class="form-group">
-                                            <label for="Name" class="col-lg-2 col-sm-2 control-label">Category Name</label>
+                                            <label class="col-lg-2 col-sm-2 control-label">Category Name</label>
                                             <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="Name" name="Name" placeholder="Name">
+                                                <input type="text" class="form-control" name="Name" placeholder="Name" required>
                                                 <p class="help-block">Nhập tên Category cần thêm</p>
                                             </div>
                                         </div>
