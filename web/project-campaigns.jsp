@@ -255,7 +255,7 @@
                                         </ul>
                                     </div>
 
-                                    <jsp:include page="project-details.jsp"></jsp:include>
+                                    <jsp:include page="campaign-details.jsp"></jsp:include>
 
                                     <div id="ProjectEvents" class="tabcontent" style="height: 300px">
                                         <h4>Project Events</h4>

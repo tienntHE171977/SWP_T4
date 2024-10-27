@@ -37,23 +37,25 @@ public class AddCommentBlog extends HttpServlet {
         String comment = request.getParameter("comment");
         String newsIdParam = request.getParameter("news_id");
         HttpSession session = request.getSession();
-//        Integer userId = (Integer) session.getAttribute("user_id");
-        Integer userId = 1;
+        Integer userId = (Integer) session.getAttribute("user_id");
+        if (userId == null) {
+            userId = 1; // Sử dụng giá trị mặc định cho phát triển
+        }
         if (comment != null && !comment.trim().isEmpty() && userId != null && newsIdParam != null) {
-    try {
-        int newsId = Integer.parseInt(newsIdParam);
-        
-        NewsDAOforUser dao = new NewsDAOforUser();
-        dao.insertComment(newsId, userId, comment);
-        
-        response.sendRedirect("SingleBlog?postID="+ newsId);
-    } catch (Exception e) {
-        request.setAttribute("errorMessage", "An error occurred while submitting the comment.");
-    }
-} else {
-    request.setAttribute("errorMessage", "Vui lòng nhập bình luận và đảm bảo bạn đã đăng nhập.");
-}
-         
+            try {
+                int newsId = Integer.parseInt(newsIdParam);
+
+                NewsDAOforUser dao = new NewsDAOforUser();
+                dao.insertComment(newsId, userId, comment);
+
+                response.sendRedirect("SingleBlog?postID=" + newsId);
+            } catch (Exception e) {
+                request.setAttribute("errorMessage", "An error occurred while submitting the comment.");
+            }
+        } else {
+            request.setAttribute("errorMessage", "Vui lòng nhập bình luận và đảm bảo bạn đã đăng nhập.");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

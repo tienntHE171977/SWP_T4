@@ -143,23 +143,27 @@
                 <p><strong class="label">Mô tả:</strong> ${campaign.description}</p>
                 <p><strong class="label">Công việc:</strong> ${campaign.campaignJob}</p>
 
-                <!-- Nút để mở modal bình luận -->
-                <button class="btn btn-primary" onclick="showComments('${campaign.campaignID}')">Xem Bình Luận</button>
-                <!-- Nút để mở modal member -->
-                <button class="btn btn-primary" onclick="showMembers('${campaign.campaignID}')">Xem Thành Viên</button>
-                <!-- Nút Tham gia -->
-                <form onsubmit="event.preventDefault(); toggleJoin('${campaign.campaignID}');">
-                    <button type="submit" class="btn btn-secondary" id="joinButton_${campaign.campaignID}">
-                        <c:choose>
-                            <c:when test="${userJoinedCampaigns[campaign.campaignID]}">
-                                Đã Tham Gia
-                            </c:when>
-                            <c:otherwise>
-                                Tham Gia
-                            </c:otherwise>
-                        </c:choose>
-                    </button>
-                </form>
+                <div style="display: flex; gap: 5px;">
+                    <!-- Nút để mở modal bình luận -->
+                    <button class="btn btn-primary" onclick="showComments('${campaign.campaignID}')" style="background: #00ca6d; margin-right: 10px;">Xem Bình Luận</button>
+
+                    <!-- Nút để mở modal member -->
+                    <button class="btn btn-primary" onclick="showMembers('${campaign.campaignID}')" style="background: #FF4F42; margin-right: 10px;">Xem Thành Viên</button>
+
+                    <!-- Nút Tham gia -->
+                    <form onsubmit="event.preventDefault(); toggleJoin('${campaign.campaignID}');">
+                        <button type="submit" class="btn btn-secondary" id="joinButton_${campaign.campaignID}">
+                            <c:choose>
+                                <c:when test="${userJoinedCampaigns[campaign.campaignID]}">
+                                    Đã Tham Gia
+                                </c:when>
+                                <c:otherwise>
+                                    Tham Gia
+                                </c:otherwise>
+                            </c:choose>
+                        </button>
+                    </form>
+                </div>
             </div>
         </c:forEach>
     </div>
