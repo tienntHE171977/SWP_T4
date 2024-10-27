@@ -244,47 +244,29 @@
                                     </div>
 
                                     <div id="Description" class="tabcontent" style="height: 300px">
-                                        <p>${project.description}</p>
+                                        <p></p>
 
                                         <h4>Project Details</h4>
                                         <ul>
-                                            <p>Start Date: <fmt:formatDate value="${project.startDate}" pattern="dd/MM/yyyy"/></p>
-                                            <p>End Date: <fmt:formatDate value="${project.endDate}" pattern="dd/MM/yyyy"/></p>
-                                            <p>Status: ${project.status}</p>
-                                            <p>Role: ${project.roleProject}</p>
+                                            <p>Start Date: <fmt:formatDate value="" pattern="dd/MM/yyyy"/></p>
+                                            <p>End Date: <fmt:formatDate value="" pattern="dd/MM/yyyy"/></p>
+                                            <p>Status: </p>
+                                            <p>Role: </p>
                                         </ul>
                                     </div>
 
-                                    <div id="Campaigns" class="tabcontent" style="height: auto">
-                                        <h4>Campaigns</h4>
-                                        <ul class="info-list">
-                                            <li>
-                                                <span class="item" onclick="toggleDetails(event)">Danh sách 1 &#9662;</span>
-                                                <div class="details">Thông tin chi tiết của danh sách 1.
-                                                    <jsp:include page="project-details.jsp"></jsp:include>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span class="item" onclick="toggleDetails(event)">Danh sách 2 &#9662;</span>
-                                                <div class="details">Thông tin chi tiết của danh sách 2.</div>
-                                            </li>
-                                            <li>
-                                                <span class="item" onclick="toggleDetails(event)">Danh sách 3 &#9662;</span>
-                                                <div class="details">Thông tin chi tiết của danh sách 3.</div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <jsp:include page="project-details.jsp"></jsp:include>
 
                                     <div id="ProjectEvents" class="tabcontent" style="height: 300px">
                                         <h4>Project Events</h4>
-                                        <c:forEach var="event" items="${projectEvents}">
+                               
                                             <div class="event">
-                                                <h4>Event ID: ${event.eventId}</h4>
-                                                <p>Item: ${event.itemName}</p>
-                                                <p>Quantity Needed: ${event.quantityNeeded} ${event.unit}</p>
-                                                <p>Quantity Provided: ${event.quantityProvided} ${event.unit}</p>
+                                                <h4>Event ID:</h4>
+                                                <p>Item: </p>
+                                                <p>Quantity Needed: </p>
+                                                <p>Quantity Provided: </p>
                                             </div>
-                                        </c:forEach>
+                                      
                                     </div>
                                 </div>
 

@@ -5,25 +5,21 @@
 package Controller.Campaigns;
 
 import CampaignsDAO.CampaignDAOforUsers;
-import Model.CampaignComment;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "Campaign_1", urlPatterns = {"/Campaign_1"})
-public class Campaign extends HttpServlet {
+@WebServlet(name = "CampaignComment", urlPatterns = {"/CampaignComment"})
+public class CampaignComment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,34 +33,17 @@ public class Campaign extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        // Lấy PID từ session
-        HttpSession session = request.getSession();
-        String PID = (String) session.getAttribute("PID"); // Giả sử PID đã được lưu trong session trước đó
-        if (PID == null || PID.isEmpty()) {
-            PID = "6"; // Giá trị mặc định
-        }
-        // Lấy phiên làm việc
-        Integer userId = (Integer) session.getAttribute("user_id");
-        if (userId == null) {
-            userId = 1; // Sử dụng giá trị mặc định cho phát triển
-        }
+        String campaignId = request.getParameter("campaignId");
         CampaignDAOforUsers dao = new CampaignDAOforUsers();
 
-        List<Model.Campaign> campaigns = dao.getAllCampaignsforPid(PID);
-        Map<Integer, Boolean> userJoinedCampaigns = new HashMap<>();
+        // Lấy danh sách bình luận cho campaignId
+        List<Model.CampaignComment> comments = dao.getCommentsForCampaign(campaignId);
 
-        // Kiểm tra xem người dùng có tham gia các chiến dịch không
-        if (userId != null) {
-            for (Model.Campaign campaign : campaigns) {
-                boolean isJoined = dao.isUserInCampaign(userId, campaign.getCampaignID());
-                userJoinedCampaigns.put(campaign.getCampaignID(), isJoined);
-            }
-        }
+        request.setAttribute("comments", comments);
+        request.setAttribute("campaignId", campaignId); // Thêm campaignId để sử dụng trong JSP
 
-        request.setAttribute("campaigns", campaigns);
-        request.setAttribute("userJoinedCampaigns", userJoinedCampaigns);
-        request.getRequestDispatcher("project-campaigns.jsp").forward(request, response);
-
+        // Gửi đến JSP để hiển thị bình luận
+        request.getRequestDispatcher("campaign_comment.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

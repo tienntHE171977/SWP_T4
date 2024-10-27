@@ -161,7 +161,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
                         <div class="section_title text-center mb-55">
-                            <h3><span>Update Event</span></h3>
+                            <h3><span>Update Campaign</span></h3>
                         </div>
                     </div>
                 </div>
@@ -170,42 +170,39 @@
                     <div class="col-lg-8">
                         <div class="form-container">
                             <!-- Updated form action to match servlet mapping -->
-                            <form action="event-update" method="POST">
-                                <input type="hidden" name="eventId" value="${event.eventId}">
-                                
+                            <form action="EditCampaign" method="POST">
+                                       
                                 <div class="form-group">
-                                    <label for="projectId">Project ID</label>
-                                    <input type="number" class="form-control" id="projectId" name="projectId" 
-                                           value="${event.projectId}" required>
+                                    <label for="campaignId">Campaign ID</label>
+                                    <input type="text" class="form-control" id="campaignId" name="campaignId" 
+                                           value="${detail.campaignID}" readonly>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="itemName">Item Name</label>
-                                    <input type="text" class="form-control" id="itemName" name="itemName" 
-                                           value="${event.itemName}" required>
+                                    <label for="campaignName">Name</label>
+                                    <input type="text" class="form-control" id="campaignName" name="campaignName" 
+                                           value="${detail.campaignName}" required>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="quantityNeeded">Quantity Needed</label>
-                                    <input type="number" class="form-control" id="quantityNeeded" name="quantityNeeded" 
-                                           value="${event.quantityNeeded}" required>
+                                    <label for="address">Location</label>
+                                    <input type="text" class="form-control" id="address" name="address" 
+                                           value="${detail.campaignLocation}" required>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="quantityProvided">Quantity Provided</label>
-                                    <input type="number" class="form-control" id="quantityProvided" name="quantityProvided" 
-                                           value="${event.quantityProvided}" required>
+                                    <label for="description">Description</label>
+                                     <textarea class="form-control" id="description" name="description" style="height: 250px; resize: vertical;">${detail.description}</textarea>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="unit">Unit</label>
-                                    <input type="text" class="form-control" id="unit" name="unit" 
-                                           value="${event.unit}" required>
+                                    <label for="job">Job</label>
+                                    <textarea class="form-control" id="job" name="job" style="height: 250px; resize: vertical;">${detail.campaignJob}</textarea>
                                 </div>
                                 
                                 <div class="btn-container text-center">
-                                    <button type="submit" class="btn btn-primary">Update Event</button>
-                                    <a href="event-manage" class="btn btn-secondary">Cancel</a>
+                                    <button type="submit" class="btn btn-primary">Update Campaign</button>
+                                    <a href="CampaignManage" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </form>
                         </div>

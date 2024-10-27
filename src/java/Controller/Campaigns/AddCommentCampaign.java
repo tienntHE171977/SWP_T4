@@ -5,7 +5,6 @@
 package Controller.Campaigns;
 
 import CampaignsDAO.CampaignDAOforUsers;
-import Model.CampaignComment;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,16 +13,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "Campaign_1", urlPatterns = {"/Campaign_1"})
-public class Campaign extends HttpServlet {
+@WebServlet(name = "AddCommentCampaign", urlPatterns = {"/AddCommentCampaign"})
+public class AddCommentCampaign extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,33 +33,34 @@ public class Campaign extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        // Lấy PID từ session
+        request.setCharacterEncoding("UTF-8");
+        String comment = request.getParameter("comment");
+        String campaignId = request.getParameter("CID"); // Đảm bảo tên tham số khớp
+
         HttpSession session = request.getSession();
-        String PID = (String) session.getAttribute("PID"); // Giả sử PID đã được lưu trong session trước đó
-        if (PID == null || PID.isEmpty()) {
-            PID = "6"; // Giá trị mặc định
-        }
-        // Lấy phiên làm việc
-        Integer userId = (Integer) session.getAttribute("user_id");
+        // Giả định userId là 1 (thay đổi theo cách bạn lấy userId thực tế)
+        Integer userId = (Integer) session.getAttribute("user_id"); // Cần xác thực có userId trong session
         if (userId == null) {
-            userId = 1; // Sử dụng giá trị mặc định cho phát triển
+            userId = 1; // Thay đổi này để phục vụ mục đích phát triển
         }
-        CampaignDAOforUsers dao = new CampaignDAOforUsers();
 
-        List<Model.Campaign> campaigns = dao.getAllCampaignsforPid(PID);
-        Map<Integer, Boolean> userJoinedCampaigns = new HashMap<>();
+        if (comment != null && !comment.trim().isEmpty() && userId != null && campaignId != null) {
+            try {
+                int campaignIdInt = Integer.parseInt(campaignId); // Chuyển đổi campaignId sang int
 
-        // Kiểm tra xem người dùng có tham gia các chiến dịch không
-        if (userId != null) {
-            for (Model.Campaign campaign : campaigns) {
-                boolean isJoined = dao.isUserInCampaign(userId, campaign.getCampaignID());
-                userJoinedCampaigns.put(campaign.getCampaignID(), isJoined);
+                CampaignDAOforUsers dao = new CampaignDAOforUsers();
+                dao.insertCommentCampaign(campaignIdInt, userId, comment);
+
+                // Điều hướng lại đến trang Campaign (hoặc trang bạn muốn hiển thị bình luận)
+                response.sendRedirect("Campaign"); // Chuyển hướng đến trang có campaignId
+            } catch (NumberFormatException e) {
+                request.setAttribute("errorMessage", "Invalid campaign ID.");
+                request.getRequestDispatcher("errorPage.jsp").forward(request, response); // Chuyển hướng đến trang lỗi
             }
+        } else {
+            request.setAttribute("errorMessage", "Comment cannot be empty.");
+            request.getRequestDispatcher("errorPage.jsp").forward(request, response); // Chuyển hướng đến trang lỗi
         }
-
-        request.setAttribute("campaigns", campaigns);
-        request.setAttribute("userJoinedCampaigns", userJoinedCampaigns);
-        request.getRequestDispatcher("project-campaigns.jsp").forward(request, response);
 
     }
 

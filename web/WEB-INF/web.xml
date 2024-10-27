@@ -77,6 +77,15 @@
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>CampaignSigle</servlet-name>
+        <servlet-class>Controller.Campaigns.CampaignSigle</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CampaignSigle</servlet-name>
+        <url-pattern>/CampaignSigle</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>CampaignManage</servlet-name>
         <servlet-class>Controller.Campaigns.CampaignManage</servlet-class>
     </servlet>

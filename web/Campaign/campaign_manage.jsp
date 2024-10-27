@@ -21,7 +21,13 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animate.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/slicknav.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
+        <!-- Bootstrap JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <style>
             .event-grid {
                 display: grid;
@@ -56,6 +62,34 @@
             }
             .progress-bar {
                 background-color: #4CAF50;
+            }
+            .toggle-button {
+                display: inline-flex;
+                align-items: center;
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                text-decoration: none;
+                color: white;
+                font-size: 14px;
+            }
+
+            .toggle-button.on {
+                background-color: #28a745; /* Màu xanh cho trạng thái 'on' */
+            }
+
+            .toggle-button.off {
+                background-color: #dc3545; /* Màu đỏ cho trạng thái 'off' */
+            }
+
+            .toggle-button:hover {
+                opacity: 0.9; /* Hiệu ứng khi di chuột */
+            }
+
+            .icon {
+                margin-right: 5px; /* Khoảng cách giữa biểu tượng và chữ */
             }
         </style>
     </head>
@@ -168,25 +202,65 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-right add-event-btn">
-                            <!-- Updated URL for creating new event -->
-                            <a href=" " class="btn btn-primary">
+                            <!-- Nút mở modal -->
+                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCampaignModal">
                                 <i class="fa fa-plus"></i> Add New Campaigns
                             </a>
                         </div>
+
+                        <!-- Modal để thêm mới chiến dịch -->
+                        <div class="modal fade" id="addCampaignModal" tabindex="-1" aria-labelledby="addCampaignModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addCampaignModalLabel">Add New Campaign</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="AddCampaign" method="post">
+                                        <div class="modal-body">
+                                            <!-- Các trường thông tin cho chiến dịch -->
+                                            <div class="mb-3">
+                                                <label for="campaignName" class="form-label">Campaign Name</label>
+                                                <input type="text" class="form-control" id="campaignName" name="campaignName" required>
+                                            </div>
+                                            <!--                                            <div class="mb-3">
+                                                                                            <label for="projectName" class="form-label">Project Name</label>
+                                                                                            <input type="text" class="form-control" id="projectName" name="projectName" required>
+                                                                                        </div>-->
+                                            <div class="mb-3">
+                                                <label for="campaignLocation" class="form-label">Location</label>
+                                                <input type="text" class="form-control" id="campaignLocation" name="campaignLocation" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="description" class="form-label">Description</label>
+                                                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="job" class="form-label">Job</label>
+                                                <textarea class="form-control" id="job" name="job" rows="3" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="event-table-container">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Date</th>
-                                        <th>Project</th>
-                                        <th>Location</th>
-                                        <th>Description</th>
-                                        <th>Job</th>
-                                        <th>Status</th> 
-                                        <th>Actions</th>
+                                        <th style="width:3%">ID</th>
+                                        <th style="width:20%">Name</th>
+                                        <th style="width:15%">Date</th>
+                                        <th style="width:25%">Project</th>
+                                        <th style="width:25%">Location</th>
+                                        <th style="width:3%">Status</th> 
+                                        <th style="width:14%">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -199,19 +273,40 @@
                                             <td>
                                                 ${o.campaignLocation}
                                             </td>
-                                            <td>${o.description}</td>
-                                            <td>${o.campaignJob}</td>
-                                            <td>${o.status}</td>
+                                            <td><a href="ChangeStatusCampaign?campaignId=${o.campaignID}&status=${o.status == 'on' ? 'off' : 'on'}" 
+                                                   class="toggle-button ${o.status == 'on' ? 'on' : 'off'}">
+                                                    <i class="icon ${o.status == 'on' ? 'fa fa-toggle-on' : 'fa fa-toggle-off'}"></i>
+                                                    ${o.status == 'on' ? 'Tắt' : 'Bật'}
+                                                </a>
+
                                             <td class="action-buttons">
                                                 <!-- Updated URLs for actions -->
-                                                <a href="" 
-                                                   class="btn btn-sm btn-info">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href=""
-                                                   class="btn btn-sm btn-success">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
+                                                <form action="CampaignDetail" method="post" style="display: inline-block; margin: 0;">
+                                                    <input type="hidden" name="campaignId" value="${o.campaignID}">
+                                                    <input type="hidden" name="actionType" value="edit">
+                                                    <button
+                                                        type="submit" 
+                                                        data-bs-toggle="tooltip"
+                                                        title="Sửa chiến dịch" 
+                                                        class="btn btn-sm btn-info"
+                                                        data-original-title="Edit Campaign"
+                                                        >   
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                </form>
+                                                <form action="CampaignDetail" method="post" style="display: inline-block; margin: 0;">
+                                                    <input type="hidden" name="campaignId" value="${o.campaignID}">
+                                                    <input type="hidden" name="actionType" value="view">
+                                                    <button
+                                                        type="submit" 
+                                                        data-bs-toggle="tooltip"
+                                                        title="Xem chiến dịch" 
+                                                        class="btn btn-sm btn-info"
+                                                        data-original-title="View Campaign"
+                                                        >
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </form>
 
                                             </td>
                                         </tr>

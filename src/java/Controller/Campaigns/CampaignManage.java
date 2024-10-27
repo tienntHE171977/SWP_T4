@@ -35,6 +35,7 @@ public class CampaignManage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String indexPage = request.getParameter("index");
+        String status = request.getParameter("status");
         if (indexPage == null) {
             indexPage = "1";
         }
@@ -48,8 +49,6 @@ public class CampaignManage extends HttpServlet {
         }
 
         List<Model.Campaign> list = dao.getAllCampaigns(index);
-
-        
         
         request.setAttribute("list", list);
         

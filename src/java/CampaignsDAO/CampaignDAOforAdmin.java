@@ -65,10 +65,9 @@ public class CampaignDAOforAdmin {
 
     public List<Campaign> getCampaignbyPID(String ID, int index) {
         List<Campaign> list = new ArrayList<>();
-        String query = "SELECT c.*, p.title, l.address \n"
+        String query = "SELECT c.*, p.title \n"
                 + "FROM Campaigns c\n"
                 + "LEFT JOIN Projects p ON c.project_id = p.project_id\n"
-                + "LEFT JOIN Locations l ON c.location_id = l.location_id\n"
                 + "WHERE c.project_id = ?\n"
                 + "ORDER BY c.project_id\n"
                 + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
@@ -113,10 +112,9 @@ public class CampaignDAOforAdmin {
 
     public List<Campaign> getAllCampaigns(int index) {
         List<Campaign> list = new ArrayList<>();
-        String query = "SELECT c.*, p.title, l.address \n"
+        String query = "SELECT c.*, p.title \n"
                 + "FROM Campaigns c\n"
                 + "LEFT JOIN Projects p ON c.project_id = p.project_id\n"
-                + "LEFT JOIN Locations l ON c.location_id = l.location_id\n"
                 + "ORDER BY c.project_id\n"
                 + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
 
@@ -143,10 +141,9 @@ public class CampaignDAOforAdmin {
     }
 
     public Campaign getCampaignByID(String campaignId) {
-        String query = "SELECT c.*, p.title, l.address \n"
+        String query = "SELECT c.*, p.title \n"
                 + "FROM Campaigns c\n"
                 + "LEFT JOIN Projects p ON c.project_id = p.project_id\n"
-                + "LEFT JOIN Locations l ON c.location_id = l.location_id\n"
                 + "WHERE c.campaign_id = ?";
 
         try {
@@ -191,10 +188,9 @@ public class CampaignDAOforAdmin {
 
     public List<Campaign> searchCampaign(String name, int index) {
         List<Campaign> list = new ArrayList<>();
-        String query = "SELECT c.*, p.title, l.address \n"
+        String query = "SELECT c.*, p.title \n"
                 + "FROM Campaigns c\n"
                 + "LEFT JOIN Projects p ON c.project_id = p.project_id\n"
-                + "LEFT JOIN Locations l ON c.location_id = l.location_id\n"
                 + "WHERE (c.campaign_name LIKE ? OR c.description LIKE ?)\n"
                 + "ORDER BY c.project_id\n"
                 + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
