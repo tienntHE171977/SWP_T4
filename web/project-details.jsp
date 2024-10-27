@@ -148,8 +148,7 @@
                 <!-- Nút để mở modal member -->
                 <button class="btn btn-primary" onclick="showMembers('${campaign.campaignID}')">Xem Thành Viên</button>
                 <!-- Nút Tham gia -->
-                <form action="JoinCampaign" method="post" style="display: inline;">
-                    <input type="hidden" name="campaignId" value="${campaign.campaignID}" />
+                <form onsubmit="event.preventDefault(); toggleJoin('${campaign.campaignID}');">
                     <button type="submit" class="btn btn-secondary" id="joinButton_${campaign.campaignID}">
                         <c:choose>
                             <c:when test="${userJoinedCampaigns[campaign.campaignID]}">
@@ -161,7 +160,6 @@
                         </c:choose>
                     </button>
                 </form>
-
             </div>
         </c:forEach>
     </div>
@@ -251,9 +249,31 @@
                     .catch(error => console.error('Error:', error));
         }
 
-
+        function toggleJoin(campaignID) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "JoinCampaign", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    const joinButton = document.getElementById('joinButton_' + campaignID);
+                    if (response.joined) {
+                        joinButton.textContent = 'Đã Tham Gia';
+                        joinButton.classList.remove('btn-secondary');
+                        joinButton.classList.add('btn-success');
+                    } else {
+                        joinButton.textContent = 'Tham Gia';
+                        joinButton.classList.remove('btn-success');
+                        joinButton.classList.add('btn-secondary');
+                    }
+                }
+            };
+            xhr.send("campaignId=" + campaignID);
+        }
 
     </script>
+
+</script>
 </div>
 
 

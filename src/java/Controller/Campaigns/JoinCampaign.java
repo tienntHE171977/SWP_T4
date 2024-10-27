@@ -33,7 +33,9 @@ public class JoinCampaign extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+// Thiết lập kiểu nội dung cho phản hồi
+        response.setContentType("application/json;charset=UTF-8");
+        
         String campaignId = request.getParameter("campaignId");
         HttpSession session = request.getSession();
 
@@ -57,8 +59,10 @@ public class JoinCampaign extends HttpServlet {
             }
         }
 
-        // Chuyển hướng hoặc tải lại trang để hiển thị cập nhật
-        response.sendRedirect("Campaign");
+        // Gửi phản hồi JSON
+        PrintWriter out = response.getWriter();
+        out.print("{\"joined\":" + joined + "}");
+        out.flush();
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
