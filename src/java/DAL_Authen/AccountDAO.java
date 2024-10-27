@@ -123,7 +123,39 @@ public class AccountDAO extends DBContext {
 
         return null;
     }
+    public Users getUserByEmail(String email) {
+        String query = "SELECT * FROM Users WHERE email = ?";
 
+        try {
+            ps = connection.prepareStatement(query);
+
+            ps.setString(1, email);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Users account = new Users(
+                        rs.getInt("user_id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password_hash"),
+                        rs.getBoolean("password_reset_required"),
+                        rs.getString("role"),
+                        rs.getString("fullname"),
+                        rs.getString("adrees"),
+                        rs.getString("gender"),
+                        rs.getString("phone"),
+                        rs.getString("image"),
+                        rs.getBoolean("verified"));
+                return account;
+            }
+
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+
+        return null;
+    }
     public Users getAccountByemail(String email, String pass) {
         String query = "SELECT * FROM Users WHERE email = ?";
 
@@ -290,7 +322,7 @@ public class AccountDAO extends DBContext {
             ps = connection.prepareStatement(query);
             ps.setString(1, user.getPhone());
             ps.setString(2, user.getAdrees());
-
+            
             ps.setInt(3, user.getUserId());
             int affectedRows = ps.executeUpdate();
             return affectedRows > 0;
@@ -318,26 +350,45 @@ public class AccountDAO extends DBContext {
     public static void main(String[] args) {
         // Tạo một instance của AccountDAO
         AccountDAO accountDAO = new AccountDAO();
-        Users user = new Users();
-        user.setUserId(14); // Đặt ID người dùng cần cập nhật
-        user.setPhone("123456789");
-        user.setAdrees("123 Main St");
-        user.setImage("images/logolacay.jpg"); // Đường dẫn đến file ảnh
-
-        // Gọi phương thức updateUserProfile
-        boolean isUpdated = accountDAO.updateUserProfile(user);
-        boolean imageUpdated = accountDAO.updateUserProfileImage(user);
-        // Kiểm tra kết quả
-        if (isUpdated) {
-            System.out.println("User profile updated successfully.");
-        } else {
-            System.out.println("Failed to update user profile.");
-        }
-        if (imageUpdated) {
-            System.out.println("Cập nhật ảnh người dùng thành công.");
-        } else {
-            System.out.println("Cập nhật ảnh người dùng thất bại.");
-        }
+        
+        String mail = "nguyentrungtien512003@gmail.com";
+        Users user = accountDAO.getUserByEmail(mail);
+        if (user != null) {
+                System.out.println("User found: " + user.getAdrees());
+                System.out.println("User found: " + user.getEmail());
+                System.out.println("User found: " + user.getFullname());
+                System.out.println("User found: " + user.getGender());
+                System.out.println("User found: " + user.getImage());
+                System.out.println("User found: " + user.getPassword());
+                System.out.println("User found: " + user.getPhone());
+                System.out.println("User found: " + user.getRole());
+                System.out.println("User found: " + user.getUserName());
+                System.out.println("User found: " + user.getUserId());
+                System.out.println("User found: " + user.getUserId());
+                // In ra các thông tin khác nếu cần
+            } else {
+                System.out.println("No user found with email: " + mail);
+            }
+    
+//        user.setUserId(14); // Đặt ID người dùng cần cập nhật
+//        user.setPhone("123456789");
+//        user.setAdrees("123 Main St");
+//        user.setImage("images/google.png"); // Đường dẫn đến file ảnh
+//
+//        // Gọi phương thức updateUserProfile
+//        boolean isUpdated = accountDAO.updateUserProfile(user);
+//        boolean imageUpdated = accountDAO.updateUserProfileImage(user);
+//        // Kiểm tra kết quả
+//        if (isUpdated) {
+//            System.out.println("User profile updated successfully.");
+//        } else {
+//            System.out.println("Failed to update user profile.");
+//        }
+//        if (imageUpdated) {
+//            System.out.println("Cập nhật ảnh người dùng thành công.");
+//        } else {
+//            System.out.println("Cập nhật ảnh người dùng thất bại.");
+//        }
         // Test createNewUser
 //    Users newUser = new Users();
 //    newUser.setUserName("testUser");

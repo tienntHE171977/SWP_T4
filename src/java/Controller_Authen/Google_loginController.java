@@ -5,12 +5,15 @@
 package Controller_Authen;
 
 import DAL_Authen.AccountDAO;
+import DAL_Staff.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Staff;
 import model.Users;
 
 /**
@@ -68,21 +71,37 @@ public class Google_loginController extends HttpServlet {
                 Users account = Google_Login.getUserInfo(accessToken);
 
                 if (account != null) {
-                    // Kiểm tra nếu người dùng đã tồn tại trong hệ thống
-                    AccountDAO accountDal = new AccountDAO();
-                    boolean accountExists = accountDal.checkAccountByEmail(account.getEmail());
+                    HttpSession session = request.getSession();
+                    AccountDAO accountDao = new AccountDAO();
+                    StaffDAO sd = new StaffDAO();
+                    // Kiểm tra xem người dùng có tồn tại trong cơ sở dữ liệu không
+                    Users existingUser = accountDao.getUserByEmail(account.getEmail());
+                    Staff s = sd.getStaffByUserId(existingUser.getUserId());
+                  s.setUser(existingUser);
 
-                    if (accountExists) {
-                        // Đăng nhập người dùng (thiết lập session)
-                        request.getSession().setAttribute("user", account);
-                         // Chuyển hướng đến trang chính
-                         response.sendRedirect("index.jsp");
-                    } else {
+                    if (existingUser != null) {
                         
+                        session.setAttribute("acc", existingUser);
+                        session.setAttribute("staff", s);
+                        session.setMaxInactiveInterval(30 * 60);
+
+                        // Kiểm tra vai trò của người dùng
+                        String role = existingUser.getRole();
+                        request.getSession().setAttribute("acc", existingUser);
+                        if ("admin".equals(role)) {
+                            response.sendRedirect("admin.jsp");
+                        } else if ("staff".equals(role)) {
+                            response.sendRedirect("staff.jsp");
+                        } else {
+                            // Vai trò không xác định, chuyển hướng đến trang chính
+                            response.sendRedirect("index.jsp");
+                        }
+                    } else {
+
                         request.getSession().setAttribute("tempUser", account);
                         response.sendRedirect("registration.jsp");
                     }
-                    
+
                 } else {
                     // Nếu không lấy được thông tin người dùng, chuyển hướng đến trang lỗi
                     response.sendRedirect("404.jsp?message=khong the láy dc thong tin.");
@@ -97,27 +116,27 @@ public class Google_loginController extends HttpServlet {
         }
     }
 
-
-/**
- * Handles the HTTP <code>POST</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

@@ -335,8 +335,7 @@
                                         >
                                         <div class="avatar-sm">
                                             <img
-                                                src="assets/img/profile.jpg"
-                                                alt="..."
+                                                src="${staff.getUser().getImage()}" alt="Staff Avatar"
                                                 class="avatar-img rounded-circle"
                                                 />
                                         </div>

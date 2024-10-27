@@ -61,7 +61,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String emailorUsername = request.getParameter("emailorusername");
         String pass = request.getParameter("password");
 
@@ -71,7 +71,7 @@ public class LoginController extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
-
+        HttpSession session = request.getSession();
         AccountDAO login = new AccountDAO();
         Users user = null;
 
@@ -82,9 +82,9 @@ public class LoginController extends HttpServlet {
         }
 
         if (user != null) {
-            HttpSession session = request.getSession();
+            
             session.setAttribute("acc", user);
-
+            
             session.setMaxInactiveInterval(30 * 60);
 
             // Kiểm tra password_reset_required

@@ -3,7 +3,6 @@
     Created on : Oct 25, 2024, 4:18:10 AM
     Author     : FPT
 --%>
-<%@ page import="model.Users" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -149,70 +148,22 @@
     </head>
     <body>
         <div class="container">
-         
-
             <h1>${me}</h1>
             <h1>${mee}</h1>
-            <form action="editStaff" method="post" enctype="multipart/form-data">
+            <form action="uploadAvatar" method="post" enctype="multipart/form-data">
                 <div class="profile-card">
                     <div class="profile-header">
                         <div class="profile-avatar" id="avatarContainer">
-                            <img src="${acc.image}" alt="Staff Avatar" id="avatarImg">
+                            <img src="${staff.getUser().getImage()}" alt="Staff Avatar" id="avatarImg">
                             <input type="file" id="avatarUpload" name="avatar" accept="image/*" style="display: none;">
                         </div>
 
-                        <h2 id="staffName">${acc.fullname}</h2>
+                        <h2 id="staffName">${staff.getUser().getFullname()}</h2>
                         <p id="staffRole">${staff.role_staff}</p>
                     </div>
                 </div>
-
-
-                <div class="profile-card">
-                    <div class="profile-info">
-                        <div class="info-group">
-                            <div class="info-label">Email</div>
-                            <div class="info-value">
-                                <input type="email" id="staffEmail" value="${acc.email}" readonly>
-                            </div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">Phone</div>
-                            <div class="info-value">
-                                <input type="tel" id="staffPhone" name="phone" value="${acc.phone}">
-                            </div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">Address</div>
-                            <div class="info-value">
-                                <input type="text" id="staffAddress" name="address" value="${staff.user.getAdrees()}">
-                            </div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">Department</div>
-                            <div class="info-value">
-                                <input type="text" id="staffDepartment" value="${staff.role_staff}" readonly>
-                            </div>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">Join Date</div>
-                            <div class="info-value">
-                                <input type="text" id="staffJoinDate" value="${staff.created_at}" readonly>
-                            </div>
-                        </div>
-
-                        <div class="edit-profile">
-                            <button type="submit" class="btn btn-edit">Save Changes</button>
-                        </div>
-                        <div class="edit-profile">
-                            <button class="btn btn-home" onclick="event.preventDefault(); window.location.href = 'staff';">Back to Home</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            </form>        
+            
         </div>
 
         <!-- Modal for viewing and changing avatar -->
@@ -221,7 +172,7 @@
                 <span class="close-btn" onclick="closeModal()">&times;</span>
                 <img id="modalAvatarImg" src="" alt="Avatar" style="width: 100%; height: auto; margin-bottom: 20px;">
                 <input type="file" id="modalAvatarUpload" accept="image/*">
-                <button class="btn btn-edit" onclick="changeAvatar()">Change Avatar</button>
+                <button type="submit" class="btn btn-edit" onclick="changeAvatar()">Change Avatar</button>
             </div>
         </div>
 

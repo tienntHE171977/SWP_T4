@@ -19,7 +19,6 @@ import java.io.File;
 import java.nio.file.Paths;
 import model.Users;
 
-
 /**
  *
  * @author FPT
@@ -38,7 +37,7 @@ public class EditAccount extends HttpServlet {
         request.getRequestDispatcher("editAccountStaff.jsp").forward(request, response);
     }
 
-     @Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -48,26 +47,55 @@ public class EditAccount extends HttpServlet {
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
 
-            
-            
+            // Kiểm tra và tạo thư mục nếu chưa tồn tại
+            File uploadDir = new File(UPLOAD_DIRECTORY);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir(); // Tạo thư mục nếu chưa tồn tại
+            }
+
+            // Lấy file ảnh từ form
+            Part filePart = request.getPart("avatar");
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
+                // Đường dẫn đầy đủ để lưu file
+                String filePath = UPLOAD_DIRECTORY + File.separator + fileName;
+
+                // Lưu file vào thư mục uploads
+                filePart.write(filePath);
+
+                // Cập nhật đường dẫn ảnh trong database (chỉ lưu đường dẫn tương đối)
+                user.setImage("images/" + fileName);
+            } else {
+                // Không có ảnh mới được tải lên, giữ nguyên ảnh cũ
+                
+            }
+
             // Cập nhật thông tin người dùng
             user.setPhone(phone);
             user.setAdrees(address);
 
             AccountDAO accountDAO = new AccountDAO();
             boolean updateSuccess = accountDAO.updateUserProfile(user);
+            boolean updateImage = accountDAO.updateUserProfileImage(user);
 
-            if (updateSuccess) {
+            if (updateSuccess && updateImage) {
+                
                 session.setAttribute("acc", user);
                 request.setAttribute("me", "Cập nhật thành công");
             } else {
-                request.setAttribute("me", "Cập nhật thất bại");
+                if(!updateSuccess){
+                    request.setAttribute("me", "Cập nhật thất bại");
+                }else if(!updateImage){
+                    request.setAttribute("me", "Cập nhật ảnh thất bại");
+                }
             }
             request.getRequestDispatcher("editAccountStaff.jsp").forward(request, response);
         } else {
             response.sendRedirect("login.jsp");
         }
     }
+
     /**
      * Returns a short description of the servlet.
      *
@@ -79,4 +107,3 @@ public class EditAccount extends HttpServlet {
     }// </editor-fold>
 
 }
-    

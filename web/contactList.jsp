@@ -375,7 +375,7 @@
                                         >
                                         <div class="avatar-sm">
                                             <img
-                                                src="assets/img/profile.jpg"
+                                                src="${acc.image}"
                                                 alt="..."
                                                 class="avatar-img rounded-circle"
                                                 />
