@@ -142,7 +142,7 @@
                 <div class="sidebar-wrapper scrollbar scrollbar-inner">
                     <div class="sidebar-content">
                         <ul class="nav nav-secondary">
-                            <li class="nav-item active">
+                            <li class="nav-item ">
                                 <a href="staff.jsp">
                                     <i class="fas fa-tachometer-alt"></i> <!-- Icon cho Dashboard -->
                                     <p>Dashboard</p>
@@ -160,7 +160,7 @@
                                     <p>Event</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a href="CampaignList">
                                     <i class="fas fa-bullhorn"></i> <!-- Icon cho Campaign -->
                                     <p>Campaign</p>
@@ -633,11 +633,10 @@
                                                                         </form>
 
                                                                         <!-- Form xóa chiến dịch -->
-                                                                        <form action="ViewCampaign" method="post" onsubmit="return confirm('Are you sure you want to delete this campaign?');" style="display: inline-block; margin: 0;">
-                                                                            <input type="hidden" name="campaignId" value="${o.campaignID}">
-                                                                            <input type="hidden" name="actionType" value="delete">
+                                                                        <form style="display: inline-block; margin: 0;" onsubmit="deleteCampaign('${o.campaignID}');">
                                                                             <button
-                                                                                type="submit"
+                                                                                type="button"
+                                                                                onclick="deleteCampaign('${o.campaignID}');" 
                                                                                 data-bs-toggle="tooltip"
                                                                                 title="Xóa chiến dịch"
                                                                                 class="btn btn-link btn-danger"
@@ -646,6 +645,7 @@
                                                                                 <i class="fa fa-times"></i>
                                                                             </button>
                                                                         </form>
+
                                                                     </div>
 
                                                                 </td>
@@ -765,37 +765,63 @@
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
     <script>
-        const ctx = document.getElementById('pieChart').getContext('2d');
-        const pieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow'],
-                datasets: [{
-                        label: 'My First Dataset',
-                        data: [300, 50, 100],
-                        backgroundColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(54, 162, 235)',
-                            'rgb(255, 205, 86)'
-                        ],
-                        hoverOffset: 4
-                    }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Sample Pie Chart'
+                                                                                    const ctx = document.getElementById('pieChart').getContext('2d');
+                                                                                    const pieChart = new Chart(ctx, {
+                                                                                        type: 'pie',
+                                                                                        data: {
+                                                                                            labels: ['Red', 'Blue', 'Yellow'],
+                                                                                            datasets: [{
+                                                                                                    label: 'My First Dataset',
+                                                                                                    data: [300, 50, 100],
+                                                                                                    backgroundColor: [
+                                                                                                        'rgb(255, 99, 132)',
+                                                                                                        'rgb(54, 162, 235)',
+                                                                                                        'rgb(255, 205, 86)'
+                                                                                                    ],
+                                                                                                    hoverOffset: 4
+                                                                                                }]
+                                                                                        },
+                                                                                        options: {
+                                                                                            responsive: true,
+                                                                                            plugins: {
+                                                                                                legend: {
+                                                                                                    position: 'top',
+                                                                                                },
+                                                                                                title: {
+                                                                                                    display: true,
+                                                                                                    text: 'Sample Pie Chart'
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    });
+    </script>
+    <script>
+        function deleteCampaign(campaignID) {
+            if (!confirm("Are you sure you want to delete this campaign?")) {
+                return; // Nếu người dùng chọn "Cancel" thì không thực hiện xóa
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "ViewCampaign", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert("Chiến dịch đã được xóa thành công.");
+                        // Xóa phần tử khỏi giao diện hoặc cập nhật lại danh sách nếu cần
+                        location.reload();
+                    } else {
+                        alert("Không thể xóa chiến dịch. Hãy thử lại.");
                     }
                 }
-            }
-        });
-    </script>
+            };
 
+            xhr.send("campaignId=" + campaignID + "&actionType=delete");
+        }
+
+    </script>
 
 </body>
 </html>

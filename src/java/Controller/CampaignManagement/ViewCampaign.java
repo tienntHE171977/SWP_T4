@@ -35,6 +35,7 @@ public class ViewCampaign extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         String campaignId = request.getParameter("campaignId");
         String actionType = request.getParameter("actionType") != null ? request.getParameter("actionType") : "view";
 
@@ -63,10 +64,21 @@ public class ViewCampaign extends HttpServlet {
                 break;
 
             case "delete":
-                // Xử lý yêu cầu xóa chiến dịch
+                try {
                 dao.deleteCampaign(campaignId);
+                try (PrintWriter out = response.getWriter()) {
+                    out.print("{\"success\": true, \"message\": \"Chiến dịch đã được xóa thành công.\"}");
+                    out.flush();
+                }
                 response.sendRedirect("CampaignList");
-                break;
+            } catch (Exception e) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                try (PrintWriter out = response.getWriter()) {
+                    out.print("{\"success\": false, \"message\": \"Không thể xóa chiến dịch. Hãy thử lại.\"}");
+                    out.flush();
+                }
+            }
+            break;
 
             default:
                 response.sendRedirect("CampaignList");

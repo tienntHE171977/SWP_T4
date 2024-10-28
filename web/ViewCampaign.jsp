@@ -142,7 +142,7 @@
                 <div class="sidebar-wrapper scrollbar scrollbar-inner">
                     <div class="sidebar-content">
                         <ul class="nav nav-secondary">
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a href="staff.jsp">
                                     <i class="fas fa-tachometer-alt"></i> <!-- Icon cho Dashboard -->
                                     <p>Dashboard</p>
@@ -160,7 +160,7 @@
                                     <p>Event</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a href="CampaignList">
                                     <i class="fas fa-bullhorn"></i> <!-- Icon cho Campaign -->
                                     <p>Campaign</p>

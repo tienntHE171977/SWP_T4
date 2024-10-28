@@ -74,13 +74,13 @@
                                 <i class="fa fa-dashboard"></i> <span>Add Blog</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="BlogCategories_1">
                                 <i class="fa fa-gavel"></i> <span>Category Management</span>
                             </a>
                         </li>
 
-                        <li class="active">
+                        <li>
                             <a href="BlogList">
                                 <i class="fa fa-glass"></i> <span>BlogManagement</span>
                             </a>

@@ -69,7 +69,7 @@
                     
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li>
+                        <li class="active">
                             <a href="AddBlog">
                                 <i class="fa fa-dashboard"></i> <span>Add Blog</span>
                             </a>
@@ -80,7 +80,7 @@
                             </a>
                         </li>
 
-                        <li class="active">
+                        <li>
                             <a href="BlogList">
                                 <i class="fa fa-glass"></i> <span>BlogManagement</span>
                             </a>
