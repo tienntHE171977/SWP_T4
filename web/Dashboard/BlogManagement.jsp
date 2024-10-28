@@ -181,39 +181,43 @@
                                         <th style=" width: 10px;">Status</th>
                                         <th style=" width: 100px;">Action</th>
                                     </tr>
-                                    <c:forEach items="${listP}" var="o">
-                                        <tr>
-                                            <td>${o.newsID}</td>
-                                            <td>${o.title}</td>
-                                            <td>${o.updatedDate}</td>
-                                            <td><img style="width: 300px; height: 200px" src="${o.image}"></td>
-                                            <td ><span class="btn btn-default"><a href="ChangeStatus?ID=${o.newsID}&status=${o.status == 'on' ? 'off' : 'on'}">
-                                                        ${o.status == 'on' ? 'Turn Off' : 'Turn On'}
-                                                    </a> </span>
-                                            </td>
-                                            <td>
-                                                <!-- View Button -->
-                                                <form action="ViewBlog" method="post" style="display: inline-block; margin: 0;">
-                                                    <input type="hidden" name="postID" value="${o.newsID}">
-                                                    <button type="submit" class="btn btn-default">View</button>
-                                                </form>
+                                    <c:if test="${not empty listP}">
+                                        <c:forEach items="${listP}" var="o">
+                                            <tr>
+                                                <td>${o.newsID}</td>
+                                                <td>${o.title}</td>
+                                                <td>${o.updatedDate}</td>
+                                                <td><img style="width: 300px; height: 200px" src="${o.image}"></td>
+                                                <td ><span class="btn btn-default"><a href="ChangeStatus?ID=${o.newsID}&status=${o.status == 'on' ? 'off' : 'on'}">
+                                                            ${o.status == 'on' ? 'Turn Off' : 'Turn On'}
+                                                        </a> </span>
+                                                </td>
+                                                <td>
+                                                    <!-- View Button -->
+                                                    <form action="ViewBlog" method="post" style="display: inline-block; margin: 0;">
+                                                        <input type="hidden" name="postID" value="${o.newsID}">
+                                                        <button type="submit" class="btn btn-default">View</button>
+                                                    </form>
 
-                                                <!-- Edit Button -->
-                                                <form action="LoadBlog" method="post" style="display: inline-block; margin: 0;">
-                                                    <input type="hidden" name="postID" value="${o.newsID}">
-                                                    <button type="submit" class="btn btn-default">Edit</button>
-                                                </form>
+                                                    <!-- Edit Button -->
+                                                    <form action="LoadBlog" method="post" style="display: inline-block; margin: 0;">
+                                                        <input type="hidden" name="postID" value="${o.newsID}">
+                                                        <button type="submit" class="btn btn-default">Edit</button>
+                                                    </form>
 
-                                                <!-- Delete Button -->
-                                                <form action="DeleteBlog" method="post" onsubmit="return confirm('Are you sure you want to delete this blog?');" style="display: inline-block; margin: 0;">
-                                                    <input type="hidden" name="ID" value="${o.newsID}">
-                                                    <button type="submit" class="btn btn-default">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
+                                                    <!-- Delete Button -->
+                                                    <form action="DeleteBlog" method="post" onsubmit="return confirm('Are you sure you want to delete this blog?');" style="display: inline-block; margin: 0;">
+                                                        <input type="hidden" name="ID" value="${o.newsID}">
+                                                        <button type="submit" class="btn btn-default">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${empty listP}">
+                                        <p>Không có bài viết nào.</p>
+                                    </c:if>
                                 </table>
-
                                 <div class="text-right">
                                     <ul class="pagination">
                                         <li><a href="?index=${tag > 1 ? tag - 1 : 1}&txt=${txtS}&cateID=${categoryID}&sortby=${sortby}">&laquo;</a></li>

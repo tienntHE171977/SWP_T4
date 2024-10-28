@@ -8,23 +8,30 @@
 <!-- Bảng danh sách -->
 <div class="campaign-list">
     <h3>Participants List</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th style="width:25%">Name</th>
-                <th style="width:60%">Job</th>
-                <th style="width:15%">Participation Date</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="o" items="${listM}">
+    <c:if test="${not empty listM}">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>${o.memberName}</td>
-                    <td>${o.memberJob}</td>
-                    <td>${o.joinedDate}</td>
+                    <th style="width:25%">Name</th>
+                    <th style="width:60%">Job</th>
+                    <th style="width:15%">Participation Date</th>
+
                 </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+
+                <c:forEach var="o" items="${listM}">
+                    <tr>
+                        <td>${o.memberName}</td>
+                        <td>${o.memberJob}</td>
+                        <td>${o.joinedDate}</td>
+                    </tr>
+                </c:forEach>
+
+            </tbody>
+        </table>
+    </c:if>
+    <c:if test="${empty listM}">
+        <p>Không có thành viên nào.</p>
+    </c:if>
 </div>

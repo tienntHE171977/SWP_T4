@@ -134,39 +134,44 @@
 
 <div id="Campaigns" class="tabcontent" style="height: auto">
     <%-- Hiển thị danh sách các Campaigns --%>
-    <div class="info-list">
-        <c:forEach items="${campaigns}" var="campaign">
-            <div class="campaign-item">
-                <h4 class="campaign-name">${campaign.campaignName}</h4>
-                <p><strong class="label">Ngày tạo:</strong> ${campaign.createDate}</p>
-                <p><strong class="label">Địa điểm:</strong> ${campaign.campaignLocation}</p>
-                <p><strong class="label">Mô tả:</strong> ${campaign.description}</p>
-                <p><strong class="label">Công việc:</strong> ${campaign.campaignJob}</p>
+    <c:if test="${not empty campaigns}">
+        <div class="info-list">     
+            <c:forEach items="${campaigns}" var="campaign">
+                <div class="campaign-item">
+                    <h4 class="campaign-name">${campaign.campaignName}</h4>
+                    <p><strong class="label">Ngày tạo:</strong> ${campaign.createDate}</p>
+                    <p><strong class="label">Địa điểm:</strong> ${campaign.campaignLocation}</p>
+                    <p><strong class="label">Mô tả:</strong> ${campaign.description}</p>
+                    <p><strong class="label">Công việc:</strong> ${campaign.campaignJob}</p>
 
-                <div style="display: flex; gap: 5px;">
-                    <!-- Nút để mở modal bình luận -->
-                    <button class="btn btn-primary" onclick="showComments('${campaign.campaignID}')" style="background: #00ca6d; margin-right: 10px;">Xem Bình Luận</button>
+                    <div style="display: flex; gap: 5px;">
+                        <!-- Nút để mở modal bình luận -->
+                        <button class="btn btn-primary" onclick="showComments('${campaign.campaignID}')" style="background: #00ca6d; margin-right: 10px;">Xem Bình Luận</button>
 
-                    <!-- Nút để mở modal member -->
-                    <button class="btn btn-primary" onclick="showMembers('${campaign.campaignID}')" style="background: #FF4F42; margin-right: 10px;">Xem Thành Viên</button>
+                        <!-- Nút để mở modal member -->
+                        <button class="btn btn-primary" onclick="showMembers('${campaign.campaignID}')" style="background: #FF4F42; margin-right: 10px;">Xem Thành Viên</button>
 
-                    <!-- Nút Tham gia -->
-                    <form onsubmit="event.preventDefault(); toggleJoin('${campaign.campaignID}');">
-                        <button type="submit" class="btn btn-secondary" id="joinButton_${campaign.campaignID}">
-                            <c:choose>
-                                <c:when test="${userJoinedCampaigns[campaign.campaignID]}">
-                                    Đã Tham Gia
-                                </c:when>
-                                <c:otherwise>
-                                    Tham Gia
-                                </c:otherwise>
-                            </c:choose>
-                        </button>
-                    </form>
+                        <!-- Nút Tham gia -->
+                        <form onsubmit="event.preventDefault(); toggleJoin('${campaign.campaignID}');">
+                            <button type="submit" class="btn btn-secondary" id="joinButton_${campaign.campaignID}">
+                                <c:choose>
+                                    <c:when test="${userJoinedCampaigns[campaign.campaignID]}">
+                                        Đã Tham Gia
+                                    </c:when>
+                                    <c:otherwise>
+                                        Tham Gia
+                                    </c:otherwise>
+                                </c:choose>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </c:forEach>
-    </div>
+            </c:forEach>
+        </div>
+    </c:if>
+    <c:if test="${empty campaigns}">
+        <p>Không có campaign.</p>
+    </c:if>
     <div class="comment-form">
         <h4 style="font-size: xx-large">Leave a Reply</h4>
         <form class="form-contact comment_form" id="commentForm" onsubmit="event.preventDefault(); submitComment();">
