@@ -169,11 +169,11 @@
     </div>
     <div class="comment-form">
         <h4 style="font-size: xx-large">Leave a Reply</h4>
-        <form class="form-contact comment_form" action="AddCommentCampaign" method="post" id="commentForm">
+        <form class="form-contact comment_form" id="commentForm" onsubmit="event.preventDefault(); submitComment();">
             <div class="mb-3">
                 <label for="CID" class="form-label">Campaign</label>
                 <select class="form-select" id="CID" name="CID" required>
-                    <option value="">Select Campaign</option> <!-- Placeholder option -->
+                    <option value="">Select Campaign</option>
                     <c:forEach items="${campaigns}" var="campaign">
                         <option value="${campaign.campaignID}">${campaign.campaignName}</option>
                     </c:forEach>
@@ -273,6 +273,32 @@
                 }
             };
             xhr.send("campaignId=" + campaignID);
+        }
+
+        function submitComment() {
+            const comment = document.getElementById("comment").value;
+            const campaignID = document.getElementById("CID").value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "AddCommentCampaign", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            alert('Comment added successfully!');
+                            document.getElementById("commentForm").reset();
+                        } else {
+                            alert('Error adding comment: ' + response.message);
+                        }
+                    } else {
+                        alert('Request failed with status: ' + xhr.status);
+                    }
+                }
+            };
+            xhr.send("comment=" + encodeURIComponent(comment) + "&CID=" + encodeURIComponent(campaignID));
         }
 
     </script>

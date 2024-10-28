@@ -32,37 +32,49 @@ public class AddCommentCampaign extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        String comment = request.getParameter("comment");
-        String campaignId = request.getParameter("CID"); // Đảm bảo tên tham số khớp
+        response.setContentType("application/json;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
 
-        HttpSession session = request.getSession();
-        // Giả định userId là 1 (thay đổi theo cách bạn lấy userId thực tế)
-        Integer userId = (Integer) session.getAttribute("user_id"); // Cần xác thực có userId trong session
-        if (userId == null) {
-            userId = 1; // Thay đổi này để phục vụ mục đích phát triển
-        }
-
-        if (comment != null && !comment.trim().isEmpty() && userId != null && campaignId != null) {
-            try {
-                int campaignIdInt = Integer.parseInt(campaignId); // Chuyển đổi campaignId sang int
-
-                CampaignDAOforUsers dao = new CampaignDAOforUsers();
-                dao.insertCommentCampaign(campaignIdInt, userId, comment);
-
-                // Điều hướng lại đến trang Campaign (hoặc trang bạn muốn hiển thị bình luận)
-                response.sendRedirect("Campaign"); // Chuyển hướng đến trang có campaignId
-            } catch (NumberFormatException e) {
-                request.setAttribute("errorMessage", "Invalid campaign ID.");
-                request.getRequestDispatcher("errorPage.jsp").forward(request, response); // Chuyển hướng đến trang lỗi
-            }
-        } else {
-            request.setAttribute("errorMessage", "Comment cannot be empty.");
-            request.getRequestDispatcher("errorPage.jsp").forward(request, response); // Chuyển hướng đến trang lỗi
-        }
-
+    String comment = request.getParameter("comment");
+    String campaignId = request.getParameter("CID");
+    HttpSession session = request.getSession();
+    Integer userId = (Integer) session.getAttribute("user_id");
+    if (userId == null) {
+        userId = 1;  // Chỉ dùng cho phát triển
     }
+
+    boolean success = false;
+    String errorMessage = ""; 
+
+    // Log các giá trị tham số để xác nhận xem dữ liệu có được nhận đúng không
+    System.out.println("Comment: " + comment);
+    System.out.println("Campaign ID: " + campaignId);
+    System.out.println("User ID: " + userId);
+
+    if (comment != null && !comment.trim().isEmpty() && campaignId != null) {
+        try {
+            int campaignIdInt = Integer.parseInt(campaignId);
+            CampaignDAOforUsers dao = new CampaignDAOforUsers();
+            dao.insertCommentCampaign(campaignIdInt, userId, comment);
+            System.out.println("Comment added successfully to database.");
+            success = true;
+        } catch (NumberFormatException e) {
+            errorMessage = "Invalid campaign ID format";
+            System.err.println(errorMessage);
+        } catch (Exception e) {
+            errorMessage = "Database error: " + e.getMessage();
+            e.printStackTrace();
+        }
+    } else {
+        errorMessage = "Missing comment or campaign ID";
+        System.err.println(errorMessage);
+    }
+
+    try (PrintWriter out = response.getWriter()) {
+        out.print("{\"success\":" + success + ", \"message\": \"" + (success ? "Comment added" : errorMessage) + "\"}");
+        out.flush();
+    }
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
