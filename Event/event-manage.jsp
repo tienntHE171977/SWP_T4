@@ -169,9 +169,6 @@
                     <div class="col-lg-12">
                         <div class="text-right add-event-btn">
                             <!-- Updated URL for creating new event -->
-                            <a href="${pageContext.request.contextPath}/event-create" class="btn btn-primary">
-                                <i class="fa fa-plus"></i> Add New Event
-                            </a>
                         </div>
 
                         <div class="event-table-container">
@@ -209,17 +206,10 @@
                                             <td>${event.unit}</td>
                                             <td class="action-buttons">
                                                 <!-- Updated URLs for actions -->
-                                                <a href="${pageContext.request.contextPath}/event-update?id=${event.eventId}" 
-                                                   class="btn btn-sm btn-info">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
                                                 <a href="event-details?id=${event.eventId}"
                                                    class="btn btn-sm btn-success">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <button onclick="confirmDelete(${event.eventId})" class="btn btn-sm btn-danger">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
                                             </td>
                                         </tr>
                                     </c:forEach>
