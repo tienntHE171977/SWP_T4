@@ -201,8 +201,15 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="org-header">
-                            <h2>${organization.name}</h2>
-                            <p>Organization ID: ${organization.organizationId}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h2>${organization.name}</h2>
+                                    <p>Organization ID: ${organization.organizationId}</p>
+                                </div>
+                                <a href="organization-edit?id=${organization.organizationId}" class="btn btn-primary">
+                                    <i class="fa fa-edit"></i> Edit Organization
+                                </a>
+                            </div>
                         </div>
 
                         <div class="org-info">
@@ -249,7 +256,7 @@
                         <div class="projects-section">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h3>Projects</h3>
-                                <a href="project-manage?orgId=${organization.organizationId}" class="project-manage-btn">
+                                <a href="project-management?orgId=${organization.organizationId}" class="project-manage-btn">
                                     <i class="fa fa-cog"></i> Manage Projects
                                 </a>
                             </div>
@@ -277,7 +284,7 @@
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <a href="project-detail?id=${project.projectId}" class="project-detail-btn">
+                                                    <a href="project-details?id=${project.projectId}" class="project-detail-btn">
                                                         <i class="fa fa-eye"></i> View Details
                                                     </a>
                                                 </td>
