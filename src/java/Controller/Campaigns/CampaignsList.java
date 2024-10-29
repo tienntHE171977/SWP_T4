@@ -18,8 +18,8 @@ import java.util.List;
  *
  * @author admin
  */
-@WebServlet(name = "CampaignList", urlPatterns = {"/CampaignList_1"})
-public class CampaignList extends HttpServlet {
+@WebServlet(name = "CampaignsList", urlPatterns = {"/CampaignList_1"})
+public class CampaignsList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

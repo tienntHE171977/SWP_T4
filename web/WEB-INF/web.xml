@@ -104,11 +104,11 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>CampaignList</servlet-name>
-        <servlet-class>Controller.Campaigns.CampaignList</servlet-class>
+        <servlet-name>CampaignsList</servlet-name>
+        <servlet-class>Controller.Campaigns.CampaignsList</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CampaignList</servlet-name>
+        <servlet-name>CampaignsList</servlet-name>
         <url-pattern>/CampaignList_1</url-pattern>
     </servlet-mapping>
 </web-app>
