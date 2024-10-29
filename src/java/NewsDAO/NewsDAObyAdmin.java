@@ -27,6 +27,7 @@ public class NewsDAObyAdmin {
     ResultSet rs = null;
 // Use for News Management
 // For category news    
+
     public List<NewsCategories> getAllCategory() {
         List<NewsCategories> list = new ArrayList<>();
         String query = "select * from NewsCategories";
@@ -72,7 +73,7 @@ public class NewsDAObyAdmin {
 
         }
     }
-    
+
 // For news
     public int getTotalNews() {
         String query = "select count(*) from News";
@@ -312,6 +313,7 @@ public class NewsDAObyAdmin {
 
         }
     }
+
 
     public void editNews(String title, String content, String message, String image, String category_id, String newsID) {
         String query = "UPDATE News "

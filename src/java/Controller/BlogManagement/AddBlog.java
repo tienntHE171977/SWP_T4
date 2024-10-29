@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -41,9 +42,13 @@ public class AddBlog extends HttpServlet {
         String newMessage = request.getParameter("newsMessage");
         String categoryID = request.getParameter("category");
         String newImageURL = request.getParameter("newImageURL"); // Lấy URL hình ảnh mới
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("user_id");
 
-        // ID người dùng (lấy từ session hoặc hardcode tạm thời)
-        String userId = "1"; // Hardcode userId, có thể thay bằng giá trị từ session
+        if (userId == null) {
+            userId = "1";  // Giá trị mặc định chỉ dùng cho phát triển
+        }
+
         NewsDAObyAdmin dao = new NewsDAObyAdmin();
         List<NewsCategories> listC = dao.getAllCategory();
         dao.insertNews(newsTitle, categoryID, newsContent, newMessage, userId, newImageURL);
