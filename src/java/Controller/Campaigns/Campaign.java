@@ -37,18 +37,25 @@ public class Campaign extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        // Lấy PID từ session
-        HttpSession session = request.getSession();
-        String PID = (String) session.getAttribute("PID"); // Giả sử PID đã được lưu trong session trước đó
+        String CID = request.getParameter("CID");
+        CampaignDAOforUsers dao = new CampaignDAOforUsers();
+        // Lấy project ID từ campaign ID nếu CID có trong request
+        String projectIDFromCID = (CID != null) ? dao.getProjectIDByCampaignID(CID) : null;
+
+        // Lấy project ID từ request
+        String projectIDFromRequest = request.getParameter("PID");
+
+        // Ưu tiên PID từ request nếu có, nếu không thì dùng PID từ CID
+        String PID = (projectIDFromRequest != null && !projectIDFromRequest.isEmpty()) ? projectIDFromRequest : projectIDFromCID;
         if (PID == null || PID.isEmpty()) {
             PID = "6"; // Giá trị mặc định
         }
-        // Lấy phiên làm việc
+        // Lấy ID từ session
+        HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("user_id");
         if (userId == null) {
-            userId = 1; // Sử dụng giá trị mặc định cho phát triển
+            userId = 1;
         }
-        CampaignDAOforUsers dao = new CampaignDAOforUsers();
 
         List<Model.Campaign> campaigns = dao.getAllCampaignsforPid(PID);
         Map<Integer, Boolean> userJoinedCampaigns = new HashMap<>();

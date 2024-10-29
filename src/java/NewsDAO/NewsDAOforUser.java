@@ -280,7 +280,7 @@ public class NewsDAOforUser {
         }
         return list;
     }
-
+// for comment
     public int getTotalComment(String newsID) {
         String query = "select count(*) from NewsComment\n"
                 + "WHERE news_id = ?\n"
@@ -341,7 +341,7 @@ public class NewsDAOforUser {
 
         }
     }
-
+// for next and previous post
     public News getPreviousPost(String currentNewsID) {
         String query = "SELECT TOP 1 * FROM News WHERE news_id < ? ORDER BY news_id DESC";
         try {

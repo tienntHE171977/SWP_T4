@@ -26,6 +26,51 @@ public class CampaignDAOforUsers {
     ResultSet rs = null;
 
 // For Campaign
+    public int getTotalCampaigns() {
+        String query = "select count(*) from Campaigns";
+
+        try {
+            conn = new DBContext().makeConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public List<Campaign> getAllCampaigns(int index) {
+        List<Campaign> list = new ArrayList<>();
+        String query = "SELECT c.*, p.title \n"
+                + "FROM Campaigns c\n"
+                + "LEFT JOIN Projects p ON c.project_id = p.project_id\n"
+                + "ORDER BY c.project_id\n"
+                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
+
+        try {
+            conn = new DBContext().makeConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, (index - 1) * 5);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int campaignID = rs.getInt("campaign_id");
+                String campaignName = rs.getString("campaign_name");
+                String projectName = rs.getString("title"); // Lấy tên dự án
+                String campaignLocation = rs.getString("address"); // Lấy tên địa điểm
+                String description = rs.getString("description");
+                String campaignJob = rs.getString("job");
+                String status = rs.getString("status");
+                Date createDate = rs.getDate("created_at");
+                list.add(new Campaign(campaignID, campaignName, projectName, createDate, campaignLocation, description, campaignJob, status));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public List<Campaign> getAllCampaignsforPid(String PID) {
         List<Campaign> list = new ArrayList<>();
         String query = "SELECT c.*, p.title "
@@ -82,6 +127,26 @@ public class CampaignDAOforUsers {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public String getProjectIDByCampaignID(String CID) {
+        String projectID = null;
+        String query = "SELECT project_id FROM Campaigns\n"
+                + "WHERE campaign_id = ?";
+
+        try {
+            conn = new DBContext().makeConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, CID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                projectID = rs.getString("project_id");
+            }
+
+        } catch (Exception e) {
+        }
+
+        return projectID;
     }
 
     // For Comment
@@ -219,7 +284,7 @@ public class CampaignDAOforUsers {
         CampaignDAOforUsers dao = new CampaignDAOforUsers();
         int userId = 1;        // Thay đổi giá trị userId theo ý muốn
         int campaignId = 6;  // Thay đổi giá trị campaignId theo ý muốn
-        
+
         dao.addUserToCampaign(userId, campaignId);
     }
 }
