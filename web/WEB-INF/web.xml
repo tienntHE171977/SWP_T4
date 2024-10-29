@@ -101,14 +101,14 @@
     <servlet-mapping>
         <servlet-name>CampaignList</servlet-name>
         <url-pattern>/CampaignList</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping> 
     
     <servlet>
-        <servlet-name>CampaignsList</servlet-name>
-        <servlet-class>Controller.Campaigns.CampaignsList</servlet-class>
+        <servlet-name>CampaignUser</servlet-name>
+        <servlet-class>Controller.Campaigns.CampaignUser</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CampaignsList</servlet-name>
-        <url-pattern>/CampaignList_1</url-pattern>
+        <servlet-name>CampaignUser</servlet-name>
+        <url-pattern>/CampaignUser</url-pattern>
     </servlet-mapping>
 </web-app>
