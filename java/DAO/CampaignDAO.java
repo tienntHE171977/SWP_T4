@@ -7,42 +7,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CampaignDAO {
+
     private static final String INSERT_CAMPAIGN_SQL = "INSERT INTO Campaigns (project_id, location_id, description, job, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SELECT_CAMPAIGN_BY_ID = "SELECT * FROM Campaigns WHERE campaign_id = ?";
     private static final String SELECT_CAMPAIGNS_BY_PROJECT_ID = "SELECT * FROM Campaigns WHERE project_id = ?";
     private static final String UPDATE_CAMPAIGN_SQL = "UPDATE Campaigns SET project_id = ?, location_id = ?, description = ?, job = ?, is_active = ? WHERE campaign_id = ?";
     private static final String DELETE_CAMPAIGN_SQL = "DELETE FROM Campaigns WHERE campaign_id = ?";
-    
+    private static final String GET_MAX_CAMPAIGN_ID = "SELECT MAX(campaign_id) FROM Campaigns";
+
+    // Get next campaign ID
+    public int getNextCampaignId() throws SQLException {
+        int maxId = 0;
+        try (Connection connection = DBConnection.getConnection(); Statement statement = connection.createStatement(); ResultSet rs = statement.executeQuery(GET_MAX_CAMPAIGN_ID)) {
+            if (rs.next()) {
+                maxId = rs.getInt(1);
+            }
+        }
+        return maxId + 1;
+    }
 
     // Create
     public void createCampaign(Campaign campaign) throws SQLException {
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CAMPAIGN_SQL, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = DBConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CAMPAIGN_SQL)) {
+
             preparedStatement.setInt(1, campaign.getProjectId());
             preparedStatement.setInt(2, campaign.getLocationId());
             preparedStatement.setString(3, campaign.getDescription());
             preparedStatement.setString(4, campaign.getJob());
             preparedStatement.setBoolean(5, campaign.isActive());
             preparedStatement.setTimestamp(6, new Timestamp(campaign.getCreatedAt().getTime()));
-            
-            int affectedRows = preparedStatement.executeUpdate();
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        campaign.setCampaignId(generatedKeys.getInt(1));
-                    }
-                }
-            }
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
+            throw e;
         }
     }
 
     // Read
     public Campaign getCampaignById(int campaignId) {
         Campaign campaign = null;
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CAMPAIGN_BY_ID)) {
+        try (Connection connection = DBConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CAMPAIGN_BY_ID)) {
             preparedStatement.setInt(1, campaignId);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
@@ -57,8 +62,7 @@ public class CampaignDAO {
 
     public List<Campaign> getCampaignsByProjectId(int projectId) {
         List<Campaign> campaigns = new ArrayList<>();
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CAMPAIGNS_BY_PROJECT_ID)) {
+        try (Connection connection = DBConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CAMPAIGNS_BY_PROJECT_ID)) {
             preparedStatement.setInt(1, projectId);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
@@ -71,11 +75,10 @@ public class CampaignDAO {
         return campaigns;
     }
 
-    // Update
+    // Update - không thay đổi
     public boolean updateCampaign(Campaign campaign) throws SQLException {
         boolean rowUpdated;
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_CAMPAIGN_SQL)) {
+        try (Connection connection = DBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(UPDATE_CAMPAIGN_SQL)) {
             statement.setInt(1, campaign.getProjectId());
             statement.setInt(2, campaign.getLocationId());
             statement.setString(3, campaign.getDescription());
@@ -88,11 +91,10 @@ public class CampaignDAO {
         return rowUpdated;
     }
 
-    // Delete
+    // Delete - không thay đổi
     public boolean deleteCampaign(int campaignId) throws SQLException {
         boolean rowDeleted;
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_CAMPAIGN_SQL)) {
+        try (Connection connection = DBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(DELETE_CAMPAIGN_SQL)) {
             statement.setInt(1, campaignId);
             rowDeleted = statement.executeUpdate() > 0;
         }
