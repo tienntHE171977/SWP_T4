@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/event-delete")
 public class EventDeleteServlet extends HttpServlet {
@@ -21,10 +20,13 @@ public class EventDeleteServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             int eventId = Integer.parseInt(request.getParameter("id"));
+            String projectId = request.getParameter("projectId");
+            
             eventDAO.deleteProjectEvent(eventId);
-            response.sendRedirect(request.getContextPath() + "/event-manage");
-        } catch (SQLException ex) {
-            throw new ServletException(ex);
+            response.sendRedirect(request.getContextPath() + "/project-event-manage?projectId=" + projectId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
         }
     }
 }

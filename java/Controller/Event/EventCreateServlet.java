@@ -2,14 +2,12 @@ package Servlet.Event;
 
 import DAO.ProjectEventDAO;
 import Model.ProjectEvent;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/event-create")
 public class EventCreateServlet extends HttpServlet {
@@ -21,8 +19,12 @@ public class EventCreateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/event-create.jsp");
-        dispatcher.forward(request, response);
+        String projectId = request.getParameter("projectId");
+        if (projectId == null || projectId.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/project-management");
+            return;
+        }
+        request.getRequestDispatcher("/event-create.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -42,9 +44,10 @@ public class EventCreateServlet extends HttpServlet {
             newEvent.setUnit(unit);
 
             eventDAO.createProjectEvent(newEvent);
-            response.sendRedirect(request.getContextPath() + "/event-manage");
-        } catch (SQLException ex) {
-            throw new ServletException(ex);
+            response.sendRedirect(request.getContextPath() + "/project-event-manage?projectId=" + projectId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
         }
     }
 }
