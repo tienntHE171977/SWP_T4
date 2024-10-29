@@ -28,11 +28,11 @@
                     <header>Login</header>
                     <form action="#">
                         <div class="field input-field">
-                            <input type="email" placeholder="Email" class="input">
+                            <input type="email" placeholder="${requestScope.orgid}" class="input">
                         </div>
-
+                        
                         <div class="field input-field">
-                            <input type="password" placeholder="Password" class="password">
+                            <input type="password" placeholder="${prjid}" class="password">
                             <i class='bx bx-hide eye-icon'></i>
                         </div>
 
@@ -58,7 +58,7 @@
                         <span>Login with Facebook</span>
                     </a>
                 </div>
-
+                
                 <div class="media-options">
                     <a href="#" class="field google">
                         <img src="images/google.png" alt="" class="google-img">
@@ -67,7 +67,7 @@
                 </div>
 
             </div>
-
+            
             <!-- Signup Form -->
 
             <div class="form signup">

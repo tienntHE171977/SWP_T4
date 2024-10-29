@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee           http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>homeServlet</servlet-name>
+        <servlet-class>controller.homeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisOrganizationServlet</servlet-name>
+        <servlet-class>controller.RegisOrganizationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ArticleServlet</servlet-name>
+        <servlet-class>controller.ArticleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>approvalServlet</servlet-name>
+        <servlet-class>controller.approvalServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VolunteerRegisterServlet</servlet-name>
+        <servlet-class>controller.VolunteerRegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisOrganizationServlet</servlet-name>
+        <url-pattern>/regisorg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ArticleServlet</servlet-name>
+        <url-pattern>/related-articles</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>approvalServlet</servlet-name>
+        <url-pattern>/approval</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VolunteerRegisterServlet</servlet-name>
+        <url-pattern>/volunteerregis</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>searchapproval</servlet-name>
+        <servlet-class>controller.searchapproval</servlet-class>
+    </servlet>
+</web-app>
