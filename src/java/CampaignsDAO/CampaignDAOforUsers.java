@@ -27,7 +27,8 @@ public class CampaignDAOforUsers {
 
 // For Campaign
     public int getTotalCampaigns() {
-        String query = "select count(*) from Campaigns";
+        String query = "select count(*) from Campaigns\n"
+                + " where status = 'on'";
 
         try {
             conn = new DBContext().makeConnection();
@@ -46,6 +47,7 @@ public class CampaignDAOforUsers {
         String query = "SELECT c.*, p.title \n"
                 + "FROM Campaigns c\n"
                 + "LEFT JOIN Projects p ON c.project_id = p.project_id\n"
+                + "WHERE c.status = 'on'\n"
                 + "ORDER BY c.project_id\n"
                 + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
 
