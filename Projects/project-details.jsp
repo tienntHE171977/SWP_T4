@@ -258,6 +258,11 @@
 
                                     <div id="Campaigns" class="tabcontent" style="height: 300px">
                                         <h4>Campaigns</h4>
+                                        <!-- Chỉnh role chỉ staff tạo mới được thấy -->
+                                        <a href="${pageContext.request.contextPath}/project-campaign-manage?projectId=${project.projectId}"
+                                                   class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-list"></i> Campaigns Manage
+                                                </a>
                                         <ul class="info-list">
                                             <li>
                                                 <span class="item" onclick="toggleDetails(event)">Danh sách 1 &#9662;</span>
@@ -276,6 +281,12 @@
 
                                     <div id="ProjectEvents" class="tabcontent" style="height: 300px">
                                         <h4>Project Events</h4>
+                                        
+                                        <!-- Chỉnh role chỉ staff tạo mới được thấy -->
+                                        <a href="${pageContext.request.contextPath}/project-event-manage?projectId=${project.projectId}"
+                                                   class="btn btn-sm btn-warning">
+                                                    <i class="fa fa-calendar"></i> Events Manage
+                                                </a>
                                         <c:forEach var="event" items="${projectEvents}">
                                             <div class="event">
                                                 <h4>Event ID: ${event.eventId}</h4>
