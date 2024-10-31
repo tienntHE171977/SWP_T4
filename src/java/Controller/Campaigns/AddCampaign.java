@@ -33,14 +33,17 @@ public class AddCampaign extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String campaignName = request.getParameter("campaignName");
-        String projectId = "6";
+        String PID = request.getParameter("PID");
+        if (PID == null || PID.isEmpty()) {
+            PID = "6"; // Giá trị mặc định
+        }
         String campaignLocation = request.getParameter("campaignLocation");
         String description = request.getParameter("description");
         String job = request.getParameter("job");
 
         // Gọi phương thức để thêm dữ liệu vào DB
         CampaignDAOforAdminUser dao = new CampaignDAOforAdminUser();
-        dao.addNewCampaign(campaignName, projectId, campaignLocation, description, job);
+        dao.addNewCampaign(campaignName, PID, campaignLocation, description, job);
 
         // Chuyển hướng hoặc tải lại trang để hiển thị cập nhật
         response.sendRedirect("CampaignManage");

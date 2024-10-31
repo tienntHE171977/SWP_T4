@@ -82,7 +82,42 @@
             }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
+        <script>
+            function deleteContact(contactId) {
+                Swal.fire({
+                    title: 'Bạn có chắc muốn xóa?',
+                    text: 'Thao tác này không thể khôi phục!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Gửi yêu cầu xóa đến server bằng AJAX
+                        $.ajax({
+                            url: 'staffcontact',
+                            type: 'POST',
+                            data: {action: 'delete', id: contactId},
+                            success: function () {
+                                Swal.fire({
+                                    title: 'Xóa thành công!',
+                                    icon: 'success',
+                                    timer: 200000
+                                }).then(() => {
+                                    // Cập nhật lại giao diện sau khi xóa
+                                    location.reload();
+                                });
+                            },
+                            error: function () {
+                                Swal.fire('Có lỗi xảy ra!', 'Vui lòng thử lại sau.', 'error');
+                            }
+                        });
+                    }
+                })
+            }
+        </script>
 
 
         <link
@@ -377,75 +412,53 @@
                                 <div class="row justify-content-center">
                                     <div class="col-md-9">
                                         <div class="card">
-                                            <form action="AddBlog" method="post" enctype="multipart/form-data">
-                                                <div class="form-group row">
-                                                    <!-- Col 1 -->
-                                                    <div class="col-lg-6" style="display: flex; flex-direction: column; align-items: center;">
+                                            <c:forEach var="o" items="${listCC}">
+                                                <form action="EditCategories" method="post" style="display: flex; align-items: center;">
+                                                    <div class="form-group" style="display: flex; align-items: center;">
+                                                        <label for="category_${o.ncategoriesID}" style="margin-right: 20px;">Category</label>
 
-                                                        <!-- News Title -->
-                                                        <div style="margin-bottom: 15px; width: 100%;">
-                                                            <label for="newsTitle">News Title</label>
-                                                            <input type="text" class="form-control" id="newsTitle" name="newsTitle" placeholder="Nhập tiêu đề bài viết" required>
-                                                        </div>
+                                                        <!-- Input tên của category -->
+                                                        <input type="text" class="form-control" id="category_${o.ncategoriesID}" 
+                                                               name="Name" value="${o.ncategoryName}" style="flex: 1; width: 650px">
 
-                                                        <!-- News Image URL -->
-                                                        <div id="avatarContainer" style="margin-bottom: 15px; width: 100%;">
-                                                            <img id="Img" src="path_to_default_avatar.jpg" alt="Image" style="width: 300px; height: 150px; object-fit: cover;">
-                                                            <input type="file" id="Upload" name="avatar" accept="image/*" style="margin-top: 15px;" onchange="previewAvatar()">
-                                                        </div>
+                                                        <!-- Truyền ID của category -->
+                                                        <input type="hidden" name="ID" value="${o.ncategoriesID}">
 
+                                                        <button type="submit" class="btn btn-info" style="margin-left: 10px;">Edit</button>
                                                     </div>
-
-                                                    <!-- Col 2 -->
-                                                    <div class="col-lg-6" style="display: flex; flex-direction: column; align-items: center;">
-
-                                                        <!-- News Content -->
-                                                        <div style="margin-bottom: 15px; width: 100%;">
-                                                            <label for="newsContent">News Content</label>
-                                                            <textarea class="form-control" id="newsContent" name="newsContent" placeholder="Nhập nội dung bài viết" style="height: 250px; resize: vertical;" required></textarea>
-                                                        </div>
-
-                                                        <!-- News Message -->
-                                                        <div style="margin-bottom: 15px; width: 100%;">
-                                                            <label for="newsMessage">News Message</label>
-                                                            <textarea class="form-control" id="newsMessage" name="newsMessage" placeholder="Nhập thông điệp" style="height: 100px; resize: vertical;" required></textarea>
-                                                        </div>
-
-                                                        <!-- News Category -->
-                                                        <div style="margin-bottom: 15px; width: 100%;">
-                                                            <label for="category">Category</label>
-                                                            <select name="category" class="form-select" id="category" required>
-                                                                <option value="" disabled selected>Chọn danh mục</option>
-                                                                <c:forEach items="${listCC}" var="o">
-                                                                    <option value="${o.ncategoriesID}">${o.ncategoryName}</option>
-                                                                </c:forEach>
-                                                            </select>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <!-- Submit button -->
-                                                <div class="modal-footer" style="text-align: center;">
-                                                    <button type="submit" class="btn btn-info">Submit</button>
-                                                </div>
-                                            </form>
-                                            <script>
-                                                function previewAvatar() {
-                                                    var fileInput = document.getElementById('Upload');
-                                                    if (fileInput.files.length > 0) {
-                                                        var reader = new FileReader();
-                                                        reader.onload = function (e) {
-                                                            document.getElementById('Img').src = e.target.result; // Cập nhật ảnh đại diện
-                                                        }
-                                                        reader.readAsDataURL(fileInput.files[0]); // Chuyển đổi ảnh thành base64
-                                                    }
-                                                }
-                                            </script>
+                                                </form>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-9">
+                                        <div class="card">
+                                            <form action="AddCategory" method="post">
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 col-sm-2 control-label">Category Name</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" name="Name" placeholder="Name" required>
+                                                        <p class="help-block">Nhập tên Category cần thêm</p>
+                                                    </div>
+                                                </div>
 
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-2 col-lg-10">
+                                                        <button type="submit" class="btn btn-danger">Add</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                        <div class="file-export_box ms-4">
+                                            <a href="BlogList" class="d-flex justify-content-center align-items-center px-3 py-2 fs-4 text-white">
+                                                <span>Back to Home</span>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -457,6 +470,7 @@
 
             </div>
         </div>
+
 
 
 

@@ -1,185 +1,511 @@
-<%-- 
-    Document   : EditBlog
-    Created on : Oct 4, 2024, 8:19:42 AM
-    Author     : admin
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <title>Director | Dashboard</title>
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <meta name="description" content="Developed By M Abdur Rokib Promy">
-        <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
-        <!-- bootstrap 3.0.2 -->
-        <link href="Dashboard/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- font Awesome -->
-        <link href="Dashboard/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <!-- Ionicons -->
-        <link href="Dashboard/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Staff Dashboard</title>
+        <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+            />
 
-        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-        <!-- Theme style -->
-        <link href="Dashboard/css/style.css" rel="stylesheet" type="text/css" />
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
+        <!-- Fonts and icons -->
+        <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .chart-container {
+                position: relative;
+                width: 50%;
+                height: 50%;
+            }
+        </style>
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .row {
+                display: flex;
+                flex-wrap: wrap;
+                margin-bottom: 20px;
+            }
+
+            .col-sm-6, .col-md-3, .col-md-9 {
+                padding: 15px;
+                box-sizing: border-box;
+            }
+
+            .col-md-3 {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .col-md-9 {
+                flex: 1 0 100%;
+            }
+
+            .card {
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .card-header {
+                font-size: 1.25em;
+                margin-bottom: 15px;
+            }
+
+            .chart-container {
+                width: 100%;
+                height: 400px;
+            }
+
+            .card-title {
+                font-weight: bold;
+            }
+            .file-export_box {
+                border-radius: 5px;
+                background-color: green;
+                color: white;
+                cursor: pointer;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            />
+
+        <!-- Font Awesome -->
+
+
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="assets/css/plugins.min.css" />
+        <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+        <link rel="stylesheet" href="assets/css/fonts.min.css" />
+        <link rel="stylesheet" href="assets/css/fonts.css" />
+        <link rel="stylesheet" href="assets/css/plugins.css" />
     </head>
-    <body class="skin-black">
-        <!-- header logo: style can be found in header.less -->
-        <header class="header">
-            <a href="index.html" class="logo">
-                <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                Director
-            </a>
-            <!-- Header Navbar: style can be found in header.less -->
-            <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Sidebar toggle button-->
-                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-
-            </nav>
-        </header>
-        <div class="wrapper row-offcanvas row-offcanvas-left">
-            <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+    <body >
+        <div class="wrapper">
+            <!-- Sidebar -->
+            <div class="sidebar" data-background-color="dark">
+                <div class="sidebar-logo">
+                    <!-- Logo Header -->
+                    <div class="logo-header" data-background-color="dark">
+                        <a href="index.html" class="logo">
+                            <img
+                                src="img/logo.png"
+                                alt="navbar brand"
+                                class="navbar-brand"
+                                height="20"
+                                />
+                        </a>
+                        <div class="nav-toggle">
+                            <button class="btn btn-toggle toggle-sidebar">
+                                <i class="gg-menu-right"></i>
+                            </button>
+                            <button class="btn btn-toggle sidenav-toggler">
+                                <i class="gg-menu-left"></i>
+                            </button>
                         </div>
-                        <div class="pull-left info">
-                            <p>Hello, Jane</p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
+                        <button class="topbar-toggler more">
+                            <i class="gg-more-vertical-alt"></i>
+                        </button>
                     </div>
+                    <!-- End Logo Header -->
+                </div>
+                <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                    <div class="sidebar-content">
+                        <ul class="nav nav-secondary">
+                            <li class="nav-item ">
+                                <a href="staff">
+                                    <i class="fas fa-tachometer-alt"></i> <!-- Icon cho Dashboard -->
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="project.jsp">
+                                    <i class="fas fa-folder"></i> <!-- Icon cho Project -->
+                                    <p>Project</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="event.jsp">
+                                    <i class="fas fa-calendar-alt"></i> <!-- Icon cho Event -->
+                                    <p>Event</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="CampaignList">
+                                    <i class="fas fa-bullhorn"></i> <!-- Icon cho Campaign -->
+                                    <p>Campaign</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="organization-manage">
+                                    <i class="fas fa-bullhorn"></i> <!-- Icon cho Campaign -->
+                                    <p>Organizations</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="staffcontact">
+                                    <i class="fas fa-address-book"></i> <!-- Icon cho Contact -->
+                                    <p>Contact</p>
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="BlogList">
+                                    <i class="fa-solid fa-address-book"></i> <!-- Icon cho Contact -->
+                                    <p>News</p>
+                                </a>
+                            </li>
+                        </ul>
 
-                    <!-- sidebar menu: : style can be found in sidebar.less -->
-                    <ul class="sidebar-menu">
-                        <li>
-                            <a href="AddBlog">
-                                <i class="fa fa-dashboard"></i> <span>Add Blog</span>
+                    </div>
+                </div>
+            </div>
+            <!-- End Sidebar -->
+
+            <div class="main-panel">
+                <div class="main-header">
+                    <div class="main-header-logo">
+                        <!-- Logo Header -->
+                        <div class="logo-header" data-background-color="dark">
+                            <a href="index.html" class="logo">
+                                <img
+                                    src="img/logo.png"
+                                    alt="navbar brand"
+                                    class="navbar-brand"
+                                    height="20"
+                                    />
                             </a>
-                        </li>
-                        <li>
-                            <a href="BlogCategories_1">
-                                <i class="fa fa-gavel"></i> <span>Category Management</span>
-                            </a>
-                        </li>
+                            <div class="nav-toggle">
+                                <button class="btn btn-toggle toggle-sidebar">
+                                    <i class="gg-menu-right"></i>
+                                </button>
+                                <button class="btn btn-toggle sidenav-toggler">
+                                    <i class="gg-menu-left"></i>
+                                </button>
+                            </div>
+                            <button class="topbar-toggler more">
+                                <i class="gg-more-vertical-alt"></i>
+                            </button>
+                        </div>
+                        <!-- End Logo Header -->
+                    </div>
+                    <!-- Navbar Header -->
+                    <nav
+                        class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+                        >
+                        <div class="container-fluid">
 
-                        <li class="active">
-                            <a href="BlogList">
-                                <i class="fa fa-glass"></i> <span>BlogManagement</span>
-                            </a>
-                        </li>
 
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
-            </aside>
+                            <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                                <li
+                                    class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
+                                    >
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        data-bs-toggle="dropdown"
+                                        href="#"
+                                        role="button"
+                                        aria-expanded="false"
+                                        aria-haspopup="true"
+                                        >
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-search animated fadeIn">
+                                        <form class="navbar-left navbar-form nav-search">
+                                            <div class="input-group">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Search ..."
+                                                    class="form-control"
+                                                    />
+                                            </div>
+                                        </form>
+                                    </ul>
+                                </li>
 
-            <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">
-                <!-- Content Header (Page header) -->
-                <section class="panel">
-                    <header class="panel-heading">
-                        Basic Forms
-                    </header>
-                    <div class="panel-body">
-                        <form action="EditBlog" method="post">
-                            <div class="form-group">
-                                <div class="col-lg-6" style="display: flex; flex-direction: column; align-items: center; height: 60vh;">
-                                    <!-- News ID -->
-                                    <div style="margin-bottom: 15px; width: 300px;">
-                                        <label for="newsID">News ID</label>
-                                        <input type="text" class="form-control" id="newsID" name="newsID" value="${detail.newsID}" readonly>
-                                    </div>
+                                <li class="nav-item topbar-icon dropdown hidden-caret">
+                                    <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-bell"></i>
+                                        <span class="notification">${notifications.size()}</span>
+                                    </a>
+                                    <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                                        <li>
+                                            <div class="dropdown-title">
+                                                You have ${notifications.size()} new notifications
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="notif-scroll scrollbar-outer">
+                                                <div class="notif-center">
+                                                    <c:forEach var="notification" items="${notifications}">
+                                                        <a href="#">
+                                                            <div class="notif-icon notif-primary">
+                                                                <i class="fa fa-info-circle"></i>
+                                                            </div>
+                                                            <div class="notif-content">
+                                                                <span class="block">${notification.message}</span>
+                                                                <span class="time">${notification.createdAt}</span>
+                                                            </div>
+                                                        </a>
+                                                    </c:forEach>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                                    <!-- News Title -->
-                                    <div style="margin-bottom: 15px; width: 300px;">
-                                        <label for="newsTitle">News Title</label>
-                                        <input type="text" class="form-control" id="newsTitle" name="newsTitle" value="${detail.title}" required>
-                                    </div>
 
-                                    <!-- News Date -->
-                                    <div style="margin-bottom: 15px; width: 300px;">
-                                        <label for="newsDate">News Date</label>
-                                        <input type="text" class="form-control" id="newsDate" value="${detail.updatedDate}" readonly>
-                                    </div>
-
-                                    <!-- Current News Image -->
-                                    <div style="margin-bottom: 15px; width: 300px;">
-                                        <label>Current News Image</label>
-                                        <div>
-                                            <img src="${detail.image}" alt="News Image" style="width: 200px; height: 150px; display: block; margin: auto;">
+                                <li class="nav-item topbar-user dropdown hidden-caret">
+                                    <a
+                                        class="dropdown-toggle profile-pic"
+                                        data-bs-toggle="dropdown"
+                                        href="#"
+                                        aria-expanded="false"
+                                        >
+                                        <div class="avatar-sm">
+                                            <img
+                                                src="${acc.image}"
+                                                alt="..."
+                                                class="avatar-img rounded-circle"
+                                                />
                                         </div>
-                                        <p>Hình ảnh hiện tại: ${detail.image}</p>
-                                    </div>
+                                        <span class="profile-username">
+                                            <span class="op-7">Hi,</span>
+                                            <span class="fw-bold">${staff.getUser().getFullname()}</span>
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user animated fadeIn">
+                                        <div class="dropdown-user-scroll scrollbar-outer">
+                                            <li>
+                                                <div class="user-box">
+                                                    <div class="avatar-lg">
+                                                        <img
+                                                            src="assets/img/profile.jpg"
+                                                            alt="image profile"
+                                                            class="avatar-img rounded"
+                                                            />
+                                                    </div>
+                                                    <div class="u-text">
+                                                        <h4>${staff.getUser().getFullname()}</h4>
+                                                        <p class="text-muted"></p>
+                                                        <a
+                                                            href="staffProfile.jsp"
+                                                            class="btn btn-xs btn-secondary btn-sm"
+                                                            >View Profile</a
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="dropdown-divider"></div>
 
-                                    <!-- Input to enter new image URL -->
-                                    <div style="margin-bottom: 15px; width: 300px;">
-                                        <label for="newImageURL">New Image URL (Optional)</label>
-                                        <input type="text" class="form-control" id="newImageURL" name="newImageURL" placeholder="Nhập URL hình ảnh mới nếu muốn thay thế">
+                                                <a class="dropdown-item" href="changepasswordstaff">Change PassWord</a>
+
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="editStaff">Account Setting</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="logout">Logout</a>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <!-- End Navbar -->
+                </div>
+
+                <div class="container" >
+                    <div class="page-inner">
+                        <div
+                            class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
+                            >
+                            <div>
+                                <h3 class="fw-bold mb-3">Dashboard</h3>
+                                <h6 class="op-7 mb-2">Staff Dashboard</h6>
+                            </div>
+
+                        </div>
+                        <div class="container">
+                            <div class="page-inner">
+                                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                                    <div>
+                                        <h3 class="fw-bold mb-3">Staff Blog</h3>
+
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6" style="display: flex; flex-direction: column; align-items: center; height: 60vh;">
-                                    <!-- News Content -->
-                                    <div style="margin-bottom: 15px; width: 300px;">
-                                        <label for="newsContent">News Content</label>
-                                        <textarea class="form-control" id="newsContent" name="newsContent" style="height: 250px; resize: vertical;">${detail.content}</textarea>
-                                    </div>
 
-                                    <!-- News Message -->
-                                    <div style="margin-bottom: 15px; width: 300px;">
-                                        <label for="newsMessage">News Message</label>
-                                        <textarea class="form-control" id="newsMessage" name="newsMessage" style="height: 100px; resize: vertical;">${detail.message}</textarea>
-                                    </div>
 
-                                    <!-- News Category -->
-                                    <div style="margin-bottom: 15px; width: 300px;">
-                                        <label>Category</label>
-                                        <select name="category" class="form-select" aria-label="Default select example">
-                                            <c:forEach items="${listCC}" var="o">
-                                                <option value="${o.ncategoriesID}" ${o.ncategoriesID == categoryID ? 'selected' : ''}>${o.ncategoryName}</option>
-                                            </c:forEach>
-                                        </select>
+                                <!-- bradcam_area_start -->
+                                <div class="bradcam_area breadcam_bg overlay d-flex align-items-center justify-content-center">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="bradcam_text text-center">
+                                                    <h3>Blog Management</h3>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- bradcam_area_end -->
+                                <div class="row justify-content-center">
+                                    <div class="col-md-10">
+                                        <div class="card p-4 shadow-sm">
+                                            <form action="EditBlog" method="post" enctype="multipart/form-data">
+                                                <div class="row">
+                                                    <!-- Left Column -->
+                                                    <div class="col-lg-6 d-flex flex-column align-items-center">
+                                                        <!-- News ID -->
+                                                        <div class="form-group w-100 mb-3">
+                                                            <label for="newsID">News ID</label>
+                                                            <input type="text" class="form-control" id="newsID" name="newsID" value="${detail.newsID}" readonly>
+                                                        </div>
 
-                                <div class="modal-footer" style="text-align: center;">
-                                    <button type="submit" class="btn btn-info">Submit</button>
+                                                        <!-- News Title -->
+                                                        <div class="form-group w-100 mb-3">
+                                                            <label for="newsTitle">News Title</label>
+                                                            <input type="text" class="form-control" id="newsTitle" name="newsTitle" value="${detail.title}" required>
+                                                        </div>
+
+                                                        <!-- News Date -->
+                                                        <div class="form-group w-100 mb-3">
+                                                            <label for="newsDate">News Date</label>
+                                                            <input type="text" class="form-control" id="newsDate" value="${detail.updatedDate}" readonly>
+                                                        </div>
+
+                                                        <!-- Current News Image -->
+                                                        <div class="form-group w-100 text-center mb-3">
+                                                            <label>Current News Image</label>
+                                                            <div class="my-2">
+                                                                <img src="${detail.image}" alt="News Image" class="img-thumbnail" style="width: 200px; height: 150px;">
+                                                            </div>
+                                                            <p class="text-muted small">Current image path: ${detail.image}</p>
+                                                        </div>
+
+                                                        <!-- Input for new image URL -->
+
+                                                        <div id="avatarContainer" class="form-group w-100 mb-3">
+                                                            <img id="Img" src="path_to_default_avatar.jpg" alt="Image" style="width: 300px; height: 150px; object-fit: cover;">
+                                                            <input type="file" id="Upload" name="avatar" accept="image/*" style="margin-top: 15px;" onchange="previewAvatar()">
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Right Column -->
+                                                    <div class="col-lg-6 d-flex flex-column align-items-center">
+                                                        <!-- News Content -->
+                                                        <div class="form-group w-100 mb-3">
+                                                            <label for="newsContent">News Content</label>
+                                                            <textarea class="form-control" id="newsContent" name="newsContent" rows="7" style="resize: vertical;">${detail.content}</textarea>
+                                                        </div>
+
+                                                        <!-- News Message -->
+                                                        <div class="form-group w-100 mb-3">
+                                                            <label for="newsMessage">News Message</label>
+                                                            <textarea class="form-control" id="newsMessage" name="newsMessage" rows="3" style="resize: vertical;">${detail.message}</textarea>
+                                                        </div>
+
+                                                        <!-- News Category -->
+                                                        <div class="form-group w-100 mb-3">
+                                                            <label for="category">Category</label>
+                                                            <select name="category" id="category" class="form-select">
+                                                                <c:forEach items="${listCC}" var="o">
+                                                                    <option value="${o.ncategoriesID}" ${o.ncategoriesID == categoryID ? 'selected' : ''}>${o.ncategoryName}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Submit Button -->
+                                                <div class="text-center mt-4">
+                                                    <button type="submit" class="btn btn-info px-5">Submit</button>
+                                                </div>
+                                            </form>
+                                            <script>
+                                                function previewAvatar() {
+                                                    var fileInput = document.getElementById('Upload');
+                                                    if (fileInput.files.length > 0) {
+                                                        var reader = new FileReader();
+                                                        reader.onload = function (e) {
+                                                            document.getElementById('Img').src = e.target.result; // Cập nhật ảnh đại diện
+                                                        }
+                                                        reader.readAsDataURL(fileInput.files[0]); // Chuyển đổi ảnh thành base64
+                                                    }
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-
+                        </div>
                     </div>
-                </section>
-            </aside><!-- /.right-side -->
+                </div>
 
-        </div><!-- ./wrapper -->
-        <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="Dashboard/js/jquery.min.js" type="text/javascript"></script>
+            </div>
+        </div>
 
-        <!-- Bootstrap -->
-        <script src="Dashboard/js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- Director App -->
-        <script src="Dashboard/js/Director/app.js" type="text/javascript"></script>
+        <!--   Core JS Files   -->
+        <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="assets/js/core/popper.min.js"></script>
+        <script src="assets/js/core/bootstrap.min.js"></script>
+
+        <!-- jQuery Scrollbar -->
+        <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+        <!-- Chart JS -->
+        <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+
+        <!-- jQuery Sparkline -->
+        <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+        <!-- Chart Circle -->
+        <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+
+        <!-- Datatables -->
+        <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+        <!-- Bootstrap Notify -->
+        <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+        <!-- jQuery Vector Maps -->
+        <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+        <script src="assets/js/plugin/jsvectormap/world.js"></script>
+
+        <!-- Sweet Alert -->
+        <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+        <!-- Kaiadmin JS -->
+        <script src="assets/js/kaiadmin.min.js"></script>
+        <script>
+
+        </script>
+
+
     </body>
 </html>
-
-

@@ -1,99 +1,94 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller.BlogManagement;
 
-import Model.News;
 import Model.NewsCategories;
 import NewsDAO.NewsDAObyAdmin;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.List;
 
-/**
- *
- * @author admin
- */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 @WebServlet(name = "AddBlog", urlPatterns = {"/AddBlog"})
 public class AddBlog extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private static final String UPLOAD_DIR = "images";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
+        // Lấy các giá trị từ form
         String newsTitle = request.getParameter("newsTitle");
         String newsContent = request.getParameter("newsContent");
         String newMessage = request.getParameter("newsMessage");
         String categoryID = request.getParameter("category");
-        String newImageURL = request.getParameter("newImageURL"); // Lấy URL hình ảnh mới
-        HttpSession session = request.getSession();
-        String userId = (String) session.getAttribute("user_id");
 
-        if (userId == null) {
-            userId = "1";  // Giá trị mặc định chỉ dùng cho phát triển
+        // Tạo thư mục lưu trữ ảnh
+        String applicationPath = request.getServletContext().getRealPath("");
+        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
+
+        File uploadDir = new File(uploadFilePath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
         }
 
+        // Lấy ảnh từ form
+        Part filePart = request.getPart("avatar");
+        String fileName = null;
+        String avatarUrl = null;
+
+        if (filePart != null && filePart.getSize() > 0) {
+            fileName = System.currentTimeMillis() + "_" + Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String filePath = uploadFilePath + File.separator + fileName;
+            filePart.write(filePath); // Lưu ảnh vào thư mục
+            avatarUrl = UPLOAD_DIR + "/" + fileName; // Đường dẫn ảnh lưu trong DB
+        }
+
+        // Lấy user ID từ session
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("user_id");
+        if (userId == null) {
+            userId = "1"; // Giá trị mặc định chỉ dùng cho phát triển
+        }
+
+        // Lưu thông tin bài viết và hình ảnh vào cơ sở dữ liệu
         NewsDAObyAdmin dao = new NewsDAObyAdmin();
+        dao.insertNews(newsTitle, categoryID, newsContent, newMessage, userId, avatarUrl);
+
+        // Lấy danh sách các danh mục để hiển thị lại trên trang AddBlog.jsp
         List<NewsCategories> listC = dao.getAllCategory();
-        dao.insertNews(newsTitle, categoryID, newsContent, newMessage, userId, newImageURL);
         request.setAttribute("listCC", listC);
         request.getRequestDispatcher("Dashboard/AddBlog.jsp").forward(request, response);
-
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        NewsDAObyAdmin dao = new NewsDAObyAdmin();
+        List<NewsCategories> listC = dao.getAllCategory();
+        request.setAttribute("listCC", listC);
+        request.getRequestDispatcher("Dashboard/AddBlog.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Servlet to add new blog post with image upload";
+    }
 }

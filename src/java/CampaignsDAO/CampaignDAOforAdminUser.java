@@ -25,12 +25,13 @@ public class CampaignDAOforAdminUser {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public int getTotalCampaigns() {
+    public int getTotalCampaigns(String PID) {
         String query = "select count(*) from Campaigns\n"
-                + " where status = 'on'";
+                + " where project_id = ?";
         try {
             conn = new DBContext().makeConnection();
             ps = conn.prepareStatement(query);
+            ps.setString(1, PID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
@@ -40,18 +41,20 @@ public class CampaignDAOforAdminUser {
         return 0;
     }
 
-    public List<Campaign> getAllCampaigns(int index) {
+    public List<Campaign> getAllCampaigns(String PID, int index) {
         List<Campaign> list = new ArrayList<>();
         String query = "SELECT c.*, p.title "
                 + "FROM Campaigns c "
                 + "LEFT JOIN Projects p ON c.project_id = p.project_id "
+                + "WHERE p.project_id = ? "
                 + "ORDER BY c.campaign_id ASC "
                 + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
 
         try {
             conn = new DBContext().makeConnection();
             ps = conn.prepareStatement(query);
-            ps.setInt(1, (index - 1) * 5);
+            ps.setString(1, PID);
+            ps.setInt(2, (index - 1) * 5);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int campaignID = rs.getInt("campaign_id");

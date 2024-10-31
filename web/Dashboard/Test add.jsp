@@ -82,7 +82,42 @@
             }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
+        <script>
+            function deleteContact(contactId) {
+                Swal.fire({
+                    title: 'Bạn có chắc muốn xóa?',
+                    text: 'Thao tác này không thể khôi phục!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Gửi yêu cầu xóa đến server bằng AJAX
+                        $.ajax({
+                            url: 'staffcontact',
+                            type: 'POST',
+                            data: {action: 'delete', id: contactId},
+                            success: function () {
+                                Swal.fire({
+                                    title: 'Xóa thành công!',
+                                    icon: 'success',
+                                    timer: 200000
+                                }).then(() => {
+                                    // Cập nhật lại giao diện sau khi xóa
+                                    location.reload();
+                                });
+                            },
+                            error: function () {
+                                Swal.fire('Có lỗi xảy ra!', 'Vui lòng thử lại sau.', 'error');
+                            }
+                        });
+                    }
+                })
+            }
+        </script>
 
 
         <link
@@ -377,7 +412,7 @@
                                 <div class="row justify-content-center">
                                     <div class="col-md-9">
                                         <div class="card">
-                                            <form action="AddBlog" method="post" enctype="multipart/form-data">
+                                            <form action="AddBlog" method="post">
                                                 <div class="form-group row">
                                                     <!-- Col 1 -->
                                                     <div class="col-lg-6" style="display: flex; flex-direction: column; align-items: center;">
@@ -390,7 +425,7 @@
 
                                                         <!-- News Image URL -->
                                                         <div id="avatarContainer" style="margin-bottom: 15px; width: 100%;">
-                                                            <img id="Img" src="path_to_default_avatar.jpg" alt="Image" style="width: 300px; height: 150px; object-fit: cover;">
+                                                            <img id="Img" src="path_to_default_avatar.jpg" alt="Image" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
                                                             <input type="file" id="Upload" name="avatar" accept="image/*" style="margin-top: 15px;" onchange="previewAvatar()">
                                                         </div>
 

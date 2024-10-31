@@ -7,19 +7,28 @@ package Controller.BlogManagement;
 import Model.News;
 import NewsDAO.NewsDAObyAdmin;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 
 /**
  *
  * @author admin
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 @WebServlet(name = "EditBlog", urlPatterns = {"/EditBlog"})
 public class EditBlog extends HttpServlet {
+
+    private static final String UPLOAD_DIR = "images";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,13 +47,32 @@ public class EditBlog extends HttpServlet {
         String newsContent = request.getParameter("newsContent");
         String newMessage = request.getParameter("newsMessage");
         String categoryID = request.getParameter("category");
-        String newImageURL = request.getParameter("newImageURL"); // Lấy URL hình ảnh mới
+        // Tạo thư mục lưu trữ ảnh
+        String applicationPath = request.getServletContext().getRealPath("");
+        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
+
+        File uploadDir = new File(uploadFilePath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        // Lấy ảnh từ form
+        Part filePart = request.getPart("avatar");
+        String fileName = null;
+        String avatarUrl = null;
+
+        if (filePart != null && filePart.getSize() > 0) {
+            fileName = System.currentTimeMillis() + "_" + Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String filePath = uploadFilePath + File.separator + fileName;
+            filePart.write(filePath); // Lưu ảnh vào thư mục
+            avatarUrl = UPLOAD_DIR + "/" + fileName; // Đường dẫn ảnh lưu trong DB
+        }
 
         NewsDAObyAdmin dao = new NewsDAObyAdmin();
-        News currentNews = dao.getNewsByID(postID); 
+        News currentNews = dao.getNewsByID(postID);
 
-        // Kiểm tra nếu người dùng không nhập URL hình ảnh mới, giữ nguyên URL ảnh cũ
-        String imagePath = (newImageURL == null || newImageURL.isEmpty()) ? currentNews.getImage() : newImageURL;
+        // Kiểm tra nếu người dùng không nhập  hình ảnh mới, giữ nguyên  ảnh cũ
+        String imagePath = (avatarUrl != null) ? avatarUrl : currentNews.getImage();
         dao.editNews(newsTitle, newsContent, newMessage, imagePath, categoryID, postID);
 
         response.sendRedirect("BlogList");

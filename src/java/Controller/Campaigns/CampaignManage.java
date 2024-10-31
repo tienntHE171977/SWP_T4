@@ -35,6 +35,10 @@ public class CampaignManage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String indexPage = request.getParameter("index");
+        String PID = request.getParameter("PID");
+        if (PID == null || PID.isEmpty()) {
+            PID = "6"; // Giá trị mặc định
+        }
         String status = request.getParameter("status");
         if (indexPage == null) {
             indexPage = "1";
@@ -42,16 +46,16 @@ public class CampaignManage extends HttpServlet {
         int index = Integer.parseInt(indexPage);
 
         CampaignDAOforAdminUser dao = new CampaignDAOforAdminUser();
-        int count = dao.getTotalCampaigns();
+        int count = dao.getTotalCampaigns(PID);
         int endPage = count / 5;
         if (count % 5 != 0) {
             endPage++;
         }
 
-        List<Model.Campaign> list = dao.getAllCampaigns(index);
-        
+        List<Model.Campaign> list = dao.getAllCampaigns(PID, index);
+
         request.setAttribute("list", list);
-        
+
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
         request.setAttribute("totalPage", count);
