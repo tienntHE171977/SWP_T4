@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Staff;
-import model.Users;
+import model.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -78,7 +78,7 @@ public class ChangePasswordStaffController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
-        Users currentUser = (Users) session.getAttribute("acc");
+        User currentUser = (User) session.getAttribute("acc");
         if (currentUser == null) {
             String mee = "Không lấy được session";
             request.setAttribute("me", mee);

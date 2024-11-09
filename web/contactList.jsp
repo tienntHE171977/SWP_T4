@@ -5,16 +5,12 @@
 <html lang="en">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Staff Dashboard</title>
+        <title>Bảng Điều khiển</title>
         <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
             />
-        <link
-            rel="icon"
-            href="assets/img/kaiadmin/favicon.ico"
-            type="image/x-icon"
-            />
+
 
         <!-- Fonts and icons -->
         <script src="assets/js/plugin/webfont/webfont.min.js"></script>
@@ -168,39 +164,51 @@
                     <div class="sidebar-content">
                         <ul class="nav nav-secondary">
                             <li class="nav-item active">
-                                <a href="staff.jsp">
+                                <a href="staff">
                                     <i class="fas fa-tachometer-alt"></i> <!-- Icon cho Dashboard -->
-                                    <p>Dashboard</p>
+                                    <p>Bảng điều kiển </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="project.jsp">
+                                <a href="project">
                                     <i class="fas fa-folder"></i> <!-- Icon cho Project -->
-                                    <p>Project</p>
+                                    <p>Dự án</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="event.jsp">
-                                    <i class="fas fa-calendar-alt"></i> <!-- Icon cho Event -->
-                                    <p>Event</p>
+                                <a href="userList">
+                                    <i class="fa-solid fa-user"></i> <!-- Icon cho Project -->
+                                    <p>Người dùng</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="campaign.jsp">
-                                    <i class="fas fa-bullhorn"></i> <!-- Icon cho Campaign -->
-                                    <p>Campaign</p>
+                                <a href="event-manage">
+                                    <i class="fa-solid fa-calendar-days"></i> <!-- Icon cho Event -->
+                                    <p>Sự kiện</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="organization.jsp">
-                                    <i class="fas fa-bullhorn"></i> <!-- Icon cho Campaign -->
-                                    <p>Organizations</p>
+                                <a href="CampaignList">
+                                    <i class="fa-solid fa-campground"></i> <!-- Icon cho Campaign -->
+                                    <p>Chiến dịch</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="organization-manage">
+                                    <i class="fa-solid fa-sitemap"></i> <!-- Icon cho Campaign -->
+                                    <p>Tổ chức</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="staffcontact">
-                                    <i class="fas fa-address-book"></i> <!-- Icon cho Contact -->
-                                    <p>Contact</p>
+                                    <i class="fa-solid fa-address-book"></i> <!-- Icon cho Contact -->
+                                    <p>Liên hệ</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="BlogList">
+                                    <i class="fa-solid fa-address-book"></i> <!-- Icon cho Contact -->
+                                    <p>Tin tức</p>
                                 </a>
                             </li>
                         </ul>
@@ -215,7 +223,7 @@
                     <div class="main-header-logo">
                         <!-- Logo Header -->
                         <div class="logo-header" data-background-color="dark">
-                            <a href="index.html" class="logo">
+                            <a href="staff" class="logo">
                                 <img
                                     src="img/logo.png"
                                     alt="navbar brand"
@@ -242,7 +250,7 @@
                         class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
                         >
                         <div class="container-fluid">
-                            <nav
+<!--                            <nav
                                 class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -257,10 +265,10 @@
                                         />
                                 </div>
 
-                            </nav>
+                            </nav>-->
 
                             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                                <li
+<!--                                <li
                                     class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
                                     >
                                     <a
@@ -284,87 +292,42 @@
                                             </div>
                                         </form>
                                     </ul>
-                                </li>
+                                </li>-->
 
                                 <li class="nav-item topbar-icon dropdown hidden-caret">
-                                    <a
-                                        class="nav-link dropdown-toggle"
-                                        href="#"
-                                        id="notifDropdown"
-                                        role="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        >
+                                    <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-bell"></i>
-                                        <span class="notification">4</span>
+                                        <span class="notification">${notifications.size()}</span>
                                     </a>
-                                    <ul
-                                        class="dropdown-menu notif-box animated fadeIn"
-                                        aria-labelledby="notifDropdown"
-                                        >
+                                    <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                                         <li>
                                             <div class="dropdown-title">
-                                                You have 4 new notification
+                                                You have ${notifications.size()} new notifications
                                             </div>
                                         </li>
                                         <li>
                                             <div class="notif-scroll scrollbar-outer">
                                                 <div class="notif-center">
-                                                    <a href="#">
-                                                        <div class="notif-icon notif-primary">
-                                                            <i class="fa fa-user-plus"></i>
-                                                        </div>
-                                                        <div class="notif-content">
-                                                            <span class="block"> New user registered </span>
-                                                            <span class="time">5 minutes ago</span>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#">
-                                                        <div class="notif-icon notif-success">
-                                                            <i class="fa fa-comment"></i>
-                                                        </div>
-                                                        <div class="notif-content">
-                                                            <span class="block">
-                                                                Rahmad commented on Admin
-                                                            </span>
-                                                            <span class="time">12 minutes ago</span>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#">
-                                                        <div class="notif-img">
-                                                            <img
-                                                                src="assets/img/profile2.jpg"
-                                                                alt="Img Profile"
-                                                                />
-                                                        </div>
-                                                        <div class="notif-content">
-                                                            <span class="block">
-                                                                Reza send messages to you
-                                                            </span>
-                                                            <span class="time">12 minutes ago</span>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#">
-                                                        <div class="notif-icon notif-danger">
-                                                            <i class="fa fa-heart"></i>
-                                                        </div>
-                                                        <div class="notif-content">
-                                                            <span class="block"> Farrah liked Admin </span>
-                                                            <span class="time">17 minutes ago</span>
-                                                        </div>
-                                                    </a>
+                                                    <c:forEach var="notification" items="${notifications}">
+                                                        <a href="#">
+                                                            <div class="notif-icon notif-primary">
+                                                                <i class="fa fa-info-circle"></i>
+                                                            </div>
+                                                            <div class="notif-content">
+                                                                <span class="block">${notification.message}</span>
+                                                                <span class="time">${notification.createdAt}</span>
+                                                            </div>
+                                                        </a>
+                                                    </c:forEach>
                                                 </div>
                                             </div>
                                         </li>
                                         <li>
-                                            <a class="see-all" href="javascript:void(0);"
-                                               >See all notifications<i class="fa fa-angle-right"></i>
-                                            </a>
+                                            <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i></a>
                                         </li>
                                     </ul>
                                 </li>
-                                
+
 
                                 <li class="nav-item topbar-user dropdown hidden-caret">
                                     <a
@@ -375,13 +338,12 @@
                                         >
                                         <div class="avatar-sm">
                                             <img
-                                                src="${acc.image}"
-                                                alt="..."
+                                                src="${staff.getUser().getImage()}" alt="Staff Avatar"
                                                 class="avatar-img rounded-circle"
                                                 />
                                         </div>
                                         <span class="profile-username">
-                                            <span class="op-7">Hi,</span>
+                                            <span class="op-7">Chào,</span>
                                             <span class="fw-bold">${staff.getUser().getFullname()}</span>
                                         </span>
                                     </a>
@@ -391,7 +353,7 @@
                                                 <div class="user-box">
                                                     <div class="avatar-lg">
                                                         <img
-                                                            src="assets/img/profile.jpg"
+                                                            src="${staff.getUser().getImage()}"
                                                             alt="image profile"
                                                             class="avatar-img rounded"
                                                             />
@@ -402,20 +364,20 @@
                                                         <a
                                                             href="staffProfile.jsp"
                                                             class="btn btn-xs btn-secondary btn-sm"
-                                                            >View Profile</a
+                                                            >Xem hồ sơ</a
                                                         >
                                                     </div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="dropdown-divider"></div>
-                                                
-                                                <a class="dropdown-item" href="changepasswordstaff">Change PassWord</a>
-                                                
+
+                                                <a class="dropdown-item" href="changepasswordstaff">Đổi mật khẩu</a>
+
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="editStaff">Account Setting</a>
+                                                <a class="dropdown-item" href="editStaff">Cài đặt tài khoản</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="logout">Logout</a>
+                                                <a class="dropdown-item" href="logout">Đăng xuất</a>
                                             </li>
                                         </div>
                                     </ul>
@@ -432,8 +394,8 @@
                             class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
                             >
                             <div>
-                                <h3 class="fw-bold mb-3">Dashboard</h3>
-                                <h6 class="op-7 mb-2">Staff Dashboard</h6>
+                                <h3 class="fw-bold mb-3">Bảng điều khiển</h3>
+                                <h6 class="op-7 mb-2">Bảng điều khiển nhân viên</h6>
                             </div>
 
                         </div>
@@ -441,12 +403,17 @@
                             <div class="page-inner">
                                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                                     <div>
-                                        <h3 class="fw-bold mb-3">Staff Contact</h3>
+                                        <h3 class="fw-bold mb-3">Bảng điều khiển Liên hệ</h3>
+                                        
 
                                     </div>
                                 </div>
 
 
+                                <form action="staffcontact" method="get" class="d-flex mb-3">
+                                    <input type="text" name="searchName" placeholder="Tìm kiếm theo tên" class="form-control me-2" value="${param.searchName}">
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </form>
 
                                 <!-- Row for Transaction History -->
                                 <div class="row" >
@@ -457,10 +424,10 @@
                                                 <div class="card-tools">
                                                     <form action="staffcontact" method="get" class="mb-3">
                                                         <select name="status" class="form-control" onchange="this.form.submit()">
-                                                            <option value="">All Statuses</option>
-                                                            <option value="new" ${param.status == 'new' ? 'selected' : ''}>New</option>
-                                                            <option value="in progress" ${param.status == 'in progress' ? 'selected' : ''}>In Progress</option>
-                                                            <option value="resolved" ${param.status == 'resolved' ? 'selected' : ''}>Resolved</option>
+                                                            <option value="">Tất cả</option>
+                                                            <option value="new" ${param.status == 'new' ? 'selected' : ''}>mới</option>
+                                                            <option value="in progress" ${param.status == 'in progress' ? 'selected' : ''}>đang duyệt</option>
+                                                            <option value="resolved" ${param.status == 'resolved' ? 'selected' : ''}>từ chối</option>
                                                         </select>
                                                     </form>
                                                 </div>
@@ -471,12 +438,12 @@
                                                         <thead class="thead-light">
                                                             <tr>
                                                                 <th scope="col">ID</th>
-                                                                <th scope="col" class="text-end">Name </th>
+                                                                <th scope="col" class="text-end">Tiên </th>
                                                                 <th scope="col" class="text-end">Email</th>
-                                                                <th scope="col" class="text-end">Subject</th>
-                                                                <th scope="col" class="text-end">Status</th>
-                                                                <th scope="col" class="text-end">Created At</th>
-                                                                <th scope="col" class="text-end">Actions</th>
+                                                                <th scope="col" class="text-end">Chủ đề</th>
+                                                                <th scope="col" class="text-end">Trạng thái</th>
+                                                                <th scope="col" class="text-end">Tạo ngày </th>
+                                                                <th scope="col" class="text-end">Hành động</th>
 
                                                             </tr>
                                                         </thead>
@@ -496,11 +463,11 @@
                                                                             </td>
                                                                             <td class="text-end">${contact.created_at}</td>
                                                                             <td class="text-end">
-                                                                                <a href="staffcontact?action=view&id=${contact.contact_id}" class="btn btn-sm btn-info">View</a>
+                                                                                <a href="staffcontact?action=view&id=${contact.contact_id}" class="btn btn-sm btn-info">Xem</a>
                                                                                 <c:if test="${contact.status == 'new'}">
-                                                                                    <a href="staffcontact?action=assign&id=${contact.contact_id}" class="btn btn-sm btn-primary">Assign to Me</a>
+                                                                                    <a href="staffcontact?action=assign&id=${contact.contact_id}" class="btn btn-sm btn-primary">Giao cho tôi</a>
                                                                                 </c:if>
-                                                                                <button href="staffcontact?action=delete&id=${contact.contact_id}" onclick="deleteContact(${contact.contact_id})" class="btn btn-sm btn-danger">Delete</button>
+                                                                                <button href="staffcontact?action=delete&id=${contact.contact_id}" onclick="deleteContact(${contact.contact_id})" class="btn btn-sm btn-danger">Xóa</button>
                                                                                 <!--                                                                                    <button onclick="deleteContact(20)">Delete Contact</button>-->
                                                                             </td>
                                                                         </tr>
@@ -508,7 +475,7 @@
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <tr>
-                                                                        <td colspan="7" class="text-center">No contacts found</td>
+                                                                        <td colspan="7" class="text-center">Không tìm thấy địa chỉ liên hệ nào</td>
                                                                     </tr>
                                                                 </c:otherwise>
                                                             </c:choose>
@@ -544,25 +511,22 @@
                         <ul class="nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="http://www.themekita.com">
-                                    ThemeKita
+                                    Team4
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> Help </a>
+                                <a class="nav-link" href="#"> Hỗ trợ </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> Licenses </a>
+                                <a class="nav-link" href="#"> Giấy phép </a>
                             </li>
                         </ul>
                     </nav>
                     <div class="copyright">
-                        2024, made with <i class="fa fa-heart heart text-danger"></i> by
-                        <a href="http://www.themekita.com">ThemeKita</a>
+                        2024, tạo <i class="fa fa-heart heart text-danger"></i> bởi
+                        <a href="http://www.themekita.com">Team4</a>
                     </div>
-                    <div>
-                        Distributed by
-                        <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-                    </div>
+                    
                 </div>
             </footer>
         </div>

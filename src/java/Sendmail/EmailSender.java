@@ -9,7 +9,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import model.Users;
+import model.User;
 
 public class EmailSender {
 
@@ -81,7 +81,7 @@ public class EmailSender {
         }
     }
 
-    public static void sendEmailToUser(Users user, String code) {
+    public static void sendEmailToUser(User user, String code) {
         if (user != null && user.getEmail() != null) {
             sendEmail(user.getEmail(), code);
         } else {
@@ -91,7 +91,7 @@ public class EmailSender {
 
     public static void main(String[] args) {
         // Tạo một đối tượng người dùng với email
-        Users user = new Users();
+        User user = new User();
         user.setEmail("nguyentrungtien512003@gmail.com"); // Thay thế bằng email người nhận
 
         // Mã xác nhận để gửi

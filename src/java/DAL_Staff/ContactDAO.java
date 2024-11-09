@@ -195,6 +195,35 @@ public class ContactDAO extends DBContext {
         return false;
     }
 }
+    
+    public List<Contact> searchContactsByName(String name) {
+    List<Contact> contacts = new ArrayList<>();
+    String query = "SELECT * FROM Contact WHERE subject LIKE ? ORDER BY created_at DESC";
+
+    try {
+        ps = connection.prepareStatement(query);
+        ps.setString(1, "%" + name + "%");
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Contact contact = new Contact(
+                    rs.getInt("contact_id"),
+                    rs.getString("name"),
+                    rs.getString("email"),
+                    rs.getString("subject"),
+                    rs.getString("message"),
+                    rs.getString("status"),
+                    rs.getDate("created_at"),
+                    rs.getInt("assigned_staff_id")
+            );
+            contacts.add(contact);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return contacts;
+}
+
 
 
     public List<Contact> getUnassignedContacts() {

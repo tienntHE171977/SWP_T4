@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Reset Password For Staff</title>
+        <title>Đặt Lại Mật Khẩu Cho Nhân Viên</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -108,20 +108,19 @@
     </head>
     <body>
         <form action="resetPasswordRequired" method="post" onsubmit="return validateForm()">
-            <h2>Reset Password For Staff</h2>
+            <h2>Đặt Lại Mật Khẩu Cho Nhân Viên</h2>
             <input type="hidden" name="action" value="resetPassword">
-            <input type="email" name="email" required placeholder="Confirm your email">
+            <input type="email" name="email" required placeholder="Xác nhận email của bạn">
             <span id="email-error" class="error-message"></span>
             <div class="otp-container">
-                <input type="text" name="otp" required placeholder="Enter OTP" class="otp-input" maxlength="6">
-                <button type="button" class="send-button" onclick="sendOTP()" >Send</button>
+                <input type="text" name="otp" required placeholder="Nhập mã OTP" class="otp-input" maxlength="6">
+                <button type="button" class="send-button" onclick="sendOTP()">Gửi</button>
             </div>
-            <input type="password" name="newPassword" id="newPassword" required placeholder="Enter new password">
-            <input type="password" name="newPassword_confirm" id="newPassword_confirm" required placeholder="Confirm new password">
-            <button type="submit">Reset Password</button>
+            <input type="password" name="newPassword" id="newPassword" required placeholder="Nhập mật khẩu mới">
+            <input type="password" name="newPassword_confirm" id="newPassword_confirm" required placeholder="Xác nhận mật khẩu mới">
+            <button type="submit">Đặt Lại Mật Khẩu</button>
 
             <div id="message">
-
                 <% if(request.getAttribute("error") != null) { %>
                 <p class="error"><%= request.getAttribute("error") %></p>
                 <% } %>
@@ -129,8 +128,9 @@
                 <p class="success"><%= request.getAttribute("success") %></p>
                 <% } %>
             </div>
-            <button onclick="backToLogin()" style=" margin-top: 20px;">Back to Login</button>
+            <button onclick="backToLogin()" style="margin-top: 20px;">Quay lại Đăng Nhập</button>
         </form>
+
 
 
     <body>
@@ -171,9 +171,9 @@
 
                 function showError() {
                     if (emailInput.validity.valueMissing) {
-                        emailError.textContent = 'You need to enter an email address.';
+                        emailError.textContent = 'Bạn cần nhập địa chỉ email.';
                     } else if (emailInput.validity.typeMismatch) {
-                        emailError.textContent = 'Entered value needs to be an email address.';
+                        emailError.textContent = 'Giá trị nhập vào cần là một địa chỉ email.';
                     }
                     emailError.style.display = 'block';
                     emailInput.style.borderColor = 'red';

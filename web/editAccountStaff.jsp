@@ -3,7 +3,7 @@
     Created on : Oct 25, 2024, 4:18:10 AM
     Author     : FPT
 --%>
-<%@ page import="model.Users" %>
+<%@ page import="model.User" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +12,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Staff Profile</title>
+        <title>Chỉnh sửa hồ sơ nhân viên</title>
         <style>
             * {
                 margin: 0;
@@ -177,38 +177,38 @@
                         </div>
 
                         <div class="info-group">
-                            <div class="info-label">Phone</div>
+                            <div class="info-label">Số điện thoại</div>
                             <div class="info-value">
                                 <input type="tel" id="staffPhone" name="phone" value="${acc.phone}">
                             </div>
                         </div>
 
                         <div class="info-group">
-                            <div class="info-label">Address</div>
+                            <div class="info-label">Địa chỉ</div>
                             <div class="info-value">
                                 <input type="text" id="staffAddress" name="address" value="${staff.user.getAdrees()}">
                             </div>
                         </div>
 
                         <div class="info-group">
-                            <div class="info-label">Department</div>
+                            <div class="info-label">Chức vụ</div>
                             <div class="info-value">
                                 <input type="text" id="staffDepartment" value="${staff.role_staff}" readonly>
                             </div>
                         </div>
 
                         <div class="info-group">
-                            <div class="info-label">Join Date</div>
+                            <div class="info-label">Ngày tham gia</div>
                             <div class="info-value">
                                 <input type="text" id="staffJoinDate" value="${staff.created_at}" readonly>
                             </div>
                         </div>
 
                         <div class="edit-profile">
-                            <button type="submit" class="btn btn-edit">Save Changes</button>
+                            <button type="submit" class="btn btn-edit">Lưu thay đổi</button>
                         </div>
                         <div class="edit-profile">
-                            <button class="btn btn-home" onclick="event.preventDefault(); window.location.href = 'staff';">Back to Home</button>
+                            <button class="btn btn-home" onclick="event.preventDefault(); window.location.href = 'staff';">Quay lại trang điều khiển</button>
                         </div>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
                 <span class="close-btn" onclick="closeModal()">&times;</span>
                 <img id="modalAvatarImg" src="" alt="Avatar" style="width: 100%; height: auto; margin-bottom: 20px;">
                 <input type="file" id="modalAvatarUpload" accept="image/*">
-                <button class="btn btn-edit" onclick="changeAvatar()">Change Avatar</button>
+                <button class="btn btn-edit" onclick="changeAvatar()">đổi ảnh</button>
             </div>
         </div>
 

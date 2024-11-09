@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Staff;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -68,37 +68,37 @@ public class Google_loginController extends HttpServlet {
                 String accessToken = Google_Login.getToken(code);
 
                 // Lấy thông tin người dùng từ Google
-                Users account = Google_Login.getUserInfo(accessToken);
+                User account = Google_Login.getUserInfo(accessToken);
 
                 if (account != null) {
                     HttpSession session = request.getSession();
                     AccountDAO accountDao = new AccountDAO();
                     StaffDAO sd = new StaffDAO();
+
                     // Kiểm tra xem người dùng có tồn tại trong cơ sở dữ liệu không
-                    Users existingUser = accountDao.getUserByEmail(account.getEmail());
-                    Staff s = sd.getStaffByUserId(existingUser.getUserId());
-                  s.setUser(existingUser);
+                    User existingUser = accountDao.getUserByEmail(account.getEmail());
 
                     if (existingUser != null) {
-                        
+                        Staff s = sd.getStaffByUserId(existingUser.getUserId());
+                        s.setUser(existingUser);
+
                         session.setAttribute("acc", existingUser);
                         session.setAttribute("staff", s);
                         session.setMaxInactiveInterval(30 * 60);
 
                         // Kiểm tra vai trò của người dùng
                         String role = existingUser.getRole();
-                        request.getSession().setAttribute("acc", existingUser);
                         if ("admin".equals(role)) {
                             response.sendRedirect("admin.jsp");
                         } else if ("staff".equals(role)) {
-                            response.sendRedirect("staff.jsp");
+                            response.sendRedirect("staff");
                         } else {
                             // Vai trò không xác định, chuyển hướng đến trang chính
                             response.sendRedirect("index.jsp");
                         }
                     } else {
-
-                        request.getSession().setAttribute("tempUser", account);
+                        // Người dùng không tồn tại, chuyển hướng đến trang đăng ký
+                        session.setAttribute("tempUser", account);
                         response.sendRedirect("registration.jsp");
                     }
 

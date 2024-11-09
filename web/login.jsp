@@ -3,7 +3,7 @@
     Created on : Sep 23, 2024, 12:15:23 AM
     Author     : FPT
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Login</title>
+        <title>Đăng Nhập</title>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
@@ -34,37 +34,35 @@
                             <figure>
                                 <img src="images/logolacay.jpg" alt="sing up image">
                             </figure>
-                            <a href="registration.jsp" class="signup-image-link">Create an
-                                account</a>
+                            <a href="registration.jsp" class="signup-image-link">Tạo tài Khoản</a>
                         </div>
 
                         <div class="signin-form">
-                            <h2 class="form-title">Login</h2>
+                            <h2 class="form-title">Đăng nhập</h2>
                             <form method="post" action="login" class="register-form"
                                   id="login-form">
                                 <div class="form-group">
                                     <label for="username"><i
                                             class="zmdi zmdi-account material-icons-name"></i></label> <input
                                         type="text" name="emailorusername" value="${username}"
-                                        placeholder="Email or Username" />
+                                        placeholder="Email hoặc Tên Đăng nhập" />
                                 </div>
                                 <div class="form-group">
                                     <label for="password"><i class="zmdi zmdi-lock"></i></label> <input
                                         type="password" name="password" id="password" value="${password}"
-                                        placeholder="Password"/>
+                                        placeholder="Mật khẩu"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="checkbox" name="remember-me" id="remember-me"
                                            class="agree-term" /> <label for="remember-me"
-                                           class="label-agree-term"><span><span></span></span>Remember
-                                        me</label>
+                                           class="label-agree-term"><span><span></span></span>Lưu Tài Khoản</label>
                                 </div>
                                 <div class="forget-password">
-                                    <a href="resetPassword">Forget Password?</a>
+                                    <a href="resetPassword">Lấy lại mật khẩu?</a>
                                 </div>
                                 <div class="form-group form-button">
                                     <input type="submit" name="signin" id="signin"
-                                           class="form-submit" value="Log in" />
+                                           class="form-submit" value="Đăng nhập" />
                                 </div>
                                 <div >
                                     <p style="color: red;">${err}</p>
@@ -73,12 +71,9 @@
                                 </div>
                             </form>
                             <div class="social-login">
-                                <span class="social-label">Or login with</span>
+                                <span class="social-label">Đăng nhập với</span>
                                 <ul class="socials">
-                                    <li><a href="#"><i
-                                                class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                    <li><a href="#"><i
-                                                class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                    
                                     <li><a href="https://accounts.google.com/o/oauth2/auth?client_id=696107190644-uun9t77kr1ohvrmcpufnhs9c69lmar2v.apps.googleusercontent.com&redirect_uri=http://localhost:8080/swp391/google&response_type=code&scope=email%20profile" class="field google">
                                             <i class="display-flex-center zmdi zmdi-google"></i></a></li>
                                 </ul>

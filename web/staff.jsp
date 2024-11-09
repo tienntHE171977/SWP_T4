@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,11 +9,11 @@
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
             />
-        <link
-            rel="icon"
-            href="assets/img/kaiadmin/favicon.ico"
-            type="image/x-icon"
-            />
+        <!--        <link
+                    rel="icon"
+                    href="assets/img/kaiadmin/favicon.ico"
+                    type="image/x-icon"
+                    />-->
 
         <!-- Fonts and icons -->
         <script src="assets/js/plugin/webfont/webfont.min.js"></script>
@@ -70,12 +70,19 @@
             }
 
             .chart-container {
+
                 width: 100%;
                 height: 400px;
             }
 
             .card-title {
                 font-weight: bold;
+            }
+            .file-export_box {
+                border-radius: 5px;
+                background-color: green;
+                color: white;
+                cursor: pointer;
             }
         </style>
         <link
@@ -85,14 +92,14 @@
 
         <!-- Font Awesome -->
 
-
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <!-- CSS Files -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/plugins.min.css" />
         <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-        <link rel="stylesheet" href="assets/css/fonts.min.css" />
-        <link rel="stylesheet" href="assets/css/fonts.css" />
+        <!--        <link rel="stylesheet" href="assets/css/fonts.min.css" />-->
+        <!--        <link rel="stylesheet" href="assets/css/fonts.css" />-->
         <link rel="stylesheet" href="assets/css/plugins.css" />
     </head>
     <body>
@@ -102,7 +109,7 @@
                 <div class="sidebar-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="index.html" class="logo">
+                        <a href="staff" class="logo">
                             <img
                                 src="img/logo.png"
                                 alt="navbar brand"
@@ -128,39 +135,51 @@
                     <div class="sidebar-content">
                         <ul class="nav nav-secondary">
                             <li class="nav-item active">
-                                <a href="staff.jsp">
+                                <a href="staff">
                                     <i class="fas fa-tachometer-alt"></i> <!-- Icon cho Dashboard -->
-                                    <p>Dashboard</p>
+                                    <p>Bảng điều kiển </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="project.jsp">
+                                <a href="project">
                                     <i class="fas fa-folder"></i> <!-- Icon cho Project -->
-                                    <p>Project</p>
+                                    <p>Dự án</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="event.jsp">
-                                    <i class="fas fa-calendar-alt"></i> <!-- Icon cho Event -->
-                                    <p>Event</p>
+                                <a href="userList">
+                                    <i class="fa-solid fa-user"></i> <!-- Icon cho Project -->
+                                    <p>Người dùng</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="campaign.jsp">
-                                    <i class="fas fa-bullhorn"></i> <!-- Icon cho Campaign -->
-                                    <p>Campaign</p>
+                                <a href="event-manage">
+                                    <i class="fa-solid fa-calendar-days"></i> <!-- Icon cho Event -->
+                                    <p>Sự kiện</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="organization.jsp">
-                                    <i class="fas fa-bullhorn"></i> <!-- Icon cho Campaign -->
-                                    <p>Organizations</p>
+                                <a href="CampaignList">
+                                    <i class="fa-solid fa-campground"></i> <!-- Icon cho Campaign -->
+                                    <p>Chiến dịch</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="organization-manage">
+                                    <i class="fa-solid fa-sitemap"></i> <!-- Icon cho Campaign -->
+                                    <p>Tổ chức</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="staffcontact">
-                                    <i class="fas fa-address-book"></i> <!-- Icon cho Contact -->
-                                    <p>Contact</p>
+                                    <i class="fa-solid fa-address-book"></i> <!-- Icon cho Contact -->
+                                    <p>Liên hệ</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="BlogList">
+                                    <i class="fa-solid fa-address-book"></i> <!-- Icon cho Contact -->
+                                    <p>Tin tức</p>
                                 </a>
                             </li>
                         </ul>
@@ -175,7 +194,7 @@
                     <div class="main-header-logo">
                         <!-- Logo Header -->
                         <div class="logo-header" data-background-color="dark">
-                            <a href="index.html" class="logo">
+                            <a href="staff" class="logo">
                                 <img
                                     src="img/logo.png"
                                     alt="navbar brand"
@@ -202,7 +221,7 @@
                         class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
                         >
                         <div class="container-fluid">
-                            <nav
+<!--                            <nav
                                 class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -217,7 +236,7 @@
                                         />
                                 </div>
 
-                            </nav>
+                            </nav>-->
 
                             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                                 <li
@@ -233,7 +252,7 @@
                                         >
                                         <i class="fa fa-search"></i>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-search animated fadeIn">
+<!--                                    <ul class="dropdown-menu dropdown-search animated fadeIn">
                                         <form class="navbar-left navbar-form nav-search">
                                             <div class="input-group">
                                                 <input
@@ -243,88 +262,11 @@
                                                     />
                                             </div>
                                         </form>
-                                    </ul>
+                                    </ul>-->
                                 </li>
 
-                                <li class="nav-item topbar-icon dropdown hidden-caret">
-                                    <a
-                                        class="nav-link dropdown-toggle"
-                                        href="#"
-                                        id="notifDropdown"
-                                        role="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        >
-                                        <i class="fa fa-bell"></i>
-                                        <span class="notification">4</span>
-                                    </a>
-                                    <ul
-                                        class="dropdown-menu notif-box animated fadeIn"
-                                        aria-labelledby="notifDropdown"
-                                        >
-                                        <li>
-                                            <div class="dropdown-title">
-                                                You have 4 new notification
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="notif-scroll scrollbar-outer">
-                                                <div class="notif-center">
-                                                    <a href="#">
-                                                        <div class="notif-icon notif-primary">
-                                                            <i class="fa fa-user-plus"></i>
-                                                        </div>
-                                                        <div class="notif-content">
-                                                            <span class="block"> New user registered </span>
-                                                            <span class="time">5 minutes ago</span>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#">
-                                                        <div class="notif-icon notif-success">
-                                                            <i class="fa fa-comment"></i>
-                                                        </div>
-                                                        <div class="notif-content">
-                                                            <span class="block">
-                                                                Rahmad commented on Admin
-                                                            </span>
-                                                            <span class="time">12 minutes ago</span>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#">
-                                                        <div class="notif-img">
-                                                            <img
-                                                                src="assets/img/profile2.jpg"
-                                                                alt="Img Profile"
-                                                                />
-                                                        </div>
-                                                        <div class="notif-content">
-                                                            <span class="block">
-                                                                Reza send messages to you
-                                                            </span>
-                                                            <span class="time">12 minutes ago</span>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#">
-                                                        <div class="notif-icon notif-danger">
-                                                            <i class="fa fa-heart"></i>
-                                                        </div>
-                                                        <div class="notif-content">
-                                                            <span class="block"> Farrah liked Admin </span>
-                                                            <span class="time">17 minutes ago</span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a class="see-all" href="javascript:void(0);"
-                                               >See all notifications<i class="fa fa-angle-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
                                 
+                                <jsp:include page ="Notification.jsp"></jsp:include>
 
                                 <li class="nav-item topbar-user dropdown hidden-caret">
                                     <a
@@ -340,7 +282,7 @@
                                                 />
                                         </div>
                                         <span class="profile-username">
-                                            <span class="op-7">Hi,</span>
+                                            <span class="op-7">Chào,</span>
                                             <span class="fw-bold">${staff.getUser().getFullname()}</span>
                                         </span>
                                     </a>
@@ -350,7 +292,7 @@
                                                 <div class="user-box">
                                                     <div class="avatar-lg">
                                                         <img
-                                                            src="assets/img/profile.jpg"
+                                                            src="${staff.getUser().getImage()}"
                                                             alt="image profile"
                                                             class="avatar-img rounded"
                                                             />
@@ -361,20 +303,20 @@
                                                         <a
                                                             href="staffProfile.jsp"
                                                             class="btn btn-xs btn-secondary btn-sm"
-                                                            >View Profile</a
+                                                            >Xem hồ sơ</a
                                                         >
                                                     </div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="dropdown-divider"></div>
-                                                
-                                                <a class="dropdown-item" href="changepasswordstaff">Change PassWord</a>
-                                                
+
+                                                <a class="dropdown-item" href="changepasswordstaff">Đổi mật khẩu</a>
+
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="editStaff">Account Setting</a>
+                                                <a class="dropdown-item" href="editStaff">Cài đặt tài khoản</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="logout">Logout</a>
+                                                <a class="dropdown-item" href="logout">Đăng xuất</a>
                                             </li>
                                         </div>
                                     </ul>
@@ -391,22 +333,24 @@
                             class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
                             >
                             <div>
-                                <h3 class="fw-bold mb-3">Dashboard</h3>
-                                <h6 class="op-7 mb-2">Staff Dashboard</h6>
+                                <h3 class="fw-bold mb-3">Bảng điều khiển</h3>
+                                <h6 class="op-7 mb-2">Bảng điều khiển nhân viên</h6>
+
                             </div>
 
                         </div>
-                        <<div class="container">
+                        <div class="container">
                             <div class="page-inner">
+                                <div class="page-inner">
                                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                                     <div>
-                                        <h3 class="fw-bold mb-3">Dashboard</h3>
-                                        <h6 class="op-7 mb-2">Staff Dashboard</h6>
+                                        <h3 class="fw-bold mb-3">Bảng điều khiển</h3>
+                                        <h6 class="op-7 mb-2">Bảng điều khiển nhân viên</h6>
                                     </div>
                                 </div>
 
                                 <!-- Row for Project, Event, Campaign -->
-                                <div class="row">
+                                 <div class="row">
                                     <div class="col-sm-6 col-md-3">
                                         <div class="card card-stats card-round">
                                             <div class="card-body">
@@ -418,29 +362,29 @@
                                                     </div>
                                                     <div class="col col-stats ms-3 ms-sm-0">
                                                         <div class="numbers">
-                                                            <p class="card-category">Project</p>
-                                                            <h4 class="card-title">1,294</h4>
+                                                            <p class="card-category">Dự án</p>
+                                                            <h4 class="card-title">${totalProjects}</h4>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    
+
+
                                     <div class="col-sm-6 col-md-3">
                                         <div class="card card-stats card-round">
                                             <div class="card-body">
                                                 <div class="row align-items-center">
                                                     <div class="col-icon">
                                                         <div class="icon-big text-center icon-info bubble-shadow-small">
-                                                            <i class="fas fa-donate"></i>
+                                                            <i class="fa-solid fa-calendar-days"></i>
                                                         </div>
                                                     </div>
                                                     <div class="col col-stats ms-3 ms-sm-0">
                                                         <div class="numbers">
-                                                            <p class="card-category">Event</p>
-                                                            <h4 class="card-title">1,303</h4>
+                                                            <p class="card-category">Sự kiện</p>
+                                                            <h4 class="card-title">${totalEvents}</h4>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -453,13 +397,13 @@
                                                 <div class="row align-items-center">
                                                     <div class="col-icon">
                                                         <div class="icon-big text-center icon-success bubble-shadow-small">
-                                                            <i class="fas fa-luggage-cart"></i>
+                                                            <i class="fa-solid fa-campground"></i>
                                                         </div>
                                                     </div>
                                                     <div class="col col-stats ms-3 ms-sm-0">
                                                         <div class="numbers">
-                                                            <p class="card-category">Campaign</p>
-                                                            <h4 class="card-title">$1,345</h4>
+                                                            <p class="card-category">Chiến dịch</p>
+                                                            <h4 class="card-title">${totalCampaigns}</h4>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -472,29 +416,30 @@
                                                 <div class="row align-items-center">
                                                     <div class="col-icon">
                                                         <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                                            <i class="fas fa-project-diagram"></i>
+                                                            <i class="fa-solid fa-sitemap"></i>
                                                         </div>
                                                     </div>
                                                     <div class="col col-stats ms-3 ms-sm-0">
                                                         <div class="numbers">
-                                                            <p class="card-category">Organization</p>
-                                                            <h4 class="card-title">1,294</h4>
+                                                            <p class="card-category">Tổ chức</p>
+                                                            <h4 class="card-title">${totalOrganization}</h4>
                                                         </div>
                                                     </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
-                                </div>
-                                
-                                    
                                     </div>
 
+
+                                </div>
+
                                 <!-- Row for Pie Chart -->
-                                <div class="row">
+                                <div class="row justify-content-center">
                                     <div class="col-md-9">
                                         <div class="card">
                                             <div class="card-header">
-                                                <div class="card-title">Pie Chart</div>
+                                                <div class="card-title">Biểu đồ Tròn Dự án</div>
                                             </div>
                                             <div class="card-body">
                                                 <div class="chart-container">
@@ -504,9 +449,84 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-9">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <div class="card-title">Tổ chức Tạo ra Mỗi Tháng</div>
+                                                <c:if test="${mess != null}">
+                                                    ${mess}
+                                                </c:if>
+                                            </div>
+                                            <div class="card-body">
+                                                <!-- Form for selecting year -->
+
+                                                <form method="get" action="staff">
+                                                    <label for="year">Chọn Năm:</label>
+                                                    <select id="year" name="year" class="form-select" style="width: auto; display: inline-block;" onchange="this.form.submit()">
+                                                        <c:forEach var="year" items="${years}">
+                                                            <option value="${year}" <c:if test="${year == selectedYear}">selected</c:if>>${year}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </form>
+                                                <div class="file-export_box ms-4">
+                                                    <a href="exportexcel?Service=export&year=${selectedYear}"  
+                                                       class="d-flex align-items-center px-3 py-2 fs-4 text-white">
+                                                        <span class="d-md-block d-none">Xuất ra Excel</span>
+                                                        <i class='bx bxs-file-export'></i>
+                                                    </a>
+                                                </div>
+
+
+                                                <div class="chart-container">
+                                                    <canvas id="lineChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const ctx = document.getElementById('lineChart').getContext('2d');
+                                        const data = {
+                                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                                            datasets: [{
+                                                    label: 'Tổ chức',
+                                                    data: [
+                                    <c:forEach var="month" items="${organizationsPerMonth}">
+                                        ${month.value},
+                                    </c:forEach>
+                                                    ],
+                                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                                    fill: true
+                                                }]
+                                        };
+
+                                        const config = {
+                                            type: 'line',
+                                            data: data,
+                                            options: {
+                                                responsive: true,
+                                                plugins: {
+                                                    legend: {
+                                                        position: 'top',
+                                                    },
+                                                    title: {
+                                                        display: true,
+                                                        text: 'Tổ chức Tạo ra Mỗi Tháng'
+                                                    }
+                                                }
+                                            }
+                                        };
+
+                                        new Chart(ctx, config);
+                                    });
+                                </script>
 
                                 <!-- Row for Transaction History -->
-                                <div class="row">
+<!--                                <div class="row">
                                     <div class="col-md-12">
                                         <div class="card card-round">
                                             <div class="card-header">
@@ -539,14 +559,14 @@
                                                                     <span class="badge badge-success">Completed</span>
                                                                 </td>
                                                             </tr>
-                                                            <!-- Add more rows as needed -->
+                                                             Add more rows as needed 
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
 
                             </div>
                         </div>
@@ -561,25 +581,22 @@
                         <ul class="nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="http://www.themekita.com">
-                                    ThemeKita
+                                    Team4
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> Help </a>
+                                <a class="nav-link" href="#"> Hỗ trợ </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> Licenses </a>
+                                <a class="nav-link" href="#"> Giấy phép </a>
                             </li>
                         </ul>
                     </nav>
                     <div class="copyright">
-                        2024, made with <i class="fa fa-heart heart text-danger"></i> by
-                        <a href="http://www.themekita.com">ThemeKita</a>
+                        2024, tạo <i class="fa fa-heart heart text-danger"></i> bởi
+                        <a href="http://www.themekita.com">Team4</a>
                     </div>
-                    <div>
-                        Distributed by
-                        <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-                    </div>
+                    
                 </div>
             </footer>
         </div>
@@ -619,36 +636,26 @@
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
     <script>
-        const ctx = document.getElementById('pieChart').getContext('2d');
-        const pieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow'],
-                datasets: [{
-                        label: 'My First Dataset',
-                        data: [300, 50, 100],
-                        backgroundColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(54, 162, 235)',
-                            'rgb(255, 205, 86)'
-                        ],
-                        hoverOffset: 4
-                    }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Sample Pie Chart'
-                    }
-                }
-            }
-        });
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var ctx = document.getElementById('pieChart').getContext('2d');
+                                        var pieChart = new Chart(ctx, {
+                                            type: 'pie',
+                                            data: {
+                                                labels: ['Dự Án', 'Sự Kiện', 'Chiến dịch'],
+                                                datasets: [{
+                                                        data: [${totalProjects}, ${totalEvents}, ${totalCampaigns}],
+                                                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                                                        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                                                    }]
+                                            },
+                                            options: {
+                                                responsive: true
+                                            }
+                                        });
+                                    });
+
     </script>
+
 
 
 </body>

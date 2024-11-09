@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.Paths;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -41,7 +41,7 @@ public class EditAccount extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        Users user = (Users) session.getAttribute("acc");
+        User user = (User) session.getAttribute("acc");
 
         if (user != null) {
             String phone = request.getParameter("phone");

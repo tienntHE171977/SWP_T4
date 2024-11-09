@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.Random;
 import java.util.UUID;
 import model.PasswordResetTokens;
-import model.Users;
+import model.User;
 
 /**
  *

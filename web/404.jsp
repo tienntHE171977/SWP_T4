@@ -13,5 +13,8 @@
     </head>
     <body>
         <h1>Lỗi To</h1>
+        <h4 >${totalCampaigns}</h4>
+        <h4 >${totalProjects}</h4>
+        <h4 >${totalEvents}</h4>
     </body>
 </html>

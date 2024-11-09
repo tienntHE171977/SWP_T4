@@ -10,7 +10,7 @@ import java.sql.*;
  */
 public class Staff{
 
-    private Users user;
+    private User user;
     private int staff_id;
     private String role_staff;
     private String status;
@@ -32,7 +32,7 @@ public class Staff{
         this.updated_at = updated_at;
     }
 
-    public Staff(Users user, int staff_id, String role_staff, String status, Date approval_date, String first_password, Date created_at, Date updated_at) {
+    public Staff(User user, int staff_id, String role_staff, String status, Date approval_date, String first_password, Date created_at, Date updated_at) {
         this.user = user;
         this.staff_id = staff_id;
         this.role_staff = role_staff;
@@ -43,11 +43,11 @@ public class Staff{
         this.updated_at = updated_at;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

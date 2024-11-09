@@ -5,6 +5,7 @@
 package Controller_Contact;
 
 import DAL_Staff.ContactDAO;
+import DAL_Staff.NotificationDAO;
 import static Sendmail.EmailSender.sendReplyEmail;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,8 +17,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Contact;
+import model.Notification;
 import model.Staff;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -92,6 +94,7 @@ public class StaffContactController extends HttpServlet {
             default:
                 listContacts(request, response);
         };
+
     }
 
     private void listContacts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -100,9 +103,16 @@ public class StaffContactController extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-
+        
         String status = request.getParameter("status");
-        List<Contact> contacts = contactDAO.getAllContacts(page, pageSize, status);
+        String searchName = request.getParameter("searchName");
+
+        List<Contact> contacts;
+        if (searchName != null && !searchName.isEmpty()) {
+            contacts = contactDAO.searchContactsByName(searchName);
+        } else {
+            contacts = contactDAO.getAllContacts(page, pageSize, status);
+        }
         int totalContacts = contactDAO.getTotalContacts(status);
 
         int totalPages = (int) Math.ceil((double) totalContacts / pageSize);
@@ -171,16 +181,14 @@ public class StaffContactController extends HttpServlet {
 
                     break;
                 case "delete":
-                    
 
-                    
                     boolean success = contactDAO.deleteContact(contactId);
-                    if(success){
+                    if (success) {
                         message = "Delete contact suscessfully";
-                    }else{
+                    } else {
                         message = "Delete contact not suscessfully";
                     }
-                    
+
                     break;
                 default:
                     listContacts(request, response);

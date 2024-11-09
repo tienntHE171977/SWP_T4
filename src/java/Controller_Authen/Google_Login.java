@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import constant.Iconstant;
 import java.io.IOException;
-import model.Users;
+import model.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
@@ -37,7 +37,7 @@ public class Google_Login {
         return accessToken;
     }
 
-    public static Users getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+    public static User getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
         String link = Iconstant.GOOGLE_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
 
@@ -45,7 +45,7 @@ public class Google_Login {
         JsonObject googleUser = new Gson().fromJson(response, JsonObject.class);
 
         // Tạo đối tượng Account và ánh xạ dữ liệu
-        Users account = new Users();
+        User account = new User();
         account.setEmail(googleUser.get("email").getAsString());
         
         account.setImage(googleUser.get("picture").getAsString());

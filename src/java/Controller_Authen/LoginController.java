@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.nio.file.Files;
 import model.Staff;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -73,7 +73,7 @@ public class LoginController extends HttpServlet {
         }
         HttpSession session = request.getSession();
         AccountDAO login = new AccountDAO();
-        Users user = null;
+        User user = null;
 
         if (isValidEmail(emailorUsername)) {
             user = login.getAccountByemail(emailorUsername, pass);
@@ -120,9 +120,9 @@ public class LoginController extends HttpServlet {
                     staff.setUser(user);  // Đặt user vào staff
                     session.setAttribute("staff", staff);
                 }
-                response.sendRedirect("staff.jsp");
+                response.sendRedirect("staff");
             } else {
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("home");
             }
         } else {
             String mess = isValidEmail(emailorUsername) ? "Email or Password is incorrect" : "Username or Password is incorrect";

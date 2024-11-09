@@ -20,7 +20,7 @@ import javax.mail.internet.MimeMessage;
 public class EmailService {
 
     private final String username = "nguyentrungtien512003@gmail.com";
-    private final String password = "yplj gfrn yypw aegx";
+    private final String password = "litd zjrr nidm bvkj";
 
     public boolean sendVerificationEmail(String recipientEmail, String verificationLink) {
         Properties props = new Properties();

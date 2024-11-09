@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 import java.util.Random;
 import java.util.regex.Pattern;
 import model.PasswordResetTokens;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -92,7 +92,7 @@ public class ResetPasswordRequiredController extends HttpServlet {
     private void handleSendOTP(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Users user = (Users) session.getAttribute("acc");
+        User user = (User) session.getAttribute("acc");
         String email = request.getParameter("email");
 
         if (user == null || !email.equals(user.getEmail())) {
@@ -121,7 +121,7 @@ public class ResetPasswordRequiredController extends HttpServlet {
     private void handleResetPassword(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Users user = (Users) session.getAttribute("acc");
+        User user = (User) session.getAttribute("acc");
         if (user == null || !"staff".equals(user.getRole()) || !user.isPassword_reset_required()) {
             response.sendRedirect("login");
             return;

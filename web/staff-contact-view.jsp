@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="container mt-5">
-            <h2>Contact Details</h2>
+            <h2>Liên hệ chi tiết</h2>
             <c:if test="${not empty sessionScope.message}">
                 <div class="alert alert-${sessionScope.messageType == 'error' ? 'danger' : 'success'} alert-dismissible fade show" role="alert">
                     ${sessionScope.message}
@@ -31,15 +31,15 @@
             <c:if test="${not empty contact}">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Subject: ${contact.subject}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">From: ${contact.name} (${contact.email})</h6>
-                        <p class="card-text"><strong>Message:</strong> ${contact.message}</p>
-                        <p class="card-text"><strong>Status:</strong> ${contact.status}</p>
-                        <p class="card-text"><strong>Created at:</strong> ${contact.created_at}</p>
-                        <p class="card-text"><strong>Assigned Staff ID:</strong> 
+                        <h5 class="card-title">Chủ đề: ${contact.subject}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Từ: ${contact.name} (${contact.email})</h6>
+                        <p class="card-text"><strong>Nội dung:</strong> ${contact.message}</p>
+                        <p class="card-text"><strong>Trạng thái:</strong> ${contact.status}</p>
+                        <p class="card-text"><strong>Tạo ngày:</strong> ${contact.created_at}</p>
+                        <p class="card-text"><strong>ID người trả lời:</strong> 
                             <c:choose>
-                                <c:when test="${contact.assigned_staff_id != sessionScope.staff.staff_id}">Not assigned</c:when>
-                                <c:when test="${contact.assigned_staff_id == sessionScope.staff.staff_id}">Assigned to you</c:when>
+                                <c:when test="${contact.assigned_staff_id != sessionScope.staff.staff_id}">Không nhận</c:when>
+                                <c:when test="${contact.assigned_staff_id == sessionScope.staff.staff_id}">Nhận</c:when>
 
                             </c:choose>
                         </p>
@@ -49,14 +49,14 @@
                                 <input type="hidden" name="action" value="updateStatus">
                                 <input type="hidden" name="id" value="${contact.contact_id}">
                                 <div class="form-group">
-                                    <label for="status">Update Status:</label>
+                                    <label for="status">Thay đổi trạng thái:</label>
                                     <select class="form-control" id="status" name="status">
-                                        <option value="new" ${contact.status == 'new' ? 'selected' : ''}>New</option>
-                                        <option value="in progress" ${contact.status == 'in progress' ? 'selected' : ''}>In Progress</option>
-                                        <option value="resolved" ${contact.status == 'resolved' ? 'selected' : ''}>Resolved</option>
+                                        <option value="new" ${contact.status == 'new' ? 'selected' : ''}>Mới</option>
+                                        <option value="in progress" ${contact.status == 'in progress' ? 'selected' : ''}>Đang chờ</option>
+                                        <option value="resolved" ${contact.status == 'resolved' ? 'selected' : ''}>Từ chối</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Update Status</button>
+                                <button type="submit" class="btn btn-primary">Thay dổi</button>
                             </form>
 
                         </c:if>
@@ -69,20 +69,20 @@
                                 <input type="hidden" name="id" value="${contact.contact_id}">
                                 <input type="hidden" name="toEmail" value="${contact.email}">
                                 <div class="form-group">
-                                    <label for="replyMessage">Reply Message:</label>
+                                    <label for="replyMessage">Nội dung:</label>
                                     <textarea class="form-control" id="replyMessage" name="replyMessage" rows="4" required></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-info">Send Reply</button>
+                                <button type="submit" class="btn btn-info">Gửi</button>
                             </form>
                         </c:if>
 
-                        <a href="staffcontact?action=list" class="btn btn-secondary mt-3">Back to List</a>
+                        <a href="staffcontact?action=list" class="btn btn-secondary mt-3">quay lại bảng điều khiển</a>
                     </div>
                 </div>
             </c:if>
             <c:if test="${empty contact}">
-                <p>No contact found with the given ID.</p>
-                <a href="staffcontact?action=list" class="btn btn-secondary">Back to List</a>
+                <p>Không tìm thấy liên hệ nào có ID đã cho.</p>
+                <a href="staffcontact?action=list" class="btn btn-secondary">quay lại bảng điều khiển</a>
             </c:if>
         </div>
 

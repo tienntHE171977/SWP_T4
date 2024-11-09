@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -97,7 +97,7 @@ public class RegisterController extends HttpServlet {
             request.getRequestDispatcher("registration.jsp").forward(request, response);
             return;
         }
-        Users user = new Users(username, email, password, true, phone, fullname, address, gender, phone, email, true);
+        User user = new User(username, email, password, true, phone, fullname, address, gender, phone, email, true);
         boolean isUserCreated = account.createNewUser(user);
 
         if (isUserCreated) {

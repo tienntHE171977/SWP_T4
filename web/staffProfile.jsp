@@ -10,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Staff Profile</title>
+        <title>Hồ sơ nhân viên</title>
         <style>
             * {
                 margin: 0;
@@ -140,11 +140,18 @@
                     margin: 10px;
                 }
             }
+            .file-export_box {
+                border-radius: 5px;
+                background-color: green;
+                color: white;
+                cursor: pointer;
+            }
         </style>
-        
+
     </head>
     <body>
         <div class="container">
+
             <form action="staffProfile" method="post">
                 <div class="profile-card">
                     <div class="profile-header">
@@ -163,31 +170,33 @@
                     </div>
 
                     <div class="info-group">
-                        <div class="info-label">Phone</div>
+                        <div class="info-label">Số điện thoại</div>
                         <div class="info-value">
                             <input type="tel" id="staffPhone" value="${staff.getUser().getPhone()}" readonly>
                         </div>
                     </div>
                     <div class="info-group">
-                        <div class="info-label">Address</div>
+                        <div class="info-label">Địa chỉ</div>
                         <div class="info-value">
                             <input type="tel" id="staffPhone" value="${staff.getUser().getAdrees()}" readonly>
                         </div>
                     </div>
                     <div class="info-group">
-                        <div class="info-label">Department</div>
+                        <div class="info-label">Chức vụ</div>
                         <div class="info-value">
                             <input type="text" id="staffDepartment" value="${staff.role_staff}" readonly>
                         </div>
                     </div>
                     <div class="info-group">
-                        <div class="info-label">Join Date</div>
+                        <div class="info-label">Ngày tham gia</div>
                         <div class="info-value">
                             <input type="text" id="staffJoinDate" value="${staff.created_at}" readonly>
                         </div>
                     </div>
-                    <div class="profile-header">
-                        <button class="btn btn-home" onclick="event.preventDefault(); window.location.href='staff';">Back to Home</button>
+                    <div class="file-export_box ms-4">
+                        <a href="staffcontact" class="d-flex justify-content-center align-items-center px-3 py-2 fs-4 text-white">
+                            <span>Quay lại bảng điều khiển</span>
+                        </a>
                     </div>
                 </div>
 

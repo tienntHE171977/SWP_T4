@@ -14,7 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -100,7 +100,7 @@ public class VerificationServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String email = request.getParameter("email");
-        Users user = accountDAO.checkAccountByemail(email);
+        User user = accountDAO.checkAccountByemail(email);
 
         if (user != null && !accountDAO.isUserVerified(user.getUserId())) {
             String token = verificationTokenDAO.generateAndSaveVerificationToken(user.getUserId());

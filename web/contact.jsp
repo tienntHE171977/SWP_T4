@@ -50,26 +50,13 @@
                             <div class="col-xl-6 col-md-12 col-lg-8">
                                 <div class="short_contact_list">
                                     <ul>
-                                        <li><a href="#"> <i class="fa fa-phone"></i> +1 (454) 556-5656</a></li>
-                                        <li><a href="#"> <i class="fa fa-envelope"></i>Yourmail@gmail.com</a></li>
+                                        <li><a href="#"> <i class="fa fa-phone"></i> 0999999999</a></li>
+                                        <li><a href="#"> <i class="fa fa-envelope"></i>team4charifit@gmail.com</a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-md-6 col-lg-4">
-                                <div class="social_media_links d-none d-lg-block">
-                                    <a href="#">
-                                        <i class="fa fa-facebook"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fa fa-pinterest-p"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fa fa-linkedin"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -79,37 +66,27 @@
                         <div class="row align-items-center">
                             <div class="col-xl-3 col-lg-3">
                                 <div class="logo">
-                                    <a href="index.html">
+                                    <a href="home   ">
                                         <img src="img/logo.png" alt="">
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xl-9 col-lg-9">
+                            <div class="col-xl-6 col-lg-6">
                                 <div class="main-menu">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="index.html">home</a></li>
-                                            <li><a href="About.html">About</a></li>
-                                            <li><a href="#">blog <i class="ti-angle-down"></i></a>
+                                            <li><a href="home">Trang chủ</a></li>
+                                            <li><a href="About.html">Giới thiệu</a></li>
+                                            <li><a href="Blog">Tin tức </a></li>
+                                            <li><a href="project-list">Dự án <i class="fa-solid fa-chevron-down"></i></a>
                                                 <ul class="submenu">
-                                                    <li><a href="blog.html">blog</a></li>
-                                                    <li><a href="single-blog.html">single-blog</a></li>
+                                                    <li><a href="CampaignUser">Chiến dịch</a></li>
+                                                    <li><a href="Cause.html">Sự kiện</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="elements.html">elements</a></li>
-                                                    <li><a href="Cause.html">Cause</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="contact">Liên hệ</a></li>
                                         </ul>
                                     </nav>
-                                    <div class="Appointment">
-                                        <div class="book_btn d-none d-lg-block">
-                                            <a data-scroll-nav='1' href="#">Make a Donate</a>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -128,7 +105,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="bradcam_text text-center">
-                            <h3>Contact</h3>
+                            <h3>Liên Hệ</h3>
                         </div>
                     </div>
                 </div>
@@ -141,19 +118,19 @@
             <div class="container">
                 <div class="d-none d-sm-block mb-5 pb-4">
                     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-<div id="map" style="height: 400px;"></div>
+                    <div id="map" style="height: 400px;"></div>
 
-<script>
-    var map = L.map('map').setView([20.7116262, 106.7217437], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-    L.marker([20.7116262, 106.7217437]).addTo(map)
-        .bindPopup('Đồ Sơn, Hải Phòng')
-        .openPopup();
-</script>
+                    <script>
+                        var map = L.map('map').setView([20.7116262, 106.7217437], 13);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+                        L.marker([20.7116262, 106.7217437]).addTo(map)
+                                .bindPopup('Đồ Sơn, Hải Phòng')
+                                .openPopup();
+                    </script>
 
                 </div>
 
@@ -161,7 +138,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="contact-title">Get in Touch</h2>
+                        <h2 class="contact-title"> Tạo Liên Hệ</h2>
                     </div>
                     <div class="col-lg-8">
                         <form class="form-contact contact_form" action="contact" method="post" id="contactForm" novalidate="novalidate">
@@ -179,36 +156,37 @@
                                 <% } %>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder="Your Message"></textarea>
+                                        <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập tin nhắn'" placeholder="Tin nhắn của bạn"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <input class="form-control valid" name="name" id="name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" placeholder="Enter your name">
+                                        <input class="form-control valid" name="name" id="name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập tên của bạn'" placeholder="Nhập tên của bạn">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <input class="form-control valid" name="email" id="email" type="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" placeholder="Email">
+                                        <input class="form-control valid" name="email" id="email" type="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập địa chỉ email'" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input class="form-control" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'" placeholder="Enter Subject">
+                                        <input class="form-control" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập chủ đề'" placeholder="Nhập chủ đề">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <button type="submit" class="button button-contactForm boxed-btn">Send</button>
+                                <button type="submit" class="button button-contactForm boxed-btn">Gửi</button>
                             </div>
                             <script>
                                 document.getElementById('contactForm').addEventListener('submit', function (e) {
                                     console.log('Form is being submitted');
-// e.preventDefault(); // Uncomment để ngăn form submit (chỉ để test)
+                                    // e.preventDefault(); // Uncomment để ngăn form submit (chỉ để test)
                                 });
                             </script>
                         </form>
                     </div>
+
                     <div class="col-lg-3 offset-lg-1">
                         <div class="media contact-info">
                             <span class="contact-info__icon"><i class="ti-home"></i></span>
@@ -220,15 +198,15 @@
                         <div class="media contact-info">
                             <span class="contact-info__icon"><i class="ti-tablet"></i></span>
                             <div class="media-body">
-                                <h3>0399778386</h3>
+                                <h3>0999999999</h3>
                                 <p>Từ thứ hai đến thứ 6, 9am - 6pm</p>
                             </div>
                         </div>
                         <div class="media contact-info">
                             <span class="contact-info__icon"><i class="ti-email"></i></span>
                             <div class="media-body">
-                                <h3>support@colorlib.com</h3>
-                                <p>Send us your query anytime!</p>
+                                <h3>team4charifit@gmail.com</h3>
+                                <p>Gửi cho chúng tôi liên hệ của bạn bất cứ lúc nào!</p>
                             </div>
                         </div>
                     </div>
@@ -250,101 +228,45 @@
                                         <img src="img/footer_logo.png" alt="">
                                     </a>
                                 </div>
-                                <p class="address_text">Lorem ipsum dolor sit amet, <br> consectetur adipiscing elit, sed do <br> eiusmod tempor incididunt ut labore.
+                                <p class="address_text">
+                                    Chúng tôi cam kết mang lại sự thay đổi tích cực cho cộng đồng, <br>
+                                    giúp đỡ những người có hoàn cảnh khó khăn và <br>
+                                    tạo ra một tương lai tươi sáng hơn cho tất cả mọi người.
                                 </p>
-                                <div class="socail_links">
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <i class="ti-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="ti-twitter-alt"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-dribbble"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-instagram"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+
 
                             </div>
                         </div>
                         <div class="col-xl-2 col-md-6 col-lg-2">
-                            <div class="footer_widget">
-                                <h3 class="footer_title">
-                                    Services
-                                </h3>
-                                <ul class="links">
-                                    <li><a href="#">Donate</a></li>
-                                    <li><a href="#">Sponsor</a></li>
-                                    <li><a href="#">Fundraise</a></li>
-                                    <li><a href="#">Volunteer</a></li>
-                                    <li><a href="#">Partner</a></li>
-                                    <li><a href="#">Jobs</a></li>
-                                </ul>
+                                <div class="footer_widget">
+                                    <h3 class="footer_title">
+                                        Dịch Vụ
+                                    </h3>
+                                    <ul class="links">
+                                        <li><a href="#">Quyên Góp</a></li>
+                                        <li><a href="#">Nhà Tài Trợ</a></li>
+                                        <li><a href="#">Gây Quỹ</a></li>
+                                        <li><a href="#">Tình Nguyện</a></li>
+                                        <li><a href="#">Đối Tác</a></li>
+                                        <li><a href="#">Việc Làm</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         <div class="col-xl-3 col-md-6 col-lg-3">
                             <div class="footer_widget">
                                 <h3 class="footer_title">
-                                    Contacts
+                                    Liên hệ
                                 </h3>
                                 <div class="contacts">
-                                    <p>+2(305) 587-3407 <br>
-                                        info@loveuscharity.com <br>
-                                        Flat 20, Reynolds Neck, North
-                                        Helenaville, FV77 8WS
+                                    <p>0999999999 <br>
+                                        team4charifit@gmail.com <br>
+                                        HẢI PHÒNG
+                                        VIỆT NAM
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-6 col-lg-3">
-                            <div class="footer_widget">
-                                <h3 class="footer_title">
-                                    Top News
-                                </h3>
-                                <ul class="news_links">
-                                    <li>
-                                        <div class="thumb">
-                                            <a href="#">
-                                                <img src="img/news/news_1.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <a href="#">
-                                                <h4>School for African 
-                                                    Childrens</h4>
-                                            </a>
-                                            <span>Jun 12, 2019</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="thumb">
-                                            <a href="#">
-                                                <img src="img/news/news_2.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <a href="#">
-                                                <h4>School for African 
-                                                    Childrens</h4>
-                                            </a>
-                                            <span>Jun 12, 2019</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -353,11 +275,8 @@
                     <div class="row">
                         <div class="bordered_1px "></div>
                         <div class="col-xl-12">
-                            <p class="copy_right text-center">
-                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                            </p>
+                            
+                            
                         </div>
                     </div>
                 </div>

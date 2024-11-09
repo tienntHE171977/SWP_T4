@@ -19,7 +19,7 @@ import java.sql.*;
 import java.util.Random;
 import java.util.regex.Pattern;
 import model.PasswordResetTokens;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -93,7 +93,7 @@ public class ResetPasswordController extends HttpServlet {
         
         // Kiểm tra email tồn tại
         AccountDAO accountDAO = new AccountDAO();
-        Users user = accountDAO.checkAccountByemail(email);
+        User user = accountDAO.checkAccountByemail(email);
 
         if (user != null) {
             String otp = generateOTP();

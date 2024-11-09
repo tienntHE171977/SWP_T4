@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Verify Email</title>
+        <title>Xác Minh Email</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
@@ -76,7 +76,7 @@
 
 
                     </form>
-                    <button class="btn-back-to-login" onclick="backToLogin()" >Back to Login</button>
+                    <button class="btn-back-to-login" onclick="backToLogin()" >Quay lại đăng nhập</button>
 
                 </div>
             </div>

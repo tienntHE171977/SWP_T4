@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.Paths;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -84,7 +84,7 @@ public class uploadAvataController extends HttpServlet {
             return;
         }
 
-        Users user = (Users) session.getAttribute("acc");
+        User user = (User) session.getAttribute("acc");
         
         // Get the upload directory path
         String applicationPath = request.getServletContext().getRealPath("");

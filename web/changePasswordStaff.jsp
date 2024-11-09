@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Change Password</title>
+    <title>Thay Đỏi Mật Khẩu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -83,24 +83,24 @@
 </head>
 <body>
     <div class="form-container">
-        <h2>Change Password</h2>
+        <h2>Thay Đổi Mật Khẩu</h2>
         <h2>${me}</h2>
         <h2>${errorMessage}</h2>
         <h2>${successMessage}</h2>
         <form action="changepasswordstaff" method="post">
-            <label for="currentPassword">Current Password:</label>
+            <label for="currentPassword">Mật Khẩu Hiện Tại:</label>
             <div class="password-wrapper">
                 <input type="password" id="currentPassword" name="currentPassword" required>
                 <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('currentPassword', this)"></i>
             </div>
             
-            <label for="newPassword">New Password:</label>
+            <label for="newPassword">Mật Khẩu Mới:</label>
             <div class="password-wrapper">
                 <input type="password" id="newPassword" name="newPassword" required>
                 <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('newPassword', this)"></i>
             </div>
             
-            <label for="confirmPassword">Confirm Password:</label>
+            <label for="confirmPassword">Xác Nhận Mật Khẩu:</label>
             <div class="password-wrapper">
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
                 <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('confirmPassword', this)"></i>

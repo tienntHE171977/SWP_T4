@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Staff;
-import model.Users;
+import model.User;
 
 /**
  *
@@ -37,7 +37,7 @@ public class StaffDAO extends DBContext {
                 staff.setUpdated_at(rs.getDate("updated_at"));
 
                 // Tạo và đặt User object
-                Users user = new Users();
+                User user = new User();
                 user.setUserId(userId);
                 staff.setUser(user);
 
@@ -64,8 +64,8 @@ public class StaffDAO extends DBContext {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                // Tạo đối tượng Users
-                Users user = new Users(
+                // Tạo đối tượng User
+                User user = new User(
                     rs.getInt("user_id"),
                     rs.getString("username"),
                     rs.getString("email"),
@@ -101,7 +101,7 @@ public class StaffDAO extends DBContext {
     }
     
     public boolean updateStaffProfile(Staff staff) {
-        // Update Users table
+        // Update User table
         String updateUserQuery = """
             UPDATE Users 
             SET fullname = ?, adrees = ?, gender = ?, 
@@ -119,7 +119,7 @@ public class StaffDAO extends DBContext {
         try {
             connection.setAutoCommit(false);
 
-            // Update Users
+            // Update User
             ps = connection.prepareStatement(updateUserQuery);
             ps.setString(1, staff.getUser().getFullname());
             ps.setString(2, staff.getUser().getAdrees());
