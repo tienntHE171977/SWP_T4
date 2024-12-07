@@ -263,8 +263,8 @@
         }
 
         .custom-image-preview {
-            width: 200px;
-            height: 200px;
+            width: 446px; /* Wider width for a horizontal rectangle */
+            height: 312px; /* Shorter height */
             border: 2px solid #ddd;
             margin: 10px auto;
             display: flex;
@@ -272,9 +272,9 @@
             justify-content: center;
             background-color: #f0f0f0;
             overflow: hidden;
-            border-radius: 50%; /* Tạo hình tròn */
             cursor: pointer;
             position: relative;
+            /* Remove border-radius for rectangular shape */
         }
 
         .custom-image-preview__image {
@@ -282,15 +282,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%; /* Tạo hình tròn */
         }
 
         .custom-image-preview__text {
             color: #ccc;
             font-size: 16px;
             text-align: center;
-            pointer-events: none; /* Để chữ không cản trở việc nhấp chuột vào input */
+            pointer-events: none;
         }
+
         .page {
             padding: 20px;
             display: block;
@@ -458,7 +458,7 @@
                     <div class="col-lg-12">
                         <div class="justify-content-center">
 
-                            <h1 class="text-center text-dark">Register for an organizational account</h1>
+                            <h1 class="text-center text-dark">Tạo Dự án thiện nguyện</h1>
 
                         </div>
                     </div>
@@ -473,13 +473,11 @@
             <form id="registerForm" action="regisorg" method="post" enctype="multipart/form-data">
                 <div class="page" id="page1">
                     <div class="RegSectionHeader">
-                        Part 1: General information of the organization *${yourOr.getName()}
+                        Nhập thông tin về dự án thiện nguyện
                     </div>
-                    <c:forEach var="o" items="${organiztions}">
-                        <div class="listOhidden" >${o.name}</div>
-                    </c:forEach>
+
                     <div class="CustomFormGroup">
-                        <label for="customImageInput">Organization Avatar</label>
+                        <label for="customImageInput">Ảnh bìa dự án</label>
                         <div class="custom-image-preview" id="customImagePreview">
                             <input class="CustomFileInput" type="file" id="customImageInput" name="image" accept="image/*" required />
                             <img src="" alt="Image Preview" class="custom-image-preview__image" />
@@ -488,37 +486,37 @@
                     </div>
 
                     <div class="RegFormGroup">
-                        <label for="orgName">Organization Name *</label> 
+                        <label for="orgName">Tên dự án *</label> 
                         <input value="${yourOr.getName()}" type="text" id="orgName" name="orgName" placeholder="Enter the full name of the organization" required>
                         <p style="font-size: 13px; color: red" id="errName"></p>
                         <p style="font-size: 13px; color: red" id="errNameD"></p>
                     </div>
 
                     <div class="RegFormGroup">
-                        <label for="created_at">Established Date *</label>
+                        <label for="description">mô tả về dự án *</label>
+                        <input type="text" id="description" name="description" placeholder="Enter the Description about the organization" required>
+                        <p style="font-size: 13px; color: red" id="errDescription"></p>
+                    </div>
+
+                    <div class="RegFormGroup">
+                        <label for="created_at">Ngày bắt đầu *</label>
+                        <input type="date" id="created_at" name="created_at" max="" required>
+
+                    </div>
+                        <div class="RegFormGroup">
+                        <label for="created_at">Ngày kết thúc *</label>
                         <input type="date" id="created_at" name="created_at" max="" required>
 
                     </div>
 
-
                     <div class="RegFormGroup">
-                        <label for="website">Website *</label>
-                        <input type="url" id="website" name="website" placeholder="Enter the link to the organization's website" required>
-                        <p style="font-size: 13px; color: red" id="errWeb"></p>
-                    </div>
-
-                    <div class="RegFormGroup">
-                        <label for="created_by">Organization's user account name on the Charity app *</label>
+                        <label for="created_by">Tổ chức đại diện *</label>
                         <input type="text" id="created_by" name="created_by" value="${user.userName}" disabled>
                         <input type="hidden" name="userId" value="" />
                     </div>
 
 
-                    <div class="RegFormGroup">
-                        <label for="description">Description about the organization's activities, experiences, and volunteer plans *</label>
-                        <input type="text" id="description" name="description" placeholder="Enter the Description about the organization" required>
-                        <p style="font-size: 13px; color: red" id="errDescription"></p>
-                    </div>
+
 
                     <div class="RegFormGroup">
                         <label for="representative_phone">Phone Number *</label>
@@ -698,7 +696,7 @@
                         <div class="col-xl-12">
                             <p class="copy_right text-center">
                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                
+
                             </p>
                         </div>
                     </div>
@@ -897,7 +895,7 @@
         imagePreviewContainer.addEventListener('click', function () {
             imageInput.click();
         });
-        
+
         imageInput.addEventListener('change', function () {
             const file = this.files[0];
             if (file) {
@@ -914,7 +912,7 @@
                 imagePreviewImage.style.display = null;
                 imagePreviewImage.setAttribute('src', '');
             }
-            
+
         });
     </script>
     <script>
@@ -964,11 +962,11 @@
             const representativePhone = document.getElementById('representative_phone').value;
             const representativeEmail = document.getElementById('representative_email').value;
             const image = document.getElementById('customImageInput').files[0];
-            
+
             if (checkForDuplicate()) {
                 document.getElementById('errNameD').textContent = 'Organization name already exists !';
                 isValid = false;
-                window.scrollTo({ top: 500, behavior: 'smooth' });
+                window.scrollTo({top: 500, behavior: 'smooth'});
             }
             if (orgName.trim().length < 3) {
                 document.getElementById('errName').textContent = 'Organization name cannot be blank !';

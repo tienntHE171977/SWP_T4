@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/Campaign.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/Organization_Regis.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/VCategory.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/Volunteer_register.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/About.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/controllerQuang/volunteerapproval.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/DAO.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/DBContext.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/StaffDAO.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/ProjectCategory.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/controllerQuang/homeServlet.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/single-blog.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/VCategoryDAO.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/Organization.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/controllerQuang/CreateProjectServlet.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/staff_approval.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/User.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/ProjectCategoryDAO.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/WEB-INF/web.xml</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/VolunteerCV.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/controllerQuang/VolunteerRegisterServlet.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/OrganizationDAO.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/Project.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/CampaignParticipant.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/NewsDAO.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/Staff.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/controllerQuang/VolunteerCVDetailServlet.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/ProjectDAO.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/News.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/Volunteer.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/controllerQuang/RegisOrganizationServlet.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/CVManageDetail.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/Organization_Register_Success.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/ModelQuang/Notification.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/ProjectRegister.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/dalQuang/VolunteerDAO.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/index.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/src/java/controllerQuang/approvalServlet.java</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/Volunteer_Manger.jsp</file>
+            <file>file:/D:/FALL24/SWP/SWP_team4/SWP_team4/web/Cause.jsp</file>
+        </group>
+    </open-files>
+</project-private>

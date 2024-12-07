@@ -39,6 +39,10 @@
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            />
     </head>
     <style>
         .user_notification {
@@ -80,7 +84,18 @@
         }
         /* Ẩn dropdown mặc định */
         /* Ẩn dropdown mặc định */
-        .notification-dropdown,
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            top: 40px; /* Điều chỉnh theo vị trí của biểu tượng */
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 400px;
+        }
         .user-dropdown {
             display: none;
             position: absolute;
@@ -310,24 +325,18 @@
                                 <div class="col-xl-6 col-md-12 col-lg-8">
                                     <div class="short_contact_list">
                                         <ul>
-                                            <li><a href="#"> <i class="fa fa-phone"></i> +1 (454) 556-5656</a></li>
-                                            <li><a href="#"> <i class="fa fa-envelope"></i>Yourmail@gmail.com</a></li>
+                                            <li><a href="#"> <i class="fa fa-phone"></i></a></li>
+                                            <li><a href="#"> <i class="fa fa-envelope"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-md-6 col-lg-4">
                                     <div class="social_media_links d-none d-lg-block">
                                         <a href="#">
-                                            <i class="fa fa-facebook"></i>
+                                            <!--<i class="fa fa-facebook"></i>-->
                                         </a>
                                         <a href="#">
-                                            <i class="fa fa-pinterest-p"></i>
-                                        </a>
-                                        <a href="#">
-                                            <i class="fa fa-linkedin"></i>
-                                        </a>
-                                        <a href="#">
-                                            <i class="fa fa-twitter"></i>
+                                            <!--<i class="fa fa-pinterest-p"></i>-->
                                         </a>
                                     </div>
                                 </div>
@@ -349,21 +358,17 @@
                                         <nav>
                                             <ul id="navigation">
 
-                                                <li><a href="home">home</a></li>
-                                                <li><a href="About.html">About</a></li>
-                                                <li><a href="#">blog <i class="ti-angle-down"></i></a>
+                                                <li><a href="home">Trang chủ</a></li>
+                                                <li><a href="About.html">Giới Thiệu</a></li>
+                                                <li><a href="Blog">blog <i class="ti-angle-down"></i></a>
+                                                </li>
+                                                <li><a href="project-list">Dự Án <i class="ti-angle-down"></i></a>
                                                     <ul class="submenu">
-                                                        <li><a href="blog.jsp">blog</a></li>
-                                                        <li><a href="single-blog.jsp">single-blog</a></li>
+                                                        <li><a href="CampaignUser">Chiến Dịch</a></li>
+                                                        <li><a href="Cause.html">Sự Kiện</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                                    <ul class="submenu">
-                                                        <li><a href="elements.html">elements</a></li>
-                                                        <li><a href="Cause.html">Cause</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="approval">Contact</a></li>
+                                                <li><a href="contact">Liên Hệ</a></li>
                                                 <!-- Ô nhập tìm kiếm cho di động -->
 
                                                 <!-- Biểu tượng thông báo cho di động -->
@@ -380,7 +385,7 @@
                                     <div class="search-bar me-3 position-relative">
                                         <div  class="d-flex align-items-center">
 
-                                            <input type="text" id="searchinput" name="searchTitle" placeholder="tìm kiếm các chiến dịch"  value="${requestScope.valuesearch}" aria-label="Search" class="form-control me-2" required="Chưa nhập dữ liệu để tìm kiếm">
+                                            <input type="text" id="searchinput" name="searchTitle" placeholder="tìm kiếm dự án ..."  value="${requestScope.valuesearch}" aria-label="Search" class="form-control me-2" required="Chưa nhập dữ liệu để tìm kiếm">
                                             <button type="submit" class="btn btn-search">
                                                 <i class="fas fa-search"></i> <!-- Biểu tượng tìm kiếm -->
                                             </button>
@@ -400,11 +405,14 @@
                                                 <ul>
                                                     <!-- Kiểm tra nếu danh sách thông báo trống -->
                                                     <c:if test="${notic ==null || notic.isEmpty()}">
-                                                        <li>Không có thông báo</li>
+
+                                                        <h4 style="margin: 25px;">Thông báo</h4>
+                                                        <li style="margin-bottom: 20px; text-align: center; color: #a7acb1 "> Bạn không có thông báo nào</li>
                                                         </c:if>
 
                                                     <!-- Lặp qua danh sách thông báo nếu không trống -->
                                                     <c:forEach var="notification" items="${notifications}">
+                                                        <h4 style="margin: 25px;">Thông báo</h4>
                                                         <li>
                                                             <a href="notification/${notification.notificationId}">
                                                                 <span>${notification.message}</span>
@@ -422,10 +430,15 @@
                                             <!-- Dropdown user -->
                                             <div class="user-dropdown">
                                                 <ul>
-                                                    <li><a href="#">User Profile</a></li>
-                                                    <li><a href="login.jsp">Log Out</a></li>
+                                                    <li><a href="#">Trang cá nhân</a></li>
+                                                    <c:if test="${userOr.getOrganizationStatus() == 'active'}">
+                                                    <li><a href="#">Trang cá nhân tổ chức</a></li>
+                                                    </c:if>
+                                                    <li><a href="login.jsp">Đăng xuất</a></li>
                                                 </ul>
                                             </div>
+
+
                                         </div>
                                     </c:if>
                                     <c:if test="${requestScope.user == null}">
@@ -454,12 +467,10 @@
                         <div class="row">
                             <div class="col-lg-9">
                                 <div class="slider_text ">
-                                    <span>Get Started Today.</span>
-                                    <h3> Help the children
-                                        When They Need</h3>
-                                    <p>With so much to consume and such little time, coming up <br>
-                                        with relevant title ideas is essential</p>
-                                    <a href="About.html" class="boxed-btn3">Learn More
+                                    <span>Bắt đầu ngay hôm nay.</span>
+                                    <h3>Đồng hành cùng cộng đồng thiện nguyện</h3>
+                                    
+                                    <a href="About.html" class="boxed-btn3">Đọc Thêm
                                     </a>
                                 </div>
                             </div>
@@ -479,7 +490,12 @@
                         <option ${(idc==category.getCategoryId())?'selected':''} value="${category.getCategoryId()}">${category.getCategoryName()}</option>
                     </c:forEach>
                 </select>
-                <a href="login.jsp" class="crtprj-btn">Create a project</a>
+                <c:if test="${userOr.getOrganizationStatus() == 'active'}">
+                    <a href="login.jsp" class="crtprj-btn">Khởi tạo dự án thiện nguyện</a>
+                </c:if>
+                <c:if test="${userOr.getOrganizationStatus() != 'active' || empty userOr}">
+                    <div onclick="RejectAction('organempty')" class="crtprj-btn">Khởi tạo dự án thiện nguyện</div>
+                </c:if>
             </div>
 
             <div class="popular_causes_area section_padding">
@@ -487,20 +503,20 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
                             <div class="section_title text-center mb-55">
-                                <h3><span>Campaigns</span></h3>
+                                <h3><span>Chiến dịch thiện nguyện</span></h3>
                             </div>
                         </div>
                     </div>
                     <c:if var="c" test="${requestScope.campaigns.isEmpty()}">
 
-                        <h3 style="font-family: serif; color: #666; text-align: center; font-weight: bold">We found no results</h3>
+                        <h3 style="font-family: serif; color: #666; text-align: center; font-weight: bold">Chúng tôi không thấy kết quả nào</h3>
                         <h4 style="font-family: serif; color: #666; text-align: center">Make sure all words are spelled correctly or try a different keyword</h4>
                     </c:if>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="custom_causes_active owl-carousel"> 
                                 <c:forEach var="c" items="${requestScope.campaigns}">
-                                    <div class="single_cause">
+                                    <div class="single_cause" id="campaignslist">
                                         <div class="thumb">
                                             <img src="${c.image}" alt="">
                                         </div>
@@ -537,7 +553,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
                             <div class="section_title text-center mb-55">
-                                <h3><span>Events</span></h3>
+                                <h3><span>Sự kiện thiện nguyện</span></h3>
                             </div>
                         </div>
                     </div>
@@ -690,8 +706,28 @@
                         </c:forEach>
 
                     </div>
+
                 </div>
+
             </div>
+
+            <div style="text-align: center; margin-bottom: 30px">
+                <c:if test="${(user.role) == 'volunteer'}">
+                    <div style="display: flex; justify-content: center">
+                        <div style="color: white" onclick="RejectAction('volunteerexist')" class="campaign-btn">Become a volunteer </div>
+                    </div>
+                </c:if>
+
+                <c:if test="${(user.role) != 'volunteer'&& yourcv == null}">
+                    <a href="volunteerregis" class="campaign-btn">Become a volunteer </a>
+                </c:if>
+                <c:if test="${(user.role) != 'volunteer' && yourcv != null}">
+                    <div style="display: flex; justify-content: center">
+                        <div style="color: white" onclick="RejectAction('volunteersentcv')" class="campaign-btn">Become a volunteer </div>
+                    </div>
+                </c:if>
+            </div>
+
             <!-- our_volunteer_area_end  -->
 
             <!-- news__area_start  -->
@@ -758,9 +794,25 @@
                         </div>
                     </div>
 
+
                     <div style="text-align: center;">
-                        <a href="regisorg" class="campaign-btn">Register now</a>
+                        <c:if test="${empty userOr || userOr.getOrganizationStatus() == 'inactive'}">
+                            <a href="regisorg"  class="campaign-btn">Register now</a>
+                        </c:if>
+                        <c:if test="${!empty userOr && userOr.getOrganizationStatus() == 'active'}">
+                            <div style="display: flex; justify-content: center">
+                                <div style="color: white; width: 170px"  style="color: white" onclick="RejectAction('organexist')" class="campaign-btn">Register now</div>
+                            </div>
+                        </c:if>
+                        <c:if test="${userOr.getOrganizationStatus() == 'pending'}">
+                            <div style="display: flex; justify-content: center">
+                                <div  style="color: white; width: 170px" onclick="RejectAction('organpending')" class="campaign-btn">Register now</div >
+                            </div>
+                        </c:if>
+
                     </div>
+
+
 
                 </div>
             </div>
@@ -882,7 +934,7 @@
                             <div class="col-xl-12">
                                 <p class="copy_right text-center">
                                 <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                    
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                                 </p>
                             </div>
@@ -948,20 +1000,17 @@
                                                 userDropdown.classList.remove('show-dropdown');
                                             }
                                         });
-
-
     </script>
     <script type="text/javascript">
         function change() {
             document.getElementById("f1").submit();
-
         }
+
 
         function handleDropdownChange() {
             const dropdown = document.getElementById('filterDropdown');
             const selectedValue = dropdown.value; // Giá trị đã chọn
             const search = document.getElementById('searchinput').value;
-            
             // Kiểm tra nếu giá trị không phải là '0' (có nghĩa là không phải 'Tất cả')
             if (selectedValue !== '0' || search !== '') {
                 // Thực hiện cuộn trang đến vị trí cụ thể
@@ -971,7 +1020,6 @@
         handleDropdownChange();
 // Lắng nghe sự kiện 'change' cho dropdown
         document.getElementById('filterDropdown').addEventListener('submit', handleDropdownChange);
-
 //        document.getElementById("f1").onsubmit = function (event) {
 //            event.preventDefault(); // Ngăn chặn việc submit form theo cách mặc định để điều khiển quá trình
 //
@@ -1005,4 +1053,22 @@
             });
         });
     </script>
+    <script>
+        function RejectAction(id) {
+            if (id === 'volunteerexist') {
+                swal("Action failed!", "you are already a volunteer!", "warning");
+            } else if (id === 'volunteersentcv') {
+                swal("Action failed!", "You have sent your CV, please wait for approval!", "warning");
+            } else if (id === 'organexist') {
+                swal("Action failed!", "you have an organization!", "warning");
+            } else if (id === 'organpending') {
+                swal("Action failed!", "Your organization creation request is pending!", "warning");
+            }
+            else if (id === 'organempty') {
+                swal("Action failed!", "Only organizations can create projects, register to open an organization now!", "warning");
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
 </html>

@@ -2,11 +2,11 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee           http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>homeServlet</servlet-name>
-        <servlet-class>controller.homeServlet</servlet-class>
+        <servlet-class>controllerQuang.homeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisOrganizationServlet</servlet-name>
-        <servlet-class>controller.RegisOrganizationServlet</servlet-class>
+        <servlet-class>controllerQuang.RegisOrganizationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ArticleServlet</servlet-name>
@@ -14,11 +14,23 @@
     </servlet>
     <servlet>
         <servlet-name>approvalServlet</servlet-name>
-        <servlet-class>controller.approvalServlet</servlet-class>
+        <servlet-class>controllerQuang.approvalServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VolunteerRegisterServlet</servlet-name>
-        <servlet-class>controller.VolunteerRegisterServlet</servlet-class>
+        <servlet-class>controllerQuang.VolunteerRegisterServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>volunteerapproval</servlet-name>
+        <servlet-class>controllerQuang.volunteerapproval</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VolunteerCVDetailServlet</servlet-name>
+        <servlet-class>controllerQuang.VolunteerCVDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateProjectServlet</servlet-name>
+        <servlet-class>controllerQuang.CreateProjectServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>homeServlet</servlet-name>
@@ -40,8 +52,16 @@
         <servlet-name>VolunteerRegisterServlet</servlet-name>
         <url-pattern>/volunteerregis</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>searchapproval</servlet-name>
-        <servlet-class>controller.searchapproval</servlet-class>
-    </servlet>
+    <servlet-mapping>
+        <servlet-name>volunteerapproval</servlet-name>
+        <url-pattern>/volunteerapproval</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VolunteerCVDetailServlet</servlet-name>
+        <url-pattern>/cvdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateProjectServlet</servlet-name>
+        <url-pattern>/CreateProjectServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

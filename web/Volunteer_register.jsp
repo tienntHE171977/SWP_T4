@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -35,6 +36,10 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <!-- Thêm vào phần <head> của file -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
         <!-- <link rel="stylesheet" href="css/responsive.css"> -->
     </head>
     <style>
@@ -312,7 +317,7 @@
 
         #headshot img {
             width: 100%;
-            height: auto;
+            height: 100%;
             -webkit-border-radius: 50px;
             border-radius: 50px;
         }
@@ -606,6 +611,45 @@
             -moz-animation-delay: 0, 2.5s;
             animation-delay: 0, 2.5s;
         }
+        .CustomFormGroup {
+            margin-top: -32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .CustomFileInput {
+            display: none;
+        }
+
+        .custom-image-preview {
+            width: 92px;
+            height: 92px;
+            border: 2px solid #ddd;
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            border-radius: 50%; /* Tạo hình tròn */
+            cursor: pointer;
+            position: relative;
+        }
+        /*
+        */        .custom-image-preview__image {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .custom-image-preview__text {
+            color: #ccc;
+            font-size: 16px;
+            text-align: center;
+            pointer-events: none; /* Để chữ không cản trở việc nhấp chuột vào input */
+        }
     </style>
 
     <body style="background-color: #ccffcc; margin-top: 50px">
@@ -747,26 +791,53 @@
                 </div>
             </div>
         </header>
-        <form>
+        <div class="slider_area">
+            <br/><!-- comment -->
+            <br/>
+
+            <div  class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="justify-content-center">
+
+                            <h1 style="font-size: 40px; font-weight: bold;" class="text-center text-dark">Create Your CV</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <form id="registerForm" action="volunteerregis" method="post" enctype="multipart/form-data">
             <div id="cv" class="instaFade">
                 <div class="mainDetails">
                     <div id="headshot" class="quickFade">
-                        <img src="${user.image}" alt="${user.username}" />
+                        <div class="CustomFormGroup">
+                            <label for="customImageInput"></label>
+                            <div class="custom-image-preview" id="customImagePreview">
+                                <input class="CustomFileInput" type="file" id="customImageInput" name="image" accept="image/*" required />
+                                <img src="" alt="Image Preview" class="custom-image-preview__image" />
+                                <span class="custom-image-preview__text">Click to select photo</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="name">
-                        <h1 class="quickFade delayTwo">${user.username}</h1>
-                        <h2 class="quickFade delayThree">Volunteer</h2>
+                        <h1 id="fullname" class="quickFade delayTwo">${user.fullname}</h1>
+                        <h2 id="gender" class="quickFade delayThree">${user.gender}</h2>
                     </div>
 
                     <div id="contactDetails" class="quickFade delayFour">
                         <ul>
-                            <li>
-                                email:
-                                <a >${user.email}</a>
+                            <li id="mail">
+                                e:
+                                <a href="mailto:${user.email}" target="_blank">${user.email}</a>
                             </li>
 
-                            <li>phone: ${user.phone}</li>
+                            <li id="phone">m: ${user.phone}</li>
+                            <li id="address">m: ${user.adrees}</li>
+
+
                         </ul>
                     </div>
                     <div class="clear"></div>
@@ -780,12 +851,17 @@
                             </div>
 
                             <div id="personal" class="sectionContent">
-                                <p>
-                                <div>
-                                    <textarea class="custom-textarea" name="myTextarea" rows="6" placeholder="Nhập nội dung..."></textarea>
-                                </div>
-                                </p>
+
+                                <textarea id="description" class="custom-textarea" name="description" rows="6" placeholder="Nhập nội dung..."></textarea>
                             </div>
+                            <div style="display: none;  max-width: 600px; /* Giới hạn chiều rộng tối đa là 600px */
+                                 margin: 0 auto; /* Căn giữa nếu phần tử là khối */
+                                 word-wrap: break-word; /* Ngắt dòng khi gặp từ dài vượt quá giới hạn */
+                                 overflow-wrap: break-word;" id="personaldisplay" class="sectionContent">
+
+                                <p id="descriptiondisplay" ></p>
+                            </div>
+
                         </article>
                         <div class="clear"></div>
                     </section>
@@ -795,84 +871,72 @@
                             <h1>Work Experience</h1>
                         </div>
 
-                        <div class="sectionContent">
-                            <article>
-                                <h2>Job Title at Company</h2>
-                                <p class="subDetails">April 2011 - Present</p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                                    ultricies massa et erat luctus hendrerit. Curabitur non
-                                    consequat enim. Vestibulum bibendum mattis dignissim. Proin id
-                                    sapien quis libero interdum porttitor.
-                                </p>
-                            </article>
+                        <div class="sectionContent" id="experience">
 
                             <article>
-                                <h2>Job Title at Company</h2>
-                                <p class="subDetails">Janruary 2007 - March 2011</p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                                    ultricies massa et erat luctus hendrerit. Curabitur non
-                                    consequat enim. Vestibulum bibendum mattis dignissim. Proin id
-                                    sapien quis libero interdum porttitor.
-                                </p>
-                            </article>
-
-                            <article>
-                                <h2>Job Title at Company</h2>
-                                <p class="subDetails">October 2004 - December 2006</p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                                    ultricies massa et erat luctus hendrerit. Curabitur non
-                                    consequat enim. Vestibulum bibendum mattis dignissim. Proin id
-                                    sapien quis libero interdum porttitor.
-                                </p>
+                                <button onclick="addInputSection()">+</button>
                             </article>
                         </div>
+                        <div style="display: none;  max-width: 600px; /* Giới hạn chiều rộng tối đa là 600px */
+                             margin: 0 auto; /* Căn giữa nếu phần tử là khối */
+                             word-wrap: break-word; /* Ngắt dòng khi gặp từ dài vượt quá giới hạn */
+                             overflow-wrap: break-word; /* Ngắt dòng khi từ dài vượt quá khung */" class="sectionContent" id="experiencedisplay">
+
+                        </div>
+                        <input type="hidden" name="ex" id="ep" value="" />
                         <div class="clear"></div>
                     </section>
+
 
                     <section>
                         <div class="sectionTitle">
                             <h1>Key Skills</h1>
                         </div>
 
-                        <div id="skills" class="sectionContent">
-                            <div>
-                                <textarea class="custom-textarea" name="myTextarea" rows="4" placeholder="Nhập nội dung..."></textarea>
-                            </div>
+                        <div class="sectionContent">
+                            <ul class="keySkills" id="keySkillsList">
+
+                                <button onclick="addSkillField()">+</button>
+                            </ul>
+                            <ul style="display: none;" class="keySkills" id="keySkillsListshow">
+
+                            </ul>
+
                         </div>
+                        <input type="hidden" name="ski" id="ski" value="" />
                         <div class="clear"></div>
                     </section>
+
 
                     <section>
                         <div class="sectionTitle">
                             <h1>Education</h1>
                         </div>
 
-                        <div class="sectionContent">
+                        <div class="sectionContent" id="education">
                             <article>
-                                <h2>College/University</h2>
-                                <p class="subDetails">Qualification</p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                                    ultricies massa et erat luctus hendrerit. Curabitur non
-                                    consequat enim.
-                                </p>
-                            </article>
-
-                            <article>
-                                <h2>College/University</h2>
-                                <p class="subDetails">Qualification</p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                                    ultricies massa et erat luctus hendrerit. Curabitur non
-                                    consequat enim.
-                                </p>
+                                <button onclick="addEducation()()">+</button>
                             </article>
                         </div>
+                        <div style="display: none;  max-width: 600px; /* Giới hạn chiều rộng tối đa là 600px */
+                             margin: 0 auto; /* Căn giữa nếu phần tử là khối */
+                             word-wrap: break-word; /* Ngắt dòng khi gặp từ dài vượt quá giới hạn */
+                             overflow-wrap: break-word;" class="sectionContent" id="educationdisplay">
+
+                        </div>
+                        <input type="hidden" name="ed" id="ed" value="" />
                         <div class="clear"></div>
                     </section>
+
+
+
+                </div>
+            </div>
+            <div style="align-items: center; margin-left: 150px; padding-bottom: 20px; max-width: 80%">
+                <div  style=" display: flex;justify-content: space-evenly; padding-bottom: 20px;">
+                    <button id="view" style="padding: 10px 15px; border-radius: 10px; background-color: moccasin; color: white; border: none;font-weight:  bold    " type="button" value="SEND CV" onclick="ViewCV()">View CV</button>
+                    <button id="edit" style="padding: 10px 15px; border-radius: 10px; background-color: moccasin; color: white; border: none;font-weight:  bold; display: none    " type="button" value="SEND CV" onclick="EditCV()">Edit</button>
+                    <button id="send" style="padding: 10px 15px; border-radius: 10px; background-color: moccasin; color: white; border: none;font-weight:  bold  ; display: none  " type="submit">send CV</button>
                 </div>
             </div>
         </form>
@@ -1008,8 +1072,7 @@
                         <div class="col-xl-12">
                             <p class="copy_right text-center">
                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                                                      
                             </p>
                         </div>
                     </div>
@@ -1118,85 +1181,76 @@
 
                                             document.getElementById('registerForm').addEventListener('submit', function (event) {
                                                 event.preventDefault(); // Ngăn trang tự động gửi form
-                                                function isEmpty(value) {
-                                                    return value.trim() === ''; // Kiểm tra sau khi loại bỏ khoảng trắng
-                                                }
-                                                // Lấy giá trị các trường nhập
-//                                                const orgName = document.getElementById('orgName').value;
-//                                                const createdAt = document.getElementById('created_at').value;
-//                                                const website = document.getElementById('website').value;
-                                                const description = document.getElementById('description').value;
-                                                const descriptionskill = document.getElementById('descriptionskill').value;
 
-//                                                const representativePhone = document.getElementById('representative_phone').value;
-//                                                const representativeEmail = document.getElementById('representative_email').value;
-//                                                const image = document.getElementById('image').files[0];
-//                                                const regex_phone = /^(03|05|07|08|09)[0-9]{8}$/;
-//                                                // Reset thông báo lỗi
+
+                                                const description = document.getElementById('description').value.trim();
+                                                const exper = document.getElementById('ep').value.trim();
+                                                const descriptionskill = document.getElementById('ski').value.trim();
+                                                const edu = document.getElementById('ed').value.trim();
+
+                                                const image = document.getElementById('customImageInput').files[0];
+
+//                                                if (event.submitter && event.submitter.id !== 'send') {
+//                                                    return; // Thoát nếu không phải submit từ nút "REGISTER"
+//                                                }
                                                 let isValid = true;
-//                                                document.getElementById('errName').textContent = '';
-                                                document.getElementById('errDescription').textContent = '';
-                                                document.getElementById('errDescriptionSkill').textContent = '';
-//                                                document.getElementById('errRepPhone').textContent = '';
-//                                                document.getElementById('errRepEmail').textContent = '';
-
-                                                // Kiểm tra tên tổ chức (ít nhất 3 ký tự)
-//                                                if (isEmpty(orgName)) {
-//                                                    document.getElementById('errName').textContent = 'Tên tổ chức không được để trống';
-//                                                    isValid = false;
-//                                                }
-//
-//                                                // Kiểm tra website (URL hợp lệ)
-//                                                try {
-//                                                    new URL(website);
-//                                                } catch (e) {
-//                                                    document.getElementById('errName').textContent = 'URL không hợp lệ';
-//                                                    isValid = false;
-//                                                }
-//
-//                                                // Kiểm tra ngày thành lập (không vượt quá ngày hiện tại)
-//                                                const today = new Date().toISOString().split('T')[0];
-//                                                if (createdAt > today) {
-//                                                    document.getElementById('errName').textContent = 'Ngày thành lập không hợp lệ';
-//                                                    isValid = false;
-//                                                }
-
+                                                if (event.submitter && event.submitter.id !== 'send') {
+                                                    return; // Thoát nếu không phải submit từ nút "REGISTER"
+                                                }
                                                 // Kiểm tra mô tả (ít nhất 10 ký tự)
-                                                if (isEmpty(description)) {
-                                                    document.getElementById('errDescription').textContent = 'Mô tả không được để trống';
+                                                if (description.length < 90) {
+
+                                                    //                                                    document.getElementById('errDescription').textContent = 'Mô tả không được để trống';
                                                     isValid = false;
                                                 }
-                                                if (isEmpty(descriptionskill)) {
-                                                    document.getElementById('errDescriptionSkill').textContent = 'Mô tả không được để trống';
+                                                if (descriptionskill.length < 10) {
+
+                                                    //                                                    document.getElementById('errDescriptionSkill').textContent = 'Mô tả không được để trống';
                                                     isValid = false;
                                                 }
-//
-//
-//                                                // Kiểm tra số điện thoại người đại diện (ít nhất 10 ký tự)
-//                                                if (!regex_phone.test(representativePhone)) {
-//                                                    document.getElementById('errRepPhone').textContent = 'Số điện thoại không hợp lệ';
-//                                                    isValid = false;
-//                                                }
-//
-//                                                // Kiểm tra email người đại diện (định dạng email hợp lệ)
-//                                                const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-//                                                if (!emailPattern.test(representativeEmail)) {
-//                                                    document.getElementById('errRepEmail').textContent = 'Email không hợp lệ';
-//                                                    isValid = false;
-//                                                }
-//
-//                                                // Kiểm tra file ảnh (định dạng hình ảnh và kích thước < 5MB)
-//                                                if (image && image.size > 5 * 1024 * 1024) {
-//                                                    alert('Kích thước ảnh phải nhỏ hơn 5MB');
-//                                                    isValid = false;
-//                                                }
+                                                if (exper.length < 10) {
+
+                                                    //                                                    document.getElementById('errDescriptionSkill').textContent = 'Mô tả không được để trống';
+                                                    isValid = false;
+                                                }
+                                                if (edu.length < 5) {
+
+                                                    //                                                    document.getElementById('errDescriptionSkill').textContent = 'Mô tả không được để trống';
+                                                    isValid = false;
+                                                }
+                                                if (!image) {
+
+                                                    isValid = false;
+                                                    window.scrollTo({top: 200, behavior: 'smooth'});
+
+                                                } else if (image.size > 5 * 1024 * 1024) {
+
+                                                    isValid = false;
+                                                    window.scrollTo({top: 200, behavior: 'smooth'});
+                                                }
+
 
                                                 // Nếu tất cả đều hợp lệ, gửi form
                                                 if (!isValid) {
+                                                    swal("Information is not valid!", "Please fill in all information!", "warning");
                                                     window.scrollTo({top: 0, behavior: 'smooth'});
                                                 } else {
-                                                    this.submit(); // Gửi form về server nếu hợp lệ
+                                                    swal({
+                                                        title: "Your CV has been sent!",
+                                                        text: "clicked the button to return to homepage!",
+                                                        icon: "success",
+                                                        
+                                                    }).then((willSubmit) => {
+                                                        if (willSubmit) {
+                                                            this.submit(); // Gửi biểu mẫu khi người dùng nhấn OK
+//                                                             alert("Gửi CV thành công!"); // Hiển thị alert sau khi gửi
+//                                                             window.location.href = "home"; // Chuyển hướng đến trang mới
+                                                        }
+                                                    });
                                                 }
+
+                                                // Gửi form về server nếu hợp lệ
+
                                             });
 
 
@@ -1242,6 +1296,390 @@
             color: #aaa; /* Màu chữ cho placeholder */
         }
     </style>
+    <script>
+        const imageInput = document.getElementById('customImageInput');
+        const imagePreviewContainer = document.getElementById('customImagePreview');
+        const imagePreviewImage = imagePreviewContainer.querySelector('.custom-image-preview__image');
+        const imagePreviewText = imagePreviewContainer.querySelector('.custom-image-preview__text');
+        imagePreviewContainer.addEventListener('click', function () {
+            imageInput.click();
+        });
+        imageInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                imagePreviewText.style.display = 'none';
+                imagePreviewImage.style.display = 'block';
+                reader.addEventListener('load', function () {
+                    imagePreviewImage.setAttribute('src', this.result);
+                });
+                reader.readAsDataURL(file);
+            } else {
+                imagePreviewText.style.display = null;
+                imagePreviewImage.style.display = null;
+                imagePreviewImage.setAttribute('src', '');
+            }
+        });
+    </script>
+    <script>
+        let sectionCount = 1;
+
+        function addInputSection() {
+            const articleContainer = document.createElement("article");
+            articleContainer.classList.add("articleContainer");
+            const articleContainerdisplay = document.createElement("article");
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "X";
+            deleteButton.classList.add("deleteButton");
+            deleteButton.onclick = function () {
+                articleContainer.remove();
+                articleContainerdisplay.remove();
+            };
+
+            const titleLabel = document.createElement("label");
+            titleLabel.textContent = 'Job Title for Section ' + sectionCount + ' :';
+            const titleInput = document.createElement("input");
+            titleInput.type = "text";
+            titleInput.id = "title" + sectionCount;
+            titleInput.name = 'jobTitle';
+            titleInput.placeholder = `Enter job title`;
+
+
+            const dateLabel = document.createElement("label");
+            dateLabel.textContent = "Date Range:";
+            const dateInput = document.createElement("input");
+            dateInput.type = "text";
+            dateInput.id = "date" + sectionCount;
+            dateInput.name = 'dateRange ' + sectionCount;
+            dateInput.placeholder = `Enter date range (e.g., Jan 2020 - Dec 2021)`;
+
+            const descriptionLabel = document.createElement("label");
+            descriptionLabel.textContent = "Description:";
+            const descriptionInput = document.createElement("textarea");
+            descriptionInput.name = 'description';
+            descriptionInput.id = "des" + sectionCount;
+            descriptionInput.placeholder = "Enter job description";
+
+
+            const displayTitle = document.createElement("h2");
+            const displayDate = document.createElement("p");
+            displayDate.className = "subDetails";
+            const displayDescrip = document.createElement("p");
+
+            articleContainer.classList.add("articleContainer");
+            articleContainer.appendChild(deleteButton);
+            articleContainer.appendChild(titleLabel);
+            articleContainer.appendChild(titleInput);
+            articleContainer.appendChild(dateLabel);
+            articleContainer.appendChild(dateInput);
+            articleContainer.appendChild(descriptionLabel);
+            articleContainer.appendChild(descriptionInput);
+
+            articleContainerdisplay.classList.add("articleContainerdisplay");
+            articleContainerdisplay.appendChild(displayTitle);
+            articleContainerdisplay.appendChild(displayDate);
+            articleContainerdisplay.appendChild(displayDescrip);
+
+            document.getElementById("experience").appendChild(articleContainer);
+            document.getElementById("experiencedisplay").appendChild(articleContainerdisplay);
+
+
+            articleContainer.addEventListener('input', function () {
+                const target = event.target;
+
+                if (target.id === titleInput.id) {
+                    displayTitle.textContent = target.value;
+                } else if (target.id === dateInput.id) {
+                    displayDate.textContent = target.value;
+                } else if (target.id === descriptionInput.id) {
+                    displayDescrip.textContent = target.value;
+                }
+            });
+            sectionCount++;
+        }
+
+        function addSkillField() {
+            // Tạo một thẻ <li> mới
+            const newLi = document.createElement("li");
+
+            const Lidisplay = document.createElement("li");
+            newLi.classList.add("skilllist");
+//            Lidisplay.style.display= "flex";
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "X";
+            deleteButton.classList.add("deleteButtonLi");
+            deleteButton.onclick = function () {
+                newLi.remove();
+                Lidisplay.remove();
+            };
+            // Tạo thẻ <input> mới bên trong <li>
+            const newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.placeholder = "Enter a new skill";
+            newInput.className = "skillInput";
+            newInput.id = "skill";// Thêm class nếu muốn CSS riêng
+
+            // Thêm <input> vào <li>
+            newLi.classList.add("skilllist");
+            Lidisplay.classList.add("skilllistshow");
+            newLi.appendChild(newInput);
+            newLi.appendChild(deleteButton);
+
+            // Thêm <li> mới vào danh sách <ul>
+            document.getElementById("keySkillsList").appendChild(newLi);
+            document.getElementById("keySkillsListshow").appendChild(Lidisplay);
+
+            newInput.addEventListener("input", function () {
+
+                Lidisplay.textContent = newInput.value;
+
+            });
+        }
+
+
+        let EduCount = 1;
+        function addEducation() {
+            const articleContainer = document.createElement("article");
+            articleContainer.classList.add("articleContainerE");
+            const articleContainerdisplay = document.createElement("article");
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("deleteButton");
+            deleteButton.onclick = function () {
+                articleContainer.remove();
+                articleContainerdisplay.remove();
+            };
+
+            const titleLabel = document.createElement("label");
+            titleLabel.textContent = 'College/University ' + EduCount + ' :';
+            const titleInput = document.createElement("input");
+            titleInput.type = "text";
+            titleInput.id = "CollegeName" + EduCount;
+            titleInput.name = 'CollegeName';
+            titleInput.placeholder = `College/University`;
+
+
+            const dateLabel = document.createElement("label");
+            dateLabel.textContent = "Qualification";
+            const dateInput = document.createElement("input");
+            dateInput.type = "text";
+            dateInput.id = "Qualification" + EduCount;
+            dateInput.name = 'Qualification ' + EduCount;
+            dateInput.placeholder = `Enter Qualification`;
+
+            const descriptionLabel = document.createElement("label");
+            descriptionLabel.textContent = "Description:";
+            const descriptionInput = document.createElement("textarea");
+            descriptionInput.name = 'descriptionE';
+            descriptionInput.id = "desE" + EduCount;
+            descriptionInput.placeholder = "Enter Education description";
+
+
+            const displayTitle = document.createElement("h2");
+            const displayDate = document.createElement("p");
+            displayDate.className = "subDetails";
+            const displayDescrip = document.createElement("p");
+
+            articleContainer.classList.add("articleContainerE");
+            articleContainer.appendChild(deleteButton);
+            articleContainer.appendChild(titleLabel);
+            articleContainer.appendChild(titleInput);
+            articleContainer.appendChild(dateLabel);
+            articleContainer.appendChild(dateInput);
+            articleContainer.appendChild(descriptionLabel);
+            articleContainer.appendChild(descriptionInput);
+
+            articleContainerdisplay.classList.add("articleContainerdisplayE");
+            articleContainerdisplay.appendChild(displayTitle);
+            articleContainerdisplay.appendChild(displayDate);
+            articleContainerdisplay.appendChild(displayDescrip);
+
+            document.getElementById("education").appendChild(articleContainer);
+            document.getElementById("educationdisplay").appendChild(articleContainerdisplay);
+
+
+            articleContainer.addEventListener('input', function () {
+                const target = event.target;
+
+                if (target.id === titleInput.id) {
+                    displayTitle.textContent = target.value;
+                } else if (target.id === dateInput.id) {
+                    displayDate.textContent = target.value;
+                } else if (target.id === descriptionInput.id) {
+                    displayDescrip.textContent = target.value;
+                }
+            });
+            EduCount++;
+        }
+
+        function ViewCV() {
+            const inputP = document.getElementById("personal");
+            const displayP = document.getElementById("personaldisplay");
+            const inputE = document.getElementById("experience");
+            const displayE = document.getElementById("experiencedisplay");
+            const inputS = document.getElementById("keySkillsList");
+            const displayS = document.getElementById("keySkillsListshow");
+            const inputEdu = document.getElementById("education");
+            const displayEdu = document.getElementById("educationdisplay");
+
+            const view = document.getElementById("view");
+            const edit = document.getElementById("edit");
+            const send = document.getElementById("send");
+            inputP.style.display = "none";
+            displayP.style.display = "block";
+            inputE.style.display = "none";
+            displayE.style.display = "block";
+            inputS.style.display = "none";
+            displayS.style.display = "block";
+            inputEdu.style.display = "none";
+            displayEdu.style.display = "block";
+            view.style.display = "none";
+            edit.style.display = "block";
+            send.style.display = "block";
+            combineSections();
+        }
+        function EditCV() {
+            const inputP = document.getElementById("personal");
+            const displayP = document.getElementById("personaldisplay");
+            const inputE = document.getElementById("experience");
+            const displayE = document.getElementById("experiencedisplay");
+            const inputS = document.getElementById("keySkillsList");
+            const displayS = document.getElementById("keySkillsListshow");
+            const inputEdu = document.getElementById("education");
+            const displayEdu = document.getElementById("educationdisplay");
+
+            const view = document.getElementById("view");
+            const edit = document.getElementById("edit");
+            const send = document.getElementById("send");
+            inputP.style.display = "block";
+            displayP.style.display = "none";
+            inputE.style.display = "block";
+            displayE.style.display = "none";
+            inputS.style.display = "block";
+            displayS.style.display = "none";
+            inputEdu.style.display = "block";
+            displayEdu.style.display = "none";
+            view.style.display = "block";
+            edit.style.display = "none";
+            send.style.display = "none";
+//                
+        }
+
+        const personal = document.getElementById("description");
+        const personaldisplay = document.getElementById("descriptiondisplay");
+        personal.addEventListener("input", function () {
+            personaldisplay.textContent = personal.value;
+        });
+
+        function combineSections() {
+            const articles = document.querySelectorAll(".articleContainer");
+            const skilllist = document.querySelectorAll("#keySkillsList input");
+            const articlesE = document.querySelectorAll(".articleContainerE");
+
+            let exper = "";
+            let skill = "";
+            let edu = "";
+            articlesE.forEach((article) => {
+                const title = article.querySelector("input[name^='CollegeName']").value;
+                const date = article.querySelector("input[name^='Qualification']").value;
+                const description = article.querySelector("textarea[name^='descriptionE']").value;
+                const edue = title + '*' + date + '*' + description;
+                edu += '+' + edue;
+            });
+
+            skilllist.forEach((sk) => {
+                skill += '&' + sk.value;
+
+            });
+            articles.forEach((articlee) => {
+                const name = articlee.querySelector("input[name^='jobTitle']").value;
+                const quan = articlee.querySelector("input[name^='dateRange']").value;
+                const description = articlee.querySelector("textarea[name^='description']").value;
+                const expe = name + '*' + quan + '*' + description;
+                exper += '+' + expe;
+            });
+
+            exper = exper.startsWith('+') ? exper.slice(1) : exper;
+            skill = skill.startsWith('&') ? skill.slice(1) : skill;
+            edu = edu.startsWith('+') ? edu.slice(1) : edu;
+            document.getElementById("ep").value = exper;
+            document.getElementById("ski").value = skill;
+            document.getElementById("ed").value = edu;
+            console.log(exper);
+            console.log(edu);
+            console.log(skill);
+
+
+        }
+
+
+    </script>
+    <style>
+        /* Styling for each input section */
+        .articleContainer {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .articleContainer label {
+            font-weight: bold;
+        }
+        .articleContainer input, .articleContainer textarea {
+            width: 100%;
+            margin: 5px 0 10px;
+        }
+        .deleteButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: black;
+            /*color: white;*/
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        /* Styling for each input section */
+        .articleContainerE {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .articleContainerE label {
+            font-weight: bold;
+        }
+        .articleContainerE input, .articleContainerE textarea {
+            width: 100%;
+            margin: 5px 0 10px;
+        }
+        .skilllist{
+            position: relative;
+
+        }
+        .skilllist input{
+            width: 100px;
+        }
+        .deleteButtonLi {
+            /*position: absolute;*/
+            top: 10px;
+            right: 10px;
+            color: black;
+            /*color: white;*/
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+
+
+
+
 
 
 </html>
